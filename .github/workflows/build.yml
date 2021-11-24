@@ -1,0 +1,44 @@
+name: build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    env:
+      PYTHONIOENCODING: utf-8
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+          architecture: x64
+      - name: Cache pip dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~\AppData\Local\pip\Cache
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+      - name: Install pip dependencies
+        run: pip install -U -r requirements.txt
+      - name: Generate font subset
+        run: |
+          mkdir font
+          iwr https://mirrors.cloud.tencent.com/adobe-fonts/source-han-serif/OTF/SimplifiedChinese/SourceHanSerifSC-Medium.otf -OutFile font/SourceHanSerifSC-Medium.otf
+          python tool/generate-font-subset.py
+          rm font/SourceHanSerifSC-Medium.otf
+      - name: Setup UPX
+        run: choco install upx
+      - name: Build executable
+        run: |
+          tzutil /s "China Standard Time"
+          ./build-windows.ps1
+      - name: Upload result
+        uses: actions/upload-artifact@v2
+        with:
+          name: striker
+          path: dist/striker.exe
