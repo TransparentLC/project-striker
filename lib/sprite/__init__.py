@@ -1,0 +1,44 @@
+import dataclasses
+import typing
+import pygame
+
+EmptyTexture = pygame.Surface((1, 1))
+
+@dataclasses.dataclass
+class Hitbox:
+    offset: pygame.Vector2
+    size: float
+
+class Sprite(pygame.sprite.Sprite):
+    textures: typing.Sequence[pygame.Surface]
+    position: pygame.Vector2
+    angle: float = 0
+    frameCounter: int = 0
+    interval: int = 1
+    speed: pygame.Vector2
+    boundary: pygame.Rect
+    hitbox: list[Hitbox]
+
+    def __init__(self, *groups: pygame.sprite.AbstractGroup) -> None:
+        super().__init__(*groups)
+
+    def update(self) -> None:
+        self.position += self.speed
+        if hasattr(self, 'textures') and self.textures:
+            self.image = pygame.transform.rotate(
+                self.textures[(self.frameCounter // self.interval) % len(self.textures)],
+                self.angle
+            )
+        else:
+            self.image = EmptyTexture
+        self.rect = self.image.get_rect()
+        self.rect.center = self.position
+        self.frameCounter += 1
+
+    @property
+    def outOfBoundary(self):
+        return not self.boundary.collidepoint(self.position)
+
+    @property
+    def hitboxAbsolute(self) -> typing.Sequence[Hitbox]:
+        return tuple(Hitbox(h.offset.rotate(-self.angle) + self.position, h.size) for h in self.hitbox)
