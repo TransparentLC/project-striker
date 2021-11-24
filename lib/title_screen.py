@@ -27,7 +27,7 @@ with open('build-info.txt', 'r', encoding='utf-8') as f:
 fontNormalRenderer = lib.font.FontRenderer(lib.font.FONT_NORMAL, (255, 255, 255))
 fontSmallRenderer = lib.font.FontRenderer(lib.font.FONT_SMALL, (255, 255, 255))
 versionText = fontSmallRenderer.render('\n'.join((
-    f'Built at {BUILD_INFO[1]} (Commit {BUILD_INFO[0]})',
+    f'Built at {BUILD_INFO[1]} (Commit {BUILD_INFO[0][:7]})',
     f'with Python {platform.python_version()} Pygame {pygame.version.ver}',
     '© 2021 TransparentLC https://akarin.dev',
 )))
@@ -35,7 +35,7 @@ versionText = fontSmallRenderer.render('\n'.join((
 manualShade = pygame.Surface((400, 225), pygame.SRCALPHA)
 pygame.draw.rect(manualShade, (0, 0, 0, 192), manualShade.get_rect(), 0, 8)
 # 一行32个全角字符，一页最多12行，用----------------分页
-manualPages = tuple(fontNormalRenderer.render(x.strip()) for x in '''
+manualPages = tuple(fontNormalRenderer.render(x.strip()) for x in f'''
 # 基本的介绍
 
 这是一个简单的弹幕射击游戏。目的是回避弹幕并击破敌机，在每一关的
@@ -94,6 +94,18 @@ manualPages = tuple(fontNormalRenderer.render(x.strip()) for x in '''
 ＊AFruitaday!制作的1943 - The Battle of Midway精灵图
 　https://www.spriters-resource.com/...
 　.../arcade/1943thebattleofmidway/
+----------------
+# 关于
+
+源代码以GNU AGPL 3.0许可证发布。
+https://github.com/TransparentLC/project-striker
+
+Commit: {BUILD_INFO[0]}
+Build time: {BUILD_INFO[1]}
+
+Built with:
+　Python {platform.python_version()}
+　Pygame {pygame.version.ver}
 '''.split('----------------'))
 
 def update():

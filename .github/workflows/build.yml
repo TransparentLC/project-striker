@@ -32,7 +32,7 @@ jobs:
           python tool/generate-font-subset.py
           rm font/SourceHanSerifSC-Medium.otf
       - name: Setup UPX
-        run: choco install upx
+        run: choco install upx --no-progress
       - name: Build executable
         run: |
           tzutil /s "China Standard Time"
