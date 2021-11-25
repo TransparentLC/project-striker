@@ -83,8 +83,9 @@ class Player(Sprite):
                     self.invincibleRemain = 150
                     self.position.update(playerInitialPosition)
                 else:
-                    sound.playBgm('TITLE')
-                    globals.currentScene = scene.Scene.TITLE
+                    pygame.mixer.music.stop()
+                    globals.currentScene = scene.Scene.RESULT
+                    self.deathWait = 1
 
         if self.invincibleRemain:
             self.invincibleRemain -= 1
@@ -95,6 +96,7 @@ class Player(Sprite):
                 sound.sfx['HYPER_END'].play()
         elif globals.keys[pygame.K_x] and globals.hyperNum and not self.deathWait:
             globals.hyperNum -= 1
+            globals.hyperUsedCount += 1
             self.hyperRemain = constants.HYPER_TIME
             self.invincibleRemain = constants.HYPER_INVINCIBLE_TIME
             sound.sfx['HYPER_ACTIVATE'].play()
@@ -142,3 +144,4 @@ class Player(Sprite):
         explosion.ExplosionPlayer(self.position)
         self.deathWait = 180
         self.hyperRemain = 0
+        globals.missedCount += 1

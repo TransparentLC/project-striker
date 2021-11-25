@@ -9,6 +9,6 @@ WAIT 60 @ VQy3fiUV
 JUMP_BOSS @VQy3fiUV
 
 WAIT 300
-LOAD_STAGE scriptfiles/stage/stage1.txt
-
+SET_CLEARED
+SHOW_RESULT
 HALT

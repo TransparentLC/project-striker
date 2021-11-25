@@ -102,13 +102,17 @@ class PlayerOption(lib.sprite.Sprite):
 
         super().update()
 
+# A机体：
+# 高速      | 11x4     = 44/25f | 1.760/f | 1.000x | 4
+# 高速Hyper | (11+5)x4 = 64/15f | 4.267/f | 2.424x | 4 12
+# 低速和高速相同
 class OptionTypeA(PlayerOption):
     def shoot(self) -> None:
         if lib.globals.groupPlayer.sprite.hyperRemain:
             lib.bullet.player_bullet.PlayerBullet(
                 self.position,
                 lib.bullet.player_bullet.bulletTextureHoming,
-                size=lib.bullet.player_bullet.bulletSizeHoming, speed=4, angle=self.angle, damage=9,
+                size=lib.bullet.player_bullet.bulletSizeHoming, speed=4, angle=self.angle, damage=11,
                 flags=lib.bullet.player_bullet.PlayerBulletFlags.HOMING
             )
             lib.bullet.player_bullet.PlayerBullet(
@@ -122,12 +126,17 @@ class OptionTypeA(PlayerOption):
             lib.bullet.player_bullet.PlayerBullet(
                 self.position,
                 lib.bullet.player_bullet.bulletTextureHoming,
-                size=lib.bullet.player_bullet.bulletSizeHoming, speed=4, angle=self.angle, damage=9,
+                size=lib.bullet.player_bullet.bulletSizeHoming, speed=4, angle=self.angle, damage=11,
                 flags=lib.bullet.player_bullet.PlayerBulletFlags.HOMING
             )
             self.shootWait = 25
         lib.sound.sfx[random.choice(('PLAYER_SHOOT_A', 'PLAYER_SHOOT_B'))].play()
 
+# B机体：
+# 高速      | 5x4     = 20/15f | 1.333/f | 1.000x | 8
+# 高速Hyper | 7x4     = 28/6f  | 4.667/f | 3.500x | 10
+# 低速      | (5+3)x4 = 32/10f | 3.200/f | 1.000x | 8 10
+# 低速Hyper | (7+3)x4 = 40/6f  | 6.667/f | 2.083x | 10 12
 class OptionTypeB0(PlayerOption):
     def shoot(self) -> None:
         if lib.globals.groupPlayer.sprite.hyperRemain:
@@ -188,4 +197,38 @@ class OptionTypeB1(PlayerOption):
                     size=lib.bullet.player_bullet.bulletSize1Way, speed=10, angle=self.angle + 7, damage=3
                 )
             self.shootWait = 10 if self.slow else 15
+        lib.sound.sfx[random.choice(('PLAYER_SHOOT_A', 'PLAYER_SHOOT_B'))].play()
+
+# C机体：
+# 高速      | (9+4)x2  = 26/8f | 3.250/f | 1.000x | 10 12
+# 高速Hyper | (11+5)x2 = 32/5f | 6.400/f | 1.969x | 12 14
+# 低速和高速相同
+class OptionTypeC(PlayerOption):
+    def shoot(self) -> None:
+        if lib.globals.groupPlayer.sprite.hyperRemain:
+            lib.bullet.player_bullet.PlayerBullet(
+                self.position,
+                lib.bullet.player_bullet.bulletTexture2WayHyper,
+                size=lib.bullet.player_bullet.bulletSize2Way, speed=12, angle=self.angle, damage=11,
+                flags=lib.bullet.player_bullet.PlayerBulletFlags.BULLET_CANCELLING
+            )
+            lib.bullet.player_bullet.PlayerBullet(
+                self.position,
+                lib.bullet.player_bullet.bulletTexture1WayHyper,
+                size=lib.bullet.player_bullet.bulletSize1Way, speed=14, angle=self.angle, damage=5,
+                flags=lib.bullet.player_bullet.PlayerBulletFlags.BULLET_CANCELLING
+            )
+            self.shootWait = 5
+        else:
+            lib.bullet.player_bullet.PlayerBullet(
+                self.position,
+                lib.bullet.player_bullet.bulletTexture2Way,
+                size=lib.bullet.player_bullet.bulletSize2Way, speed=10, angle=self.angle, damage=9
+            )
+            lib.bullet.player_bullet.PlayerBullet(
+                self.position,
+                lib.bullet.player_bullet.bulletTexture1Way,
+                size=lib.bullet.player_bullet.bulletSize1Way, speed=12, angle=self.angle, damage=4
+            )
+            self.shootWait = 8
         lib.sound.sfx[random.choice(('PLAYER_SHOOT_A', 'PLAYER_SHOOT_B'))].play()

@@ -25,6 +25,7 @@ import lib.sprite.player
 import lib.script_engine.stage
 import lib.scroll_map
 import lib.title_screen
+import lib.result_screen
 import lib.utils
 
 if __name__ == '__main__':
@@ -55,7 +56,10 @@ if __name__ == '__main__':
             if lib.globals.currentScene == lib.scene.Scene.TITLE:
                 lib.title_screen.update()
                 lib.title_screen.draw(lib.globals.screen)
-            elif lib.globals.currentScene == lib.scene.Scene.STG_GAME:
+            elif lib.globals.currentScene == lib.scene.Scene.RESULT:
+                lib.result_screen.update()
+                lib.result_screen.draw(lib.globals.screen)
+            elif lib.globals.currentScene == lib.scene.Scene.STG:
                 lib.globals.screen.blit(lib.scene.BACKGROUND_STG, (0, 0))
                 lib.scroll_map.blitBackground(lib.globals.stgSurface)
                 # lib.globals.stgSurface.fill((255, 0, 255))

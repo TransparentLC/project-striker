@@ -4,6 +4,7 @@ import random
 import typing
 
 import lib.globals
+import lib.scene
 import lib.sound
 import lib.sprite
 import lib.utils
@@ -41,6 +42,8 @@ class Opcode(enum.IntEnum):
     SPAWN = enum.auto()
     BGM = enum.auto()
     BOSS_WARNING = enum.auto()
+    SET_CLEARED = enum.auto()
+    SHOW_RESULT = enum.auto()
 
     # = enum.auto()
 
@@ -314,6 +317,13 @@ class Engine:
             lib.globals.messageQueue.append(['WARNING!', 120])
             lib.globals.messageQueue.append(['Powerful enemy is approaching.\n                  Are you ready?', 300])
             lib.sound.sfx['BOSS_ALERT'].play(loops=1)
+        elif opcode == Opcode.SET_CLEARED:
+            # 将表示通关的全局变量设为True
+            lib.globals.allCleared = True
+        elif opcode == Opcode.SHOW_RESULT:
+            # 结束游戏，跳转到结果画面
+            pygame.mixer.music.stop()
+            lib.globals.currentScene = lib.scene.Scene.RESULT
 
         # elif opcode == Opcode.:
         #     params: tuple[] = params

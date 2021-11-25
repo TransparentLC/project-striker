@@ -29,6 +29,10 @@ scoreLastFrame = 0
 grazeCount = 0
 lifeNum = 0
 hyperNum = 0
+optionType = 0
+missedCount = 0
+hyperUsedCount = 0
+allCleared = False
 
 messageQueue: typing.Deque[tuple[str, int]] = collections.deque()
 

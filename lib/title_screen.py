@@ -19,7 +19,7 @@ MENU_ITEMS = tuple(
 )
 
 OPTION = pygame.image.load('assets/ui-title-select.png').convert_alpha()
-OPTION_ITEMS = tuple(OPTION.subsurface((0, x * 128, 384, 128)) for x in range(2))
+OPTION_ITEMS = tuple(OPTION.subsurface((0, x * 128, 384, 128)) for x in range(3))
 
 with open('build-info.txt', 'r', encoding='utf-8') as f:
     BUILD_INFO = f.read().splitlines()
@@ -89,11 +89,15 @@ manualPages = tuple(fontNormalRenderer.render(x.strip()) for x in f'''
 　https://maou.audio/
 ＊Pixabay
 　https://pixabay.com/sound-effects/
+----------------
+# 借物表
 
 图片素材：
 ＊AFruitaday!制作的1943 - The Battle of Midway精灵图
 　https://www.spriters-resource.com/...
 　.../arcade/1943thebattleofmidway/
+＊Unsplash
+　https://unsplash.com/
 ----------------
 # 关于
 
@@ -121,6 +125,9 @@ def update():
             lib.globals.grazeCount = 0
             lib.globals.lifeNum = lib.constants.INITIAL_LIFENUM
             lib.globals.hyperNum = lib.constants.INITIAL_HYPERNUM
+            lib.globals.missedCount = 0
+            lib.globals.hyperUsedCount = 0
+            lib.globals.allCleared = False
             lib.globals.messageQueue.clear()
             for g in (
                 lib.globals.groupPlayerOption,
@@ -131,24 +138,31 @@ def update():
             ):
                 for s in g:
                     s.kill()
-            lib.globals.menuSubChoice %= 2
+            lib.globals.menuSubChoice %= 3
+            lib.globals.optionType = lib.globals.menuSubChoice
+            #
             if lib.globals.menuSubChoice == 0:
-                lib.globals.groupPlayer.options = [
+                lib.globals.groupPlayer.sprite.options = [
                     lib.sprite.option.OptionTypeA(8, pygame.Vector2(-30, 5), pygame.Vector2(-20, -5), 20, 10),
                     lib.sprite.option.OptionTypeA(8, pygame.Vector2(30, 5), pygame.Vector2(20, -5), -20, -10),
                     lib.sprite.option.OptionTypeA(8, pygame.Vector2(-15, 20), pygame.Vector2(-8, -20), 10, 5),
                     lib.sprite.option.OptionTypeA(8, pygame.Vector2(15, 20), pygame.Vector2(8, -20), -10, -5),
                 ]
             elif lib.globals.menuSubChoice == 1:
-                lib.globals.groupPlayer.options = [
+                lib.globals.groupPlayer.sprite.options = [
                     lib.sprite.option.OptionTypeB1(8, pygame.Vector2(-15, 20), pygame.Vector2(-25, 0), 12, 0),
                     lib.sprite.option.OptionTypeB0(8, pygame.Vector2(15, 20), pygame.Vector2(25, 0), -12, 0),
                     lib.sprite.option.OptionTypeB0(8, pygame.Vector2(-30, 5), pygame.Vector2(-45, 0), 30, 0),
                     lib.sprite.option.OptionTypeB1(8, pygame.Vector2(30, 5), pygame.Vector2(45, 0), -30, 0),
                 ]
+            elif lib.globals.menuSubChoice == 2:
+                lib.globals.groupPlayer.sprite.options = [
+                    lib.sprite.option.OptionTypeC(8, pygame.Vector2(-25, 0), pygame.Vector2(-10, -15), 0, 0),
+                    lib.sprite.option.OptionTypeC(8, pygame.Vector2(25, 0), pygame.Vector2(10, -15), 0, 0),
+                ]
             with open('scriptfiles/stage/stage1.txt', 'r', encoding='utf-8') as f:
                 lib.globals.stageEngine = lib.script_engine.stage.Engine(f.read())
-            lib.globals.currentScene = lib.scene.Scene.STG_GAME
+            lib.globals.currentScene = lib.scene.Scene.STG
         elif lib.globals.menuChoice == 2:
             pygame.event.post(pygame.event.Event(pygame.QUIT))
 
@@ -173,7 +187,7 @@ def draw(surface: pygame.Surface):
         surface.blit(item[0 if lib.globals.menuChoice == index else 1], (32, 320 + index * 32))
 
     if lib.globals.menuChoice == 0:
-        surface.blit(OPTION_ITEMS[lib.globals.menuSubChoice % 2], (200, 310))
+        surface.blit(OPTION_ITEMS[lib.globals.menuSubChoice % 3], (200, 310))
     elif lib.globals.menuChoice == 1:
         surface.blit(manualShade, (200, 210))
         surface.blit(manualPages[lib.globals.menuSubChoice % len(manualPages)], (208, 214))
