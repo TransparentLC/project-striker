@@ -1,5 +1,6 @@
 import enum
 import pygame
+import os
 import random
 import typing
 
@@ -127,6 +128,7 @@ class Engine:
         while not self.halted and not self.wait:
             opcode, params = self.instruction[self.pointer]
             params = self.applyParamsReplacement(params)
+            # print(opcode, params, self.vars)
             self.pointer += 1
             self.executeOpcode(opcode, params)
 
@@ -291,15 +293,15 @@ class Engine:
                 lib.globals.stageEngine = Engine(f.read())
         elif opcode == Opcode.SPAWN:
             # 在场景中刷出一个敌机，设置脚本和刷出位置
-            # 对于所有的敌机，超过显示区域30px就会被清除
-            # 显示区域是384x448，所以坐标范围就是(-30, -30)到(424, 478)
+            # 对于所有的敌机，超过显示区域30px（正上方为80px）就会被清除
+            # 显示区域是384x448，所以坐标范围就是(-30, -80)到(424, 478)
             params: tuple[float, float, float, str] = params
             x, y, angle, scriptFile = params
 
             enemy = lib.sprite.enemy.Enemy()
             enemy.position.update(x, y)
             enemy.angle = angle
-            if scriptFile in enemyScriptCache:
+            if scriptFile in enemyScriptCache and not os.environ.get('DEBUG_DISABLE_ENEMY_CACHE'):
                 script = enemyScriptCache[scriptFile]
             else:
                 with open(scriptFile, 'r', encoding='utf-8') as f:

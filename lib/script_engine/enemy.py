@@ -236,6 +236,7 @@ class Engine:
         while not self.halted and not self.wait:
             opcode, params = self.instruction[self.pointer]
             params = self.applyParamsReplacement(params)
+            # print(opcode, params, self.vars)
             self.pointer += 1
             self.executeOpcode(opcode, params)
 
@@ -356,6 +357,8 @@ class Engine:
             self.vars[address + 1] = position.y
         elif opcode == Opcode.CALC_DIRECTION:
             # 计算从(x1, y1)指向(x2, y2)的角度，保存在指定位置
+            # 例如计算自机狙的角度就是：
+            # CALC_DIRECTION 0 %ENEMY_X% %ENEMY_Y% %PLAYER_X% %PLAYER_Y%
             params: tuple[int, float, float, float, float] = params
             address, x1, y1, x2, y2 = params
 
@@ -715,7 +718,7 @@ class Engine:
             self.context.score = 500
             self.context.explodeSfx = lib.sound.sfx['EXPLODE_ENEMY_B']
         elif opcode == Opcode.PRESET_ENEMY_D:
-            # 中型杂鱼敌机的预设
+            # 比较小的中型杂鱼敌机的预设
             self.context.textures = EnemyTexturesTable['ENEMY_D']
             self.context.explosion = ExplosionTable['MEDIUM_B']
             self.context.hitbox = [
@@ -728,7 +731,7 @@ class Engine:
                 (DebrisTable['DEBRIS_A'], pygame.Vector2(6, -2), .125, 1.75, 1, 3),
                 (DebrisTable['DEBRIS_A'], pygame.Vector2(-6, -2), .125, 1.75, 1, 3),
             ]
-            self.context.score = 500
+            self.context.score = 200
             self.context.explodeSfx = lib.sound.sfx['EXPLODE_ENEMY_B']
         elif opcode == Opcode.PRESET_ENEMY_E:
             # 小型杂鱼敌机的预设

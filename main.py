@@ -125,7 +125,7 @@ if __name__ == '__main__':
                 pygame.draw.rect(
                     lib.globals.screen,
                     (255, 255, 255),
-                    (418, 225, lib.utils.clamp(len(lib.globals.groupEnemyBullet), 0, 512) / 512 * 204, 12),
+                    (418, 225, lib.utils.clamp(len(lib.globals.groupEnemyBullet), 0, 256) / 256 * 204, 12),
                 )
                 if lib.globals.groupBoss.sprite:
                     pygame.draw.rect(

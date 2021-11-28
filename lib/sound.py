@@ -32,7 +32,7 @@ sfx: dict[str, pygame.mixer.Sound] = {
 }
 
 for value in sfx.values():
-    value.set_volume(.1)
+    value.set_volume(.2)
 
 sfx['PLAYER_SHOOT_A'].set_volume(.01)
 sfx['PLAYER_SHOOT_B'].set_volume(.01)
@@ -41,10 +41,10 @@ sfx['PLAYER_SHOOT_HIT_B'].set_volume(.02)
 sfx['PLAYER_SHOOT_HIT_C'].set_volume(.02)
 sfx['PLAYER_SHOOT_HIT_D'].set_volume(.02)
 sfx['EXPLODE_PLAYER'].set_volume(.8)
-sfx['EXPLODE_ENEMY_A'].set_volume(.5)
-sfx['EXPLODE_ENEMY_B'].set_volume(.6)
-sfx['EXPLODE_ENEMY_C'].set_volume(.7)
-sfx['EXPLODE_ENEMY_D'].set_volume(.7)
+sfx['EXPLODE_ENEMY_A'].set_volume(.3)
+sfx['EXPLODE_ENEMY_B'].set_volume(.4)
+sfx['EXPLODE_ENEMY_C'].set_volume(.5)
+sfx['EXPLODE_ENEMY_D'].set_volume(.5)
 sfx['HYPER_ACTIVATE'].set_volume(.5)
 sfx['HYPER_END'].set_volume(.5)
 sfx['EXTEND_HYPER'].set_volume(.8)
