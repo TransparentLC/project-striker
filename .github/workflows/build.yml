@@ -52,7 +52,6 @@ jobs:
         run: |
           ./build-windows.ps1
           mv dist/striker.exe dist/striker-${{ steps.vars.outputs.buildTime }}-${{ steps.vars.outputs.commitShort }}.exe
-      - name: Rename
       - name: Upload result
         uses: actions/upload-artifact@v2
         with:
