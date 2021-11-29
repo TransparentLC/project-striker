@@ -8,7 +8,7 @@ os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
 # Download from:
 # https://mirrors.cloud.tencent.com/adobe-fonts/source-han-serif/OTF/SimplifiedChinese/SourceHanSerifSC-Medium.otf
-fontPath = '../font/SourceHanSerifSC-Medium.otf'
+fontPath = '../.font/SourceHanSerifSC-Medium.otf'
 fontSubsetPath = '../font/SourceHanSerifSC-Medium-Subset.otf'
 
 charset = set(string.printable)
