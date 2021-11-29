@@ -43,10 +43,18 @@ jobs:
           python tool/generate-font-subset.py
       - name: Setup UPX
         run: choco install upx --no-progress
+      - name: Set vars
+        id: vars
+        run: |
+          echo ::set-output name=commitShort::$(git rev-parse --short HEAD)
+          echo ::set-output name=buildTime::$(date -Format 'yyyyMMdd-HHmmss')
       - name: Build executable
-        run: ./build-windows.ps1
+        run: |
+          ./build-windows.ps1
+          mv dist/striker.exe dist/striker-${{ steps.vars.outputs.buildTime }}-${{ steps.vars.outputs.commitShort }}.exe
+      - name: Rename
       - name: Upload result
         uses: actions/upload-artifact@v2
         with:
           name: striker
-          path: dist/striker.exe
+          path: dist/striker-${{ steps.vars.outputs.buildTime }}-${{ steps.vars.outputs.commitShort }}.exe
