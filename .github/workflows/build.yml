@@ -46,8 +46,8 @@ jobs:
       - name: Set vars
         id: vars
         run: |
-          echo ::set-output name=commitShort::$(git rev-parse --short HEAD)
-          echo ::set-output name=buildTime::$(Get-Date -Format 'yyyyMMdd-HHmmss')
+          echo "::set-output name=commitShort::$(git rev-parse --short HEAD)"
+          echo "::set-output name=buildTime::$(Get-Date -Format 'yyyyMMdd-HHmmss')"
       - name: Build executable
         run: |
           ./build-windows.ps1
