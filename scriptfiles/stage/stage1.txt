@@ -1,8 +1,6 @@
 BGM STAGE1
 SET_SCROLL_SPEED 1.5
 
-# JUMP @debug
-
 WAIT 280
 
 SPAWN 81 -10 0 scriptfiles/enemy/stage1/0.txt
@@ -100,8 +98,6 @@ WAIT 660
 SPAWN 404 150 0 scriptfiles/enemy/stage1/4.txt
 WAIT 660
 
-NOOP @ debug
-
 SPAWN 120 -10 -180 scriptfiles/enemy/stage1/5.txt
 WAIT 75
 SPAWN 167 -36 0 scriptfiles/enemy/stage1/0.txt
@@ -147,5 +143,164 @@ SPAWN 192 -64 0 scriptfiles/enemy/stage1/midboss.txt
 WAIT 60 @ VQy3fiUV
 JUMP_BOSS @VQy3fiUV
 SET_SCROLL_SPEED 1.5
+
+STORE 0 0
+INC 0 @ ADQgCjvQ
+WAIT 30
+SPAWN 265 -54 0 scriptfiles/enemy/stage1/6.txt
+SPAWN 103 -52 0 scriptfiles/enemy/stage1/6.txt
+SPAWN 173 -35 0 scriptfiles/enemy/stage1/6.txt
+WAIT 10
+SPAWN 241 -6 0 scriptfiles/enemy/stage1/6.txt
+SPAWN 35 -23 0 scriptfiles/enemy/stage1/6.txt
+SPAWN 123 -10 0 scriptfiles/enemy/stage1/6.txt
+WAIT 10
+SPAWN 209 -23 0 scriptfiles/enemy/stage1/6.txt
+SPAWN 163 -22 0 scriptfiles/enemy/stage1/6.txt
+SPAWN 279 -33 0 scriptfiles/enemy/stage1/6.txt
+WAIT 10
+SPAWN 100 -18 0 scriptfiles/enemy/stage1/6.txt
+SPAWN 323 -38 0 scriptfiles/enemy/stage1/6.txt
+SPAWN 103 -20 0 scriptfiles/enemy/stage1/6.txt
+WAIT 10
+SPAWN 60 -10 0 scriptfiles/enemy/stage1/6.txt
+SPAWN 165 -52 0 scriptfiles/enemy/stage1/6.txt
+SPAWN 291 -41 0 scriptfiles/enemy/stage1/6.txt
+WAIT 10
+SPAWN 135 -42 0 scriptfiles/enemy/stage1/6.txt
+SPAWN 55 -34 0 scriptfiles/enemy/stage1/6.txt
+SPAWN 143 -27 0 scriptfiles/enemy/stage1/6.txt
+WAIT 10
+SPAWN 269 -46 0 scriptfiles/enemy/stage1/6.txt
+SPAWN 194 -30 0 scriptfiles/enemy/stage1/6.txt
+SPAWN 365 -54 0 scriptfiles/enemy/stage1/6.txt
+WAIT 10
+SPAWN 274 -21 0 scriptfiles/enemy/stage1/6.txt
+SPAWN 324 -7 0 scriptfiles/enemy/stage1/6.txt
+SPAWN 23 -56 0 scriptfiles/enemy/stage1/6.txt
+WAIT 10
+SPAWN 42 -57 0 scriptfiles/enemy/stage1/6.txt
+SPAWN 233 -5 0 scriptfiles/enemy/stage1/6.txt
+SPAWN 365 -45 0 scriptfiles/enemy/stage1/6.txt
+WAIT 10
+SPAWN 75 -52 0 scriptfiles/enemy/stage1/6.txt
+SPAWN 355 -46 0 scriptfiles/enemy/stage1/6.txt
+SPAWN 162 -24 0 scriptfiles/enemy/stage1/6.txt
+WAIT 10
+SPAWN 260 -27 0 scriptfiles/enemy/stage1/6.txt
+SPAWN 134 -56 0 scriptfiles/enemy/stage1/6.txt
+SPAWN 100 -20 0 scriptfiles/enemy/stage1/6.txt
+WAIT 10
+SPAWN 184 -46 0 scriptfiles/enemy/stage1/6.txt
+SPAWN 274 -27 0 scriptfiles/enemy/stage1/6.txt
+SPAWN 194 -14 0 scriptfiles/enemy/stage1/6.txt
+WAIT 10
+SPAWN 84 -24 0 scriptfiles/enemy/stage1/6.txt
+SPAWN 73 -11 0 scriptfiles/enemy/stage1/6.txt
+SPAWN 113 -17 0 scriptfiles/enemy/stage1/6.txt
+WAIT 10
+SPAWN 289 -29 0 scriptfiles/enemy/stage1/6.txt
+SPAWN 79 -29 0 scriptfiles/enemy/stage1/6.txt
+SPAWN 365 -39 0 scriptfiles/enemy/stage1/6.txt
+WAIT 30
+JUMP_L %VAR_0% 3 @ADQgCjvQ
+
+WAIT 45
+
+SPAWN 102 -20 180 scriptfiles/enemy/stage1/5.txt
+SPAWN 282 -20 180 scriptfiles/enemy/stage1/5.txt
+
+WAIT 120
+
+SPAWN 404 40 100 scriptfiles/enemy/stage1/7.txt
+STORE 0 0
+INC 0 @ nu2aFI50
+WAIT 20
+SPAWN 404 20 100 scriptfiles/enemy/stage1/1.txt
+SPAWN 404 60 100 scriptfiles/enemy/stage1/1.txt
+JUMP_L %VAR_0% 3 @nu2aFI50
+WAIT 20
+SPAWN 404 40 100 scriptfiles/enemy/stage1/7.txt
+STORE 0 0
+INC 0 @ JxmW8m0r
+WAIT 20
+SPAWN 404 20 100 scriptfiles/enemy/stage1/1.txt
+SPAWN 404 60 100 scriptfiles/enemy/stage1/1.txt
+JUMP_L %VAR_0% 3 @JxmW8m0r
+WAIT 20
+SPAWN 404 40 100 scriptfiles/enemy/stage1/7.txt
+
+WAIT 180
+
+SPAWN 118 -58 0 scriptfiles/enemy/stage1/0.txt
+SPAWN 18 -9 0 scriptfiles/enemy/stage1/0.txt
+WAIT 10
+SPAWN 90 -11 0 scriptfiles/enemy/stage1/0.txt
+SPAWN 108 -22 0 scriptfiles/enemy/stage1/0.txt
+WAIT 10
+SPAWN 19 -32 0 scriptfiles/enemy/stage1/0.txt
+SPAWN 107 -11 0 scriptfiles/enemy/stage1/0.txt
+WAIT 10
+SPAWN 128 -15 0 scriptfiles/enemy/stage1/0.txt
+SPAWN 141 -5 0 scriptfiles/enemy/stage1/0.txt
+WAIT 10
+SPAWN 120 -16 0 scriptfiles/enemy/stage1/0.txt
+SPAWN 169 -7 0 scriptfiles/enemy/stage1/0.txt
+WAIT 10
+SPAWN 148 -5 0 scriptfiles/enemy/stage1/0.txt
+SPAWN 157 -21 0 scriptfiles/enemy/stage1/0.txt
+
+WAIT 45
+
+SPAWN 404 20 105 scriptfiles/enemy/stage1/8.txt
+WAIT 30
+SPAWN -20 50 -105 scriptfiles/enemy/stage1/8.txt
+WAIT 30
+SPAWN 404 80 105 scriptfiles/enemy/stage1/8.txt
+WAIT 30
+SPAWN -20 110 -105 scriptfiles/enemy/stage1/8.txt
+WAIT 30
+SPAWN 404 140 105 scriptfiles/enemy/stage1/8.txt
+
+WAIT 150
+
+SPAWN 404 -30 0 scriptfiles/enemy/stage1/4.txt
+
+WAIT 660
+
+SPAWN 192 -30 0 scriptfiles/enemy/stage1/4.txt
+WAIT 120
+SPAWN 321 -13 0 scriptfiles/enemy/stage1/6.txt
+WAIT 30
+SPAWN 131 -16 0 scriptfiles/enemy/stage1/6.txt
+SPAWN 230 -22 0 scriptfiles/enemy/stage1/6.txt
+WAIT 120
+SPAWN 341 -23 0 scriptfiles/enemy/stage1/6.txt
+WAIT 30
+SPAWN 79 -58 0 scriptfiles/enemy/stage1/6.txt
+WAIT 120
+SPAWN 89 -7 0 scriptfiles/enemy/stage1/6.txt
+SPAWN 74 -11 0 scriptfiles/enemy/stage1/6.txt
+WAIT 30
+SPAWN 163 -32 0 scriptfiles/enemy/stage1/6.txt
+
+WAIT 240
+
+SPAWN 192 -30 0 scriptfiles/enemy/stage1/3.txt
+
+WAIT 360
+BOSS_WARNING
+WAIT 300
+BGM BOSS1
+WAIT 60
+
+SET_SCROLL_SPEED .8
+SPAWN 192 -64 0 scriptfiles/enemy/stage1/boss.txt
+WAIT 60 @ QNnI4e6N
+JUMP_BOSS @QNnI4e6N
+WAIT 420
+SET_SCROLL_SPEED 1.5
+SET_CLEARED
+SHOW_RESULT
 
 HALT

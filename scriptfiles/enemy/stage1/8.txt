@@ -1,0 +1,26 @@
+# 只会前进和发射3way自机狙的中型机杂鱼，但是发射速度快了很多
+
+PRESET_ENEMY_C
+SET_HITPOINT 100
+SET_INVINCIBLE 45
+SET_SPEED 1.25
+
+WAIT 30
+
+STORE 0 0
+INC 0 @ 9lMnQ64l
+    CALC_DIRECTION 7 %ENEMY_X% %ENEMY_Y% %PLAYER_X% %PLAYER_Y%
+    STORE 1 0
+    INC 1 @ 7rsKTnc2
+        STORE 2 %VAR_1%
+        MOD 2 3
+        JUMP_NE %VAR_2% 0 @4D8pOX3j
+        SFX ENEMY_SHOOT_D
+        SHOOT_MULTIWAY TYPE_A -9 -3 3.5 %VAR_7% 3 2 @ 4D8pOX3j
+        SHOOT_MULTIWAY TYPE_A 9 -3 3.5 %VAR_7% 3 2
+        WAIT 5
+    JUMP_L %VAR_1% 6 @7rsKTnc2
+    WAIT 60
+JUMP_L %VAR_0% 3 @9lMnQ64l
+
+HALT

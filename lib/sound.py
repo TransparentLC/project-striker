@@ -49,13 +49,14 @@ sfx['HYPER_ACTIVATE'].set_volume(.5)
 sfx['HYPER_END'].set_volume(.5)
 sfx['EXTEND_HYPER'].set_volume(.8)
 sfx['EXTEND_LIFE'].set_volume(.8)
-sfx['BOSS_ALERT'].set_volume(.8)
+sfx['BOSS_ALERT'].set_volume(.6)
 
 bgm: dict[str, tuple[str, str]] = {
     'TITLE': ('sound/bgm/title-a.ogg', 'sound/bgm/title-b.ogg'),
     'STAGE1': ('sound/bgm/stage1-a.ogg', 'sound/bgm/stage1-b.ogg'),
     'STAGE2': ('sound/bgm/stage2-a.ogg', 'sound/bgm/stage2-b.ogg'),
     'STAGE3': ('sound/bgm/stage3-a.ogg', 'sound/bgm/stage3-b.ogg'),
+    'BOSS1': ('sound/bgm/boss1-a.ogg', 'sound/bgm/boss1-b.ogg'),
 }
 
 def playBgm(bgmName: str):
