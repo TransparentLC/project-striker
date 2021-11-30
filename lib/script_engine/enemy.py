@@ -93,6 +93,7 @@ EnemyTexturesTable = {
     'ENEMY_D': tuple(pygame.image.load(f'assets/enemy-d-{i}.png').convert_alpha() for i in range(2)),
     'ENEMY_E': tuple(pygame.image.load(f'assets/enemy-e-{i}.png').convert_alpha() for i in range(2)),
     'BOSS_A': tuple(pygame.image.load(f'assets/boss-a-{i}.png').convert_alpha() for i in range(2)),
+    'BOSS_B': tuple(pygame.image.load(f'assets/boss-b-{i}.png').convert_alpha() for i in range(2)),
 }
 
 MoveInterpolationFunctionTable = {
