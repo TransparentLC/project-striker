@@ -1,3 +1,4 @@
+import os
 import pygame
 
 pygame.mixer.set_num_channels(64)
@@ -8,6 +9,7 @@ sfx: dict[str, pygame.mixer.Sound] = {
     'HYPER_ACTIVATE': pygame.mixer.Sound('sound/sfx/hyper-activate.ogg'),
     'HYPER_END': pygame.mixer.Sound('sound/sfx/hyper-end.ogg'),
     'BOSS_ALERT': pygame.mixer.Sound('sound/sfx/boss-alert.ogg'),
+    'BONUS': pygame.mixer.Sound('sound/sfx/bonus.ogg'),
     'PAUSE': pygame.mixer.Sound('sound/sfx/pause.ogg'),
     'PAGE': pygame.mixer.Sound('sound/sfx/page.ogg'),
     'MENU': pygame.mixer.Sound('sound/sfx/menu.ogg'),
@@ -57,9 +59,12 @@ bgm: dict[str, tuple[str, str]] = {
     'STAGE2': ('sound/bgm/stage2-a.ogg', 'sound/bgm/stage2-b.ogg'),
     'STAGE3': ('sound/bgm/stage3-a.ogg', 'sound/bgm/stage3-b.ogg'),
     'BOSS1': ('sound/bgm/boss1-a.ogg', 'sound/bgm/boss1-b.ogg'),
+    'BOSS2': ('sound/bgm/boss2-a.ogg', 'sound/bgm/boss2-b.ogg'),
 }
 
 def playBgm(bgmName: str):
+    if os.environ.get('DEBUG_DISABLE_BGM'):
+        return
     bgmHeader, bgmLoop = bgm[bgmName]
     pygame.mixer.music.stop()
     pygame.mixer.music.load(bgmHeader)

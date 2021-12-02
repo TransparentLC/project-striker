@@ -644,6 +644,7 @@ class Engine:
             bonus = len(lib.globals.groupEnemyBullet) * (50 + lib.globals.grazeCount // 3)
             lib.globals.score += bonus
             lib.globals.messageQueue.append([f'Bonus!        {bonus:8d}', 180])
+            lib.sound.sfx['BONUS'].play()
         elif opcode == Opcode.EXTEND_LIFE:
             # 奖残
             if lib.globals.lifeNum < 8:

@@ -14,6 +14,7 @@
                 "PYGAME_HIDE_SUPPORT_PROMPT": "hide",
                 "DEBUG_INPUT_DISPLAY": "1",
                 "DEBUG_DISABLE_ENEMY_CACHE": "1",
+                // "DEBUG_DISABLE_BGM": "1",
                 // "DEBUG_HITBOX_DISPLAY": "1",
                 // "DEBUG_PLAYER_INVINCIBLE": "1",
             }

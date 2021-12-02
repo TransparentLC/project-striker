@@ -1,0 +1,42 @@
+# 随机飞到某个位置，打一堆角度逐渐缩小的自机狙然后撤退的杂鱼
+
+PRESET_ENEMY_C
+SET_HITPOINT 90
+SET_INVINCIBLE 60
+
+MOVE_RELATIVE 0 100 30 LINEAR
+WAIT 30
+MOVE_RELATIVE 0 40 30 EASE_OUT_CUBIC
+WAIT 30
+
+STORE 0 0
+INC 0 @ fztERF9b
+    CALC_DIRECTION 7 %ENEMY_X% %ENEMY_Y% %PLAYER_X% %PLAYER_Y%
+
+    STORE 1 0
+    INC 1 @ yvLH8qv0
+        STORE 2 %VAR_1%
+        MUL 2 -12
+        ADD 2 90
+        JUMP_E %VAR_1% 0 @c5iUIt3W
+        JUMP_E %VAR_1% 2 @c5iUIt3W
+        JUMP_E %VAR_1% 4 @c5iUIt3W
+        JUMP @pynapHes
+        SFX ENEMY_SHOOT_B @ c5iUIt3W
+        SHOOT_MULTIWAY TYPE_A 0 0 1.5 %VAR_7% %VAR_2% 2 @ pynapHes
+        SHOOT TYPE_C 0 0 2.75 %VAR_7%
+        WAIT 10
+    JUMP_L %VAR_1% 6 @yvLH8qv0
+
+    WAIT 30
+JUMP_L %VAR_0% 3 @fztERF9b
+
+RANDOM_INT 0 42 342
+STORE 1 %ENEMY_Y%
+ADD 1 100
+MUL 1 4
+DIV 1 3
+MOVE %VAR_0% -100 %VAR_1% EASE_OUT_CUBIC
+WAIT %VAR_1%
+
+HALT
