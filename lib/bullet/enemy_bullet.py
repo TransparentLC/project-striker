@@ -15,21 +15,22 @@ class EnemyBullet(lib.bullet.Bullet):
         speed: float,
         angle: float,
         size: float,
-        texture: pygame.Surface,
-        update: typing.Callable[[lib.bullet.Bullet], None] = None
+        texture: pygame.Surface
+        # update: typing.Callable[[lib.bullet.Bullet], None] = None
     ) -> None:
         super().__init__(lib.globals.groupEnemyBullet)
         self.position = pygame.Vector2(position)
         self.angle = angle
         self.speedRadius = speed
         self.size = size
-        self.textures = (texture,)
-        self.updateCustom = update
+        # self.textures = (texture,)
+        self.texturesRotated = (pygame.transform.rotate(texture, angle),)
+        # self.updateCustom = update
         self.grazed = False
 
     def update(self, *args, **kwargs) -> None:
-        if self.updateCustom:
-            self.updateCustom(self)
+        # if self.updateCustom:
+        #     self.updateCustom(self)
         super().update(*args, **kwargs)
 
         s: lib.sprite.player.Player = lib.globals.groupPlayer.sprite

@@ -11,8 +11,10 @@ class Hitbox:
 
 class Sprite(pygame.sprite.Sprite):
     textures: typing.Sequence[pygame.Surface]
+    texturesRotated: typing.Optional[typing.Sequence[pygame.Surface]]
     position: pygame.Vector2
     angle: float = 0
+    angleLast: float = None
     frameCounter: int = 0
     interval: int = 1
     speed: pygame.Vector2
@@ -24,7 +26,9 @@ class Sprite(pygame.sprite.Sprite):
 
     def update(self) -> None:
         self.position += self.speed
-        if hasattr(self, 'textures') and self.textures:
+        if hasattr(self, 'texturesRotated') and self.texturesRotated:
+            self.image = self.texturesRotated[(self.frameCounter // self.interval) % len(self.texturesRotated)]
+        elif hasattr(self, 'textures') and self.textures:
             self.image = pygame.transform.rotate(
                 self.textures[(self.frameCounter // self.interval) % len(self.textures)],
                 self.angle
