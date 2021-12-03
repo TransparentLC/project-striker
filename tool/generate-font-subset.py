@@ -2,17 +2,13 @@ import fontTools.subset
 import fontTools.ttLib
 import glob
 import os
+import sys
 import string
 
-os.chdir(os.path.dirname(os.path.realpath(__file__)))
-
-# Download from:
-# https://mirrors.cloud.tencent.com/adobe-fonts/source-han-serif/OTF/SimplifiedChinese/SourceHanSerifSC-Medium.otf
-fontPath = '../.font/SourceHanSerifSC-Medium.otf'
-fontSubsetPath = '../font/SourceHanSerifSC-Medium-Subset.otf'
+globPath, fontPath, fontSubsetPath = sys.argv[1:]
 
 charset = set(string.printable)
-for file in glob.glob('../**/*.py', recursive=True):
+for file in glob.glob(globPath, recursive=True):
     with open(file, 'r', encoding='utf-8') as f:
         print('Collecting:', file)
         charset.update(f.read())

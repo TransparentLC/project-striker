@@ -136,5 +136,5 @@ dmypy.json
 cython_debug/
 
 psd/
-font/
 .font/
+font/SourceHanSerifSC-Medium-Subset.otf

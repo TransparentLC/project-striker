@@ -40,7 +40,7 @@ jobs:
       - name: Generate font subset
         run: |
           mkdir font
-          python tool/generate-font-subset.py
+          python tool/generate-font-subset.py lib/**/*.py .font/SourceHanSerifSC-Medium.otf font/SourceHanSerifSC-Medium-Subset.otf
       - name: Setup UPX
         run: choco install upx --no-progress
       - name: Set vars
