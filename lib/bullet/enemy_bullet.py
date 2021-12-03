@@ -1,8 +1,8 @@
 import pygame
 import random
-import typing
 
 import lib.bullet
+import lib.constants
 import lib.globals
 import lib.sprite.explosion
 import lib.sprite.player
@@ -42,7 +42,7 @@ class EnemyBullet(lib.bullet.Bullet):
                         s.explode()
                     self.explode()
                     break
-                elif distance < 10 and not self.grazed:
+                elif distance < lib.constants.GRAZE_RANGE and not self.grazed:
                     self.grazed = True
                     lib.globals.grazeCount += 1
                     lib.globals.score += len(lib.globals.groupEnemyBullet) // 5

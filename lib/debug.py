@@ -50,7 +50,7 @@ def hitboxDisplay():
             lib.globals.stgSurface,
             lib.constants.DEBUG_HITBOX,
             h.offset,
-            h.size + 10,
+            h.size + lib.constants.GRAZE_RANGE,
             1
         )
 
