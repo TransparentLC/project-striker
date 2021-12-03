@@ -38,7 +38,7 @@ jobs:
           mkdir .font
           iwr https://mirrors.cloud.tencent.com/adobe-fonts/source-han-serif/OTF/SimplifiedChinese/SourceHanSerifSC-Medium.otf -OutFile .font/SourceHanSerifSC-Medium.otf
       - name: Generate font subset
-        run: python tool/generate-font-subset.py lib/**/*.py .font/SourceHanSerifSC-Medium.otf font/SourceHanSerifSC-Medium-Subset.otf
+        run: python tool/generate-font-subset.py **/*.py .font/SourceHanSerifSC-Medium.otf font/SourceHanSerifSC-Medium-Subset.otf
       - name: Setup UPX
         run: choco install upx --no-progress
       - name: Set vars

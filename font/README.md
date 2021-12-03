@@ -10,4 +10,4 @@
 * https://mirrors.sustech.edu.cn/adobe-fonts/source-han-serif/OTF/SimplifiedChinese/SourceHanSerifSC-Medium.otf
 * （其他 Adobe 开源字体的镜像）
 
-然后运行 `tool/generate-font-subset.py lib/**/*.py /path/to/SourceHanSerifSC-Medium.otf font/SourceHanSerifSC-Medium-Subset.otf`，即可在这里生成子集化后的字体文件 `SourceHanSerifSC-Medium-Subset.otf`。
+然后在项目根目录运行 `tool/generate-font-subset.py **/*.py /path/to/SourceHanSerifSC-Medium.otf font/SourceHanSerifSC-Medium-Subset.otf`，即可在这里生成子集化后的字体文件 `SourceHanSerifSC-Medium-Subset.otf`。
