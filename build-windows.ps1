@@ -17,7 +17,7 @@ Set-Content 'build-info.txt' (($commitHash, $buildTime) -join "`n") -NoNewline
 
 python -O -m PyInstaller `
     --name striker `
-    --icon NONE `
+    --icon icon.ico `
     --onefile `
     --noconsole `
     --clean `

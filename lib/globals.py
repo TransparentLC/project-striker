@@ -3,9 +3,12 @@ import pygame
 import pygame.locals
 import typing
 
+import lib.constants
 import lib.script_engine.stage
 import lib.scene
 
+pygame.display.set_icon(pygame.image.load('assets/icon.png'))
+pygame.display.set_caption(lib.constants.TITLE)
 screen = pygame.display.set_mode((640, 480), pygame.locals.HWSURFACE | pygame.locals.DOUBLEBUF | pygame.locals.SCALED)
 # screen = pygame.display.set_mode((640, 480), pygame.locals.HWSURFACE | pygame.locals.DOUBLEBUF)
 clock = pygame.time.Clock()

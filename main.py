@@ -29,7 +29,6 @@ import lib.result_screen
 import lib.utils
 
 if __name__ == '__main__':
-    pygame.display.set_caption(lib.constants.TITLE)
     lib.sound.playBgm('TITLE')
 
     player = lib.sprite.player.Player()
