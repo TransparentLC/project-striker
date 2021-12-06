@@ -8,10 +8,10 @@ import lib.sound
 fontLargeRenderer = lib.font.FontRenderer(lib.font.FONT_LARGE, (255, 255, 255))
 
 commentText = tuple(fontLargeRenderer.render(x) for x in (
-    '满身疮痍。\n以通关为目标继续努力吧！',
+    '满身疮痍……\n以通关为目标继续努力吧！',
     '完全通关了呢！真了不起！',
     '以No Miss的结果完美通关了！\n很不容易呢！不中弹很困难吧？',
-    'No Miss No Hyper通关了！\n厉害啊……\n去尝试挑战C○VE的作品吧！',
+    'No Miss No Hyper通关了！\n厉害啊……\n你真的没有使用秘籍吗？',
 ))
 
 def update():

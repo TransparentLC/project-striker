@@ -1,0 +1,33 @@
+# 打一堆拖尾自机狙的大型机
+
+PRESET_ENEMY_A
+SET_HITPOINT 640
+SET_INVINCIBLE 120
+
+MOVE_RELATIVE 0 120 120 EASE_OUT_CUBIC
+WAIT 120
+
+STORE 0 0
+    STORE 1 0 @ mVDT4jgE
+        STORE 2 %VAR_1% @ u1qn9JxG
+        MOD 2 3
+        JUMP_NE %VAR_2% 0 @4uw6mv0p
+        JUMP @sDKIatR4
+        SFX ENEMY_SHOOT_D @ 4uw6mv0p
+        STORE 2 %VAR_1% @ sDKIatR4
+        MUL 2 .25
+        ADD 2 2.5
+        SHOOT_AIMING TYPE_C -11 -9 %VAR_2% 0
+        SHOOT_AIMING TYPE_C 11 -9 %VAR_2% 0
+        SHOOT_AIMING TYPE_C 0 -17 %VAR_2% 0
+        WAIT 5
+    INC 1
+    JUMP_L %VAR_1% 9 @u1qn9JxG
+    WAIT 15
+INC 0
+JUMP_L %VAR_0% 9 @mVDT4jgE
+
+MOVE_RELATIVE 0 -180 210 EASE_OUT_CUBIC
+WAIT 210
+
+HALT

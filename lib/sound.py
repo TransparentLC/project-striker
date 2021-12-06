@@ -58,8 +58,10 @@ bgm: dict[str, tuple[str, str]] = {
     'STAGE1': ('sound/bgm/stage1-a.ogg', 'sound/bgm/stage1-b.ogg'),
     'STAGE2': ('sound/bgm/stage2-a.ogg', 'sound/bgm/stage2-b.ogg'),
     'STAGE3': ('sound/bgm/stage3-a.ogg', 'sound/bgm/stage3-b.ogg'),
+    'STAGE4': ('sound/bgm/stage4-a.ogg', 'sound/bgm/stage4-b.ogg'),
     'BOSS1': ('sound/bgm/boss1-a.ogg', 'sound/bgm/boss1-b.ogg'),
     'BOSS2': ('sound/bgm/boss2-a.ogg', 'sound/bgm/boss2-b.ogg'),
+    'BOSS3': ('sound/bgm/boss3-a.ogg', 'sound/bgm/boss3-b.ogg'),
 }
 
 def playBgm(bgmName: str):

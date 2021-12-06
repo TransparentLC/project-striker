@@ -79,7 +79,7 @@ class PlayerBullet(lib.bullet.Bullet):
             for b in lib.globals.groupEnemyBullet:
                 b: lib.bullet.enemy_bullet.EnemyBullet
                 if self.position.distance_squared_to(b.position) < self.size ** 2:
-                    lib.globals.score += len(lib.globals.groupEnemyBullet)
+                    lib.globals.score += 5 + len(lib.globals.groupEnemyBullet) // 20
                     self.bulletCancelRemain -= 1
                     b.explode()
                     if not self.bulletCancelRemain:

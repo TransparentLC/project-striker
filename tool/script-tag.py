@@ -14,5 +14,4 @@ while True:
         f'Reference: @{tag}',
         '',
     )))
-    if input('Press enter to generate another tag. ').strip() != '':
-        break
+    input('Press enter to generate another tag. ')

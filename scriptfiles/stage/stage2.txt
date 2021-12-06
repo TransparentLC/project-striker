@@ -1,3 +1,5 @@
+# LOAD_STAGE scriptfiles/stage/stage3.txt
+
 BGM STAGE2
 SET_SCROLL_SPEED 1.5
 WAIT 210
@@ -182,9 +184,6 @@ SPAWN 192 -64 0 scriptfiles/enemy/stage2/boss.txt
 WAIT 60 @ c8yUyzCF
 JUMP_BOSS @c8yUyzCF
 WAIT 420
-# LOAD_STAGE scriptfiles/stage/stage3.txt
-
-SET_CLEARED
-SHOW_RESULT
+LOAD_STAGE scriptfiles/stage/stage3.txt
 
 HALT
