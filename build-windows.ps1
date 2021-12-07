@@ -25,7 +25,7 @@ python -O -m PyInstaller `
     --upx-dir $upxDir `
     --key $key `
     --add-data "assets;assets" `
-    --add-data "font/SourceHanSerifSC-Medium-Subset.otf;font" `
+    --add-data "font/SourceHanSerifSC-Medium.otf;font" `
     --add-data "scriptfiles;scriptfiles" `
     --add-data "sound;sound" `
     --add-data "build-info.txt;." `
