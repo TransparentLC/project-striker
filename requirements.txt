@@ -1,5 +1,1 @@
-fonttools == 4.*
 pygame == 2.*
-pyinstaller == 4.*
-# tinyaes == 1.*
-tinyaes == 1.0.3rc1

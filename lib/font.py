@@ -1,6 +1,6 @@
 import pygame
 
-FONT_FILE = 'font/SourceHanSerifSC-Medium-Subset.otf'
+FONT_FILE = 'font/SourceHanSerifSC-Medium.otf'
 FONT_SMALL = pygame.font.Font(FONT_FILE, 8)
 FONT_NORMAL = pygame.font.Font(FONT_FILE, 12)
 FONT_LARGE = pygame.font.Font(FONT_FILE, 16)

@@ -137,4 +137,4 @@ cython_debug/
 
 psd/
 .font/
-font/SourceHanSerifSC-Medium-Subset.otf
+font/SourceHanSerifSC-Medium.otf
