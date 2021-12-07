@@ -26,7 +26,7 @@ class DebrisA(Debris):
             spreadSpeed,
             rotateSpeed,
         )
-        self.textures = tuple(pygame.image.load(f'assets/debris-a-{i}.png').convert_alpha() for i in range(8))
+        self.textures = tuple(pygame.image.load(f'assets/debris-a-{i}.webp').convert_alpha() for i in range(8))
 
 class DebrisB(Debris):
     def __init__(self, position: pygame.Vector2, spreadSpeed: float, rotateSpeed: float) -> None:
@@ -35,4 +35,4 @@ class DebrisB(Debris):
             spreadSpeed,
             rotateSpeed,
         )
-        self.textures = tuple(pygame.image.load(f'assets/debris-b-{i}.png').convert_alpha() for i in range(8))
+        self.textures = tuple(pygame.image.load(f'assets/debris-b-{i}.webp').convert_alpha() for i in range(8))

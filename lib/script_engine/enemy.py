@@ -87,15 +87,15 @@ class Opcode(enum.IntEnum):
     # = enum.auto()
 
 EnemyTexturesTable = {
-    'ENEMY_A': tuple(pygame.image.load(f'assets/enemy-a-{i}.png').convert_alpha() for i in range(2)),
-    'ENEMY_B': tuple(pygame.image.load(f'assets/enemy-b-{i}.png').convert_alpha() for i in range(2)),
-    'ENEMY_C': tuple(pygame.image.load(f'assets/enemy-c-{i}.png').convert_alpha() for i in range(2)),
-    'ENEMY_D': tuple(pygame.image.load(f'assets/enemy-d-{i}.png').convert_alpha() for i in range(2)),
-    'ENEMY_E': tuple(pygame.image.load(f'assets/enemy-e-{i}.png').convert_alpha() for i in range(2)),
-    'BOSS_A': tuple(pygame.image.load(f'assets/boss-a-{i}.png').convert_alpha() for i in range(2)),
-    'BOSS_B': tuple(pygame.image.load(f'assets/boss-b-{i}.png').convert_alpha() for i in range(2)),
-    'BOSS_C': tuple(pygame.image.load(f'assets/boss-c-{i}.png').convert_alpha() for i in range(2)),
-    'BOSS_D': tuple(pygame.image.load(f'assets/boss-d-{i}.png').convert_alpha() for i in range(2)),
+    'ENEMY_A': tuple(pygame.image.load(f'assets/enemy-a-{i}.webp').convert_alpha() for i in range(2)),
+    'ENEMY_B': tuple(pygame.image.load(f'assets/enemy-b-{i}.webp').convert_alpha() for i in range(2)),
+    'ENEMY_C': tuple(pygame.image.load(f'assets/enemy-c-{i}.webp').convert_alpha() for i in range(2)),
+    'ENEMY_D': tuple(pygame.image.load(f'assets/enemy-d-{i}.webp').convert_alpha() for i in range(2)),
+    'ENEMY_E': tuple(pygame.image.load(f'assets/enemy-e-{i}.webp').convert_alpha() for i in range(2)),
+    'BOSS_A': tuple(pygame.image.load(f'assets/boss-a-{i}.webp').convert_alpha() for i in range(2)),
+    'BOSS_B': tuple(pygame.image.load(f'assets/boss-b-{i}.webp').convert_alpha() for i in range(2)),
+    'BOSS_C': tuple(pygame.image.load(f'assets/boss-c-{i}.webp').convert_alpha() for i in range(2)),
+    'BOSS_D': tuple(pygame.image.load(f'assets/boss-d-{i}.webp').convert_alpha() for i in range(2)),
 }
 
 MoveInterpolationFunctionTable = {
@@ -122,11 +122,11 @@ DebrisTable = {
 }
 
 BulletTextureTable = {
-    'TYPE_A': pygame.image.load('assets/enemy-bullet-a.png').convert_alpha(),
-    'TYPE_B': pygame.image.load('assets/enemy-bullet-b.png').convert_alpha(),
-    'TYPE_C': pygame.image.load('assets/enemy-bullet-c.png').convert_alpha(),
-    'TYPE_D': pygame.image.load('assets/enemy-bullet-d.png').convert_alpha(),
-    'TYPE_E': pygame.image.load('assets/enemy-bullet-e.png').convert_alpha(),
+    'TYPE_A': pygame.image.load('assets/enemy-bullet-a.webp').convert_alpha(),
+    'TYPE_B': pygame.image.load('assets/enemy-bullet-b.webp').convert_alpha(),
+    'TYPE_C': pygame.image.load('assets/enemy-bullet-c.webp').convert_alpha(),
+    'TYPE_D': pygame.image.load('assets/enemy-bullet-d.webp').convert_alpha(),
+    'TYPE_E': pygame.image.load('assets/enemy-bullet-e.webp').convert_alpha(),
 }
 
 BulletSizeTable = {

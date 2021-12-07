@@ -9,7 +9,7 @@ import lib.script_engine.stage
 import lib.sound
 import lib.sprite.option
 
-MENU = pygame.image.load('assets/ui-title-menu.png').convert_alpha()
+MENU = pygame.image.load('assets/ui-title-menu.webp').convert_alpha()
 MENU_ITEMS = tuple(
     (
         MENU.subsurface((0, x * 32, 128, 32)),
@@ -18,7 +18,7 @@ MENU_ITEMS = tuple(
     for x in range(3)
 )
 
-OPTION = pygame.image.load('assets/ui-title-select.png').convert_alpha()
+OPTION = pygame.image.load('assets/ui-title-select.webp').convert_alpha()
 OPTION_ITEMS = tuple(OPTION.subsurface((0, x * 128, 384, 128)) for x in range(3))
 
 with open('build-info.txt', 'r', encoding='utf-8') as f:
@@ -39,15 +39,15 @@ manualPages = tuple(fontNormalRenderer.render(x.strip()) for x in f'''
 # 基本的介绍
 
 这是一个简单（？）的弹幕射击游戏。目的是回避弹幕并击破敌机，在每
-一关的最后有一个比较强的ＢＯＳＳ，击破后就算是过关了。
-
-一共有四关，最后一关是比较长的ＢＯＳＳ战。没有二周目之类的设定。
+一关的最后有一个比较强的ＢＯＳＳ，击破后就算是过关了。一共四关，
+最后一关是比较长的ＢＯＳＳ战。没有二周目之类的设定，也没有什么剧
+情，音乐和图片用的也都是免费素材而已。
 
 难度不是很高，虽然目标是控制到东方Ｐｒｏｊｅｃｔ系列的Ｅａｓｙ到
 Ｎｏｒｍａｌ难度之间，不过平衡性和游戏性还是可能会很糟。因为是做
 着玩的所以还是不要在意这些了，我也不是专业做游戏的嘛（逃
 
-没有什么剧情，音乐和图片用的也都是免费素材而已。
+（按右方向键查看下一页）
 ----------------
 # 操作方法
 
@@ -57,6 +57,8 @@ manualPages = tuple(fontNormalRenderer.render(x.strip()) for x in f'''
 Ｘ键　　　　　　开启火力强化模式（后述）
 Ｐ键　　　　　　暂停游戏，再按一下就会恢复
 Ｅｓｃ键　　　　返回标题画面
+
+在标题画面按左右方向键，可以选择自机或在说明书中翻页。
 ----------------
 # 分数系统和奖励
 

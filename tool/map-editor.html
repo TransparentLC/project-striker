@@ -11,7 +11,7 @@
             <div v-for="row in tileData" style="line-height:0">
                 <img
                     v-for="tileId in row"
-                    :src="`../assets/map-${tileId}.png`"
+                    :src="`../assets/map-${tileId}.webp`"
                     :style="{
                         border: '1px solid ' + (tileCurrent === tileId ? 'red' : 'white'),
                     }"
@@ -31,7 +31,7 @@
             }">
                 <img
                     v-for="tile in mapData.length"
-                    :src="`../assets/map-${mapData[tile - 1]}.png`"
+                    :src="`../assets/map-${mapData[tile - 1]}.webp`"
                     :style="{
                         border: mapGrid ? '1px solid white' : null,
                     }"
