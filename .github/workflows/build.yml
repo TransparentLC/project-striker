@@ -20,6 +20,7 @@ jobs:
         os:
           - windows-latest
           - ubuntu-latest
+          # - macos-latest
     steps:
       - uses: actions/checkout@v2
       - name: Setup Python
@@ -49,27 +50,32 @@ jobs:
             choco install upx --no-progress
           elif [ "$RUNNER_OS" == "Linux" ]; then
             sudo apt install upx-ucl
+          elif [ "$RUNNER_OS" == "macOS" ]; then
+            brew install upx
           fi
       - name: Set vars
         id: vars
         run: |
-          echo "::set-output name=commitShort::$(git rev-parse --short HEAD)"
-          echo "::set-output name=buildTime::$(date +%Y%m%d-%H%M%S)"
           if [ "$RUNNER_OS" == "Windows" ]; then
-            echo "::set-output name=ext::.exe"
+            ext=".exe"
           elif [ "$RUNNER_OS" == "Linux" ]; then
-            echo "::set-output name=ext::"
+            ext=""
+          elif [ "$RUNNER_OS" == "macOS" ]; then
+            ext=""
           fi
+          echo "::set-output name=ext::${ext}"
+          echo "::set-output name=executableName::striker-$(date +%Y%m%d-%H%M%S)-$(git rev-parse --short HEAD)-${{ runner.os }}${ext}"
       - name: Build executable
         run: |
           if [ "$RUNNER_OS" == "Windows" ]; then
             export pyiSeparator=";"
           fi
           bash build.sh
-          mv dist/striker${{ steps.vars.outputs.ext }} dist/striker-${{ steps.vars.outputs.buildTime }}-${{ steps.vars.outputs.commitShort }}-${{ matrix.os }}${{ steps.vars.outputs.ext }}
-          openssl sha256 dist/striker-${{ steps.vars.outputs.buildTime }}-${{ steps.vars.outputs.commitShort }}-${{ matrix.os }}${{ steps.vars.outputs.ext }}
+          mv dist/striker${{ steps.vars.outputs.ext }} dist/${{ steps.vars.outputs.executableName }}
+          ls -l dist
+          openssl sha256 dist/${{ steps.vars.outputs.executableName }}
       - name: Upload result
         uses: actions/upload-artifact@v2
         with:
-          name: striker-${{ matrix.os }}
-          path: dist/striker-${{ steps.vars.outputs.buildTime }}-${{ steps.vars.outputs.commitShort }}-${{ matrix.os }}${{ steps.vars.outputs.ext }}
+          name: striker-${{ runner.os }}
+          path: dist/${{ steps.vars.outputs.executableName }}

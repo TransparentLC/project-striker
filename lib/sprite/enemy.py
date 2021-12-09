@@ -69,7 +69,6 @@ class Enemy(lib.sprite.Sprite):
             return
         if self.outOfBoundary:
             self.kill()
-            return
 
         s: lib.sprite.player.Player = lib.globals.groupPlayer.sprite
         if not s.invincibleRemain:
@@ -79,6 +78,10 @@ class Enemy(lib.sprite.Sprite):
                         s.explode()
 
         if self.scriptEngine:
+            if self.scriptEngine.pointerRangeBreak and self.hitpoint < lib.globals.bossHitpointRangeMin:
+                self.scriptEngine.pointer = self.scriptEngine.pointerRangeBreak
+                self.scriptEngine.pointerRangeBreak = None
+                self.scriptEngine.wait = 0
             self.scriptEngine.update()
 
         super().update()

@@ -27,6 +27,7 @@ class Opcode(enum.IntEnum):
     JUMP_G = enum.auto()
     JUMP_GE = enum.auto()
     REGISTER_DEATH = enum.auto()
+    REGISTER_BOSSBREAK = enum.auto()
 
     STORE = enum.auto()
     RANDOM_INT = enum.auto()
@@ -63,12 +64,11 @@ class Opcode(enum.IntEnum):
     MOVE = enum.auto()
     MOVE_RELATIVE = enum.auto()
     MOVE_RANDOM = enum.auto()
+    MOVE_CLEAR = enum.auto()
 
     SHOOT = enum.auto()
-    SHOOT_AHEAD = enum.auto()
     SHOOT_AIMING = enum.auto()
     SHOOT_MULTIWAY = enum.auto()
-    SHOOT_AHEAD_MULTIWAY = enum.auto()
     SHOOT_AIMING_MULTIWAY = enum.auto()
 
     SFX = enum.auto()
@@ -127,6 +127,11 @@ BulletTextureTable = {
     'TYPE_C': pygame.image.load('assets/enemy-bullet-c.webp').convert_alpha(),
     'TYPE_D': pygame.image.load('assets/enemy-bullet-d.webp').convert_alpha(),
     'TYPE_E': pygame.image.load('assets/enemy-bullet-e.webp').convert_alpha(),
+    'TYPE_A_2X': pygame.image.load('assets/enemy-bullet-a-2x.webp').convert_alpha(),
+    'TYPE_B_2X': pygame.image.load('assets/enemy-bullet-b-2x.webp').convert_alpha(),
+    'TYPE_C_2X': pygame.image.load('assets/enemy-bullet-c-2x.webp').convert_alpha(),
+    'TYPE_D_2X': pygame.image.load('assets/enemy-bullet-d-2x.webp').convert_alpha(),
+    'TYPE_E_2X': pygame.image.load('assets/enemy-bullet-e-2x.webp').convert_alpha(),
 }
 
 BulletSizeTable = {
@@ -135,6 +140,11 @@ BulletSizeTable = {
     'TYPE_C': 2.5,
     'TYPE_D': 3,
     'TYPE_E': 5,
+    'TYPE_A_2X': 4,
+    'TYPE_B_2X': 8,
+    'TYPE_C_2X': 5,
+    'TYPE_D_2X': 6,
+    'TYPE_E_2X': 10,
 }
 
 class Engine:
@@ -187,6 +197,7 @@ class Engine:
         self.context = context
         self.pointer = 0
         self.pointerDeath: int = None
+        self.pointerRangeBreak: int = None
         self.wait = 0
         self.halted = False
         self.movementTask: tuple[
@@ -261,97 +272,83 @@ class Engine:
 
     def executeOpcode(self, opcode: Opcode, params: typing.Sequence[typing.Union[int, float, str]]):
         if opcode == Opcode.NOOP:
-            # 什么也不做
             pass
         elif opcode == Opcode.DEBUGGER:
-            # 便于下断点，或者只是输出一个debugger而已
             print('Debugger triggered from line', self.pointer)
         elif opcode == Opcode.WAIT:
-            # 让脚本阻塞暂停一段时间，时间都是以帧表示的，60f=1s
             params: tuple[int] = params
             waitTime, = params
 
             self.wait = waitTime
         elif opcode == Opcode.HALT:
-            # 停止执行脚本
-
             self.halted = True
         elif opcode == Opcode.JUMP:
-            # 跳转到这行指令往后offset行的位置上
             params: tuple[int] = params
             offset, = params
 
             self.pointer += offset - 1
         elif opcode == Opcode.JUMP_E:
-            # 相等时才跳转
             params: tuple[typing.Union[int, float], typing.Union[int, float], int] = params
             a, b, offset = params
 
             if a == b:
                 self.pointer += offset - 1
         elif opcode == Opcode.JUMP_NE:
-            # 不等时才跳转
             params: tuple[typing.Union[int, float], typing.Union[int, float], int] = params
             a, b, offset = params
 
             if a != b:
                 self.pointer += offset - 1
         elif opcode == Opcode.JUMP_L:
-            # 小于时才跳转
             params: tuple[typing.Union[int, float], typing.Union[int, float], int] = params
             a, b, offset = params
 
             if a < b:
                 self.pointer += offset - 1
         elif opcode == Opcode.JUMP_LE:
-            # 小于等于时才跳转
             params: tuple[typing.Union[int, float], typing.Union[int, float], int] = params
             a, b, offset = params
 
             if a <= b:
                 self.pointer += offset - 1
         elif opcode == Opcode.JUMP_G:
-            # 大于时才跳转
             params: tuple[typing.Union[int, float], typing.Union[int, float], int] = params
             a, b, offset = params
 
             if a > b:
                 self.pointer += offset - 1
         elif opcode == Opcode.JUMP_GE:
-            # 大于等于时才跳转
             params: tuple[typing.Union[int, float], typing.Union[int, float], int] = params
             a, b, offset = params
 
             if a >= b:
                 self.pointer += offset - 1
         elif opcode == Opcode.REGISTER_DEATH:
-            # 设定在敌机被击破时跳转到某一条指令执行（和上面的类似，指令的参数是相对于这一条的偏移）
-            # 不设置的话就不会执行
-            # 可以设置死尸弹或者击破消弹之类的
             params: tuple[int] = params
             offset, = params
 
             self.pointerDeath = self.pointer + offset - 1
+        elif opcode == Opcode.REGISTER_BOSSBREAK:
+            params: tuple[int] = params
+            offset, = params
+
+            self.pointerRangeBreak = self.pointer + offset - 1
         elif opcode == Opcode.STORE:
-            # 在指定位置（0-7）保存数值
             params: tuple[int, typing.Union[int, float]] = params
             address, value = params
 
             self.vars[address] = value
         elif opcode == Opcode.RANDOM_INT:
-            # 在指定位置保存指定范围的随机整数
             params: tuple[int, int, int] = params
             address, minValue, maxValue = params
 
             self.vars[address] = random.randint(minValue, maxValue)
         elif opcode == Opcode.RANDOM_FLOAT:
-            # 在指定位置保存指定范围的随机浮点数
             params: tuple[int, float, float] = params
             address, minValue, maxValue = params
 
             self.vars[address] = minValue + (maxValue - minValue) * random.random()
         elif opcode == Opcode.CALC_OFFSET:
-            # 将相对于敌机的偏移转换绝对坐标，保存在指定位置
             params: tuple[int, float, float] = params
             address, x, y = params
 
@@ -359,105 +356,86 @@ class Engine:
             self.vars[address] = position.x
             self.vars[address + 1] = position.y
         elif opcode == Opcode.CALC_DIRECTION:
-            # 计算从(x1, y1)指向(x2, y2)的角度，保存在指定位置
-            # 例如计算自机狙的角度就是：
-            # CALC_DIRECTION 0 %ENEMY_X% %ENEMY_Y% %PLAYER_X% %PLAYER_Y%
             params: tuple[int, float, float, float, float] = params
             address, x1, y1, x2, y2 = params
 
             self.vars[address] = -pygame.Vector2().angle_to(pygame.Vector2(x2 - x1, y2 - y1)) - 90
         elif opcode == Opcode.INC:
-            # 变量值+1
             params: tuple[int] = params
             address, = params
 
             self.vars[address] += 1
         elif opcode == Opcode.DEC:
-            # 变量值-1
             params: tuple[int] = params
             address, = params
 
             self.vars[address] -= 1
         elif opcode == Opcode.ADD:
-            # 变量值相加
             params: tuple[int, typing.Union[int, float]] = params
             address, value = params
 
             self.vars[address] += value
         elif opcode == Opcode.SUB:
-            # 变量值相减
             params: tuple[int, typing.Union[int, float]] = params
             address, value = params
 
             self.vars[address] -= value
         elif opcode == Opcode.MUL:
-            # 变量值相乘
             params: tuple[int, typing.Union[int, float]] = params
             address, value = params
 
             self.vars[address] *= value
         elif opcode == Opcode.DIV:
-            # 变量值相除（整数），返回商
             params: tuple[int, int] = params
             address, value = params
 
             self.vars[address] = int(self.vars[address]) // int(value)
         elif opcode == Opcode.MOD:
-            # 变量值相除（整数），返回余数
             params: tuple[int, int] = params
             address, value = params
 
             self.vars[address] = int(self.vars[address]) % int(value)
         elif opcode == Opcode.FDIV:
-            # 变量值相除（浮点）
             params: tuple[int, typing.Union[int, float]] = params
             address, value = params
 
             self.vars[address] /= value
         elif opcode == Opcode.SET_POSITION:
-            # 设置位置（绝对值）
             params: tuple[float, float] = params
             x, y = params
 
             self.context.position.update(x, y)
         elif opcode == Opcode.SET_POSITION_RELATIVE:
-            # 设置位置（相当于现在的位置）
             params: tuple[float, float] = params
             x, y = params
 
             self.context.position += pygame.Vector2(x, y)
         elif opcode == Opcode.SET_TEXTURE:
-            # 设置贴图
             params: tuple[str] = params
             textures, = params
 
             self.context.textures = EnemyTexturesTable[textures]
         elif opcode == Opcode.SET_HITPOINT:
-            # 设置血量
             params: tuple[int] = params
             hitpoint, = params
 
             self.context.hitpoint = hitpoint
         elif opcode == Opcode.SET_SCORE:
-            # 设置击破后的分数
             params: tuple[int] = params
             score, = params
 
             self.context.score = score
         elif opcode == Opcode.SET_INVINCIBLE:
-            # 设置无敌时间
             params: tuple[int] = params
             invincibleRemain, = params
 
             self.context.invincibleRemain = invincibleRemain
         elif opcode == Opcode.SET_EXPLOSION:
-            # 设置爆炸效果
             params: tuple[str] = params
             explosion, = params
 
             self.context.explosion = ExplosionTable[explosion]
         elif opcode == Opcode.SET_DEBRIS:
-            # 添加爆炸后产生的碎片，坐标相对于中心
             params: tuple[str, float, float, float, float, float, float, int] = params
             debris, x, y, spreadSpeedMin, spreadSpeedMax, rotateSpeedMin, rotateSpeedMax, count = params
 
@@ -469,56 +447,44 @@ class Engine:
                     rotateSpeedMin, rotateSpeedMax,
                 ))
         elif opcode == Opcode.SET_HITBOX:
-            # 添加碰撞箱（中弹和体术判定，实际是个圆），坐标相对于中心
             params: tuple[float, float, float] = params
             x, y, r = params
 
             self.context.hitbox.append(lib.sprite.Hitbox(pygame.Vector2(x, y), r))
         elif opcode == Opcode.SET_SPEED:
-            # 设置速度，之后会按照这个速度和指定角度移动
-            # 设置了MOVE以后速度就会被清零
             params: tuple[float] = params
             speed, = params
 
             self.context.speed.update(pygame.Vector2(0, -speed).rotate(-self.context.angle))
         elif opcode == Opcode.SET_ANGLE:
-            # 设置角度，正上方为0，逆时针方向
             params: tuple[float] = params
             angle, = params
 
             self.context.angle = angle
         elif opcode == Opcode.SET_ANGLE_RELATIVE:
-            # 设置角度，相对于原始值
             params: tuple[float] = params
             angle, = params
 
             self.context.angle += angle
         elif opcode == Opcode.SET_EXPLODE_SFX:
-            # 设置击破后的音效
             params: tuple[str] = params
             sfxName, = params
 
             self.context.explodeSfx = lib.sound.sfx[sfxName]
         elif opcode == Opcode.SET_BOSS:
-            # 设置这个敌机为BOSS，可以读取血量显示在右侧
-
             lib.globals.groupBoss.sprite = self.context
         elif opcode == Opcode.SET_BOSS_REMAIN:
-            # 设置BOSS还有几个攻击形态，只是在右侧展示而已
             params: tuple[int] = params
             remain, = params
 
             lib.globals.bossRemain = remain
         elif opcode == Opcode.SET_BOSS_HPRANGE:
-            # 设置显示的BOSS血量范围，例如设置成2000-3000且BOSS血量为2400则显示为400/1000
             params: tuple[int, int] = params
             hpMin, hpMax = params
 
             lib.globals.bossHitpointRangeMin = hpMin
             lib.globals.bossHitpointRangeMax = hpMax
         elif opcode == Opcode.MOVE:
-            # 在一段时间内以指定的缓动函数直线移动到某坐标
-            # 这个移动过程是异步的，因此如果需要等待移动完成再执行指令的话需要使用WAIT
             params: tuple[float, float, int, str] = params
             x, y, time, mode = params
 
@@ -529,7 +495,6 @@ class Engine:
                 MoveInterpolationFunctionTable[mode],
             ))
         elif opcode == Opcode.MOVE_RELATIVE:
-            # 同上，但是坐标改成了相对的
             params: tuple[float, float, int, str] = params
             x, y, time, mode = params
 
@@ -540,7 +505,6 @@ class Engine:
                 MoveInterpolationFunctionTable[mode],
             ))
         elif opcode == Opcode.MOVE_RANDOM:
-            # 移动到区域中的随机位置
             params: tuple[float, float, float, float, int, str] = params
             x, y, width, height, time, mode = params
 
@@ -550,8 +514,10 @@ class Engine:
                 time,
                 MoveInterpolationFunctionTable[mode],
             ))
+        elif opcode == Opcode.MOVE_CLEAR:
+            self.movementQueue.clear()
+            self.movementTask = None
         elif opcode == Opcode.SHOOT:
-            # 在指定偏移的位置以绝对角度射击
             params: tuple[str, float, float, float, float] = params
             bullet, x, y, speed, angle = params
 
@@ -563,7 +529,6 @@ class Engine:
                 BulletTextureTable[bullet],
             )
         elif opcode == Opcode.SHOOT_MULTIWAY:
-            # 同上，但是可以设置扇形角度和way数了，可以用来发射奇数弹/偶数弹/开花弹
             params: tuple[str, float, float, float, float, float, int] = params
             bullet, x, y, speed, angle, fanSize, ways = params
 
@@ -576,34 +541,7 @@ class Engine:
                     BulletSizeTable[bullet],
                     BulletTextureTable[bullet],
                 )
-        elif opcode == Opcode.SHOOT_AHEAD:
-            # 在指定偏移的位置以相对于敌机自己的角度射击
-            params: tuple[str, float, float, float, float] = params
-            bullet, x, y, speed, angle = params
-
-            lib.bullet.enemy_bullet.EnemyBullet(
-                self.context.position + pygame.Vector2(x, y).rotate(-self.context.angle),
-                speed,
-                self.context.angle + angle,
-                BulletSizeTable[bullet],
-                BulletTextureTable[bullet],
-            )
-        elif opcode == Opcode.SHOOT_AHEAD_MULTIWAY:
-            # 同上
-            params: tuple[str, float, float, float, float, float, int] = params
-            bullet, x, y, speed, angle, fanSize, ways = params
-
-            for i in range(ways):
-                fanAngle = (i - (ways - 1) / 2) / (ways - 1) * fanSize
-                lib.bullet.enemy_bullet.EnemyBullet(
-                    self.context.position + pygame.Vector2(x, y).rotate(-self.context.angle),
-                    speed,
-                    fanAngle + self.context.angle + angle,
-                    BulletSizeTable[bullet],
-                    BulletTextureTable[bullet],
-                )
         elif opcode == Opcode.SHOOT_AIMING:
-            # 在指定偏移的位置以相对瞄准自机的角度射击
             params: tuple[str, float, float, float, float] = params
             bullet, x, y, speed, angle = params
 
@@ -616,7 +554,6 @@ class Engine:
                 BulletTextureTable[bullet],
             )
         elif opcode == Opcode.SHOOT_AIMING_MULTIWAY:
-            # 同上
             params: tuple[str, float, float, float, float, float, int] = params
             bullet, x, y, speed, angle, fanSize, ways = params
 
@@ -631,36 +568,30 @@ class Engine:
                     BulletTextureTable[bullet],
                 )
         elif opcode == Opcode.SFX:
-            # 播放音效
             params: tuple[str] = params
             sfxName, = params
 
             lib.sound.sfx[sfxName].play()
         elif opcode == Opcode.CLEAR_BULLET:
-            # 消除所有敌弹
             for b in lib.globals.groupEnemyBullet:
                 b: lib.bullet.enemy_bullet.EnemyBullet
                 b.explode()
         elif opcode == Opcode.BONUS_BULLET:
-            # 根据同屏弹量结算一次加分
             bonus = len(lib.globals.groupEnemyBullet) * (50 + lib.globals.grazeCount // 3)
             lib.globals.score += bonus
             lib.globals.messageQueue.append([f'Bonus!        {bonus:8d}', 180])
             lib.sound.sfx['BONUS'].play()
         elif opcode == Opcode.EXTEND_LIFE:
-            # 奖残
             if lib.globals.lifeNum < 8:
                 lib.globals.lifeNum += 1
                 lib.globals.messageQueue.append(['Life Extend!', 180])
                 lib.sound.sfx['EXTEND_LIFE'].play()
         elif opcode == Opcode.EXTEND_HYPER:
-            # 奖hyper
             if lib.globals.hyperNum < 8:
                 lib.globals.hyperNum += 1
                 lib.globals.messageQueue.append(['Hyper Extend!', 180])
                 lib.sound.sfx['EXTEND_HYPER'].play()
         elif opcode == Opcode.PRESET_ENEMY_A:
-            # 大型杂鱼敌机的预设，等效于以下脚本：
             # SET_TEXTURE ENEMY_A
             # SET_EXPLOSION LARGE
             # SET_HITBOX 0 12 10
@@ -690,7 +621,6 @@ class Engine:
             self.context.score = 1000
             self.context.explodeSfx = lib.sound.sfx['EXPLODE_ENEMY_C']
         elif opcode == Opcode.PRESET_ENEMY_B:
-            # 中型杂鱼敌机的预设，对应的脚本略
             self.context.textures = EnemyTexturesTable['ENEMY_B']
             self.context.explosion = ExplosionTable['MEDIUM_A']
             self.context.hitbox = [
@@ -706,7 +636,6 @@ class Engine:
             self.context.score = 500
             self.context.explodeSfx = lib.sound.sfx['EXPLODE_ENEMY_B']
         elif opcode == Opcode.PRESET_ENEMY_C:
-            # 中型杂鱼敌机的预设
             self.context.textures = EnemyTexturesTable['ENEMY_C']
             self.context.explosion = ExplosionTable['MEDIUM_B']
             self.context.hitbox = [
@@ -722,7 +651,6 @@ class Engine:
             self.context.score = 500
             self.context.explodeSfx = lib.sound.sfx['EXPLODE_ENEMY_B']
         elif opcode == Opcode.PRESET_ENEMY_D:
-            # 比较小的中型杂鱼敌机的预设
             self.context.textures = EnemyTexturesTable['ENEMY_D']
             self.context.explosion = ExplosionTable['MEDIUM_B']
             self.context.hitbox = [
@@ -738,7 +666,6 @@ class Engine:
             self.context.score = 200
             self.context.explodeSfx = lib.sound.sfx['EXPLODE_ENEMY_B']
         elif opcode == Opcode.PRESET_ENEMY_E:
-            # 小型杂鱼敌机的预设
             self.context.textures = EnemyTexturesTable['ENEMY_E']
             self.context.explosion = ExplosionTable['SMALL_A']
             self.context.hitbox = [
