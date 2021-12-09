@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ${{ matrix.os }}
+    env:
+      PYTHONIOENCODING: utf-8
     defaults:
       run:
         shell: bash
