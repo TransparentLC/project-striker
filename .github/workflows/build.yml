@@ -47,7 +47,7 @@ jobs:
           if [ "$RUNNER_OS" == "Windows" ]; then
             choco install upx --no-progress
           elif [ "$RUNNER_OS" == "Linux" ]; then
-            apt install upx-ucl
+            sudo apt install upx-ucl
           fi
       - name: Set vars
         id: vars
