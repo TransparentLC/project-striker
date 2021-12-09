@@ -62,6 +62,9 @@ jobs:
           fi
       - name: Build executable
         run: |
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            export pyiSeparator=";"
+          fi
           bash build.sh
           mv dist/striker${{ steps.vars.outputs.ext }} dist/striker-${{ steps.vars.outputs.buildTime }}-${{ steps.vars.outputs.commitShort }}-${{ matrix.os }}${{ steps.vars.outputs.ext }}
           openssl sha256 dist/striker-${{ steps.vars.outputs.buildTime }}-${{ steps.vars.outputs.commitShort }}-${{ matrix.os }}${{ steps.vars.outputs.ext }}
