@@ -8,4 +8,4 @@
 * https://mirrors.sustech.edu.cn/adobe-fonts/source-han-serif/OTF/SimplifiedChinese/SourceHanSerifSC-Medium.otf
 * （其他 Adobe 开源字体的镜像）
 
-打包时使用的的是经过字体子集化处理、只保留了实际使用的字形的文件（可以减小到 300 KB 左右）。如果需要生成这个文件，可以在下载字体到任意位置后在项目根目录运行 `tool/generate-font-subset.py **/*.py /path/to/SourceHanSerifSC-Medium.otf font/SourceHanSerifSC-Medium.otf`。
+打包时使用的的是经过字体子集化处理、只保留了实际使用的字形的文件（可以减小到 300 KB 左右）。如果需要生成这个文件，可以在下载字体到任意位置后在项目根目录运行 `tool/generate-font-subset.py "**/*.py" /path/to/SourceHanSerifSC-Medium.otf font/SourceHanSerifSC-Medium.otf`。
