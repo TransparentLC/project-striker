@@ -11,6 +11,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     env:
       PYTHONIOENCODING: utf-8
+      PYTHONOPTIMIZE: 1
     defaults:
       run:
         shell: bash

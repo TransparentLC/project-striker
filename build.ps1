@@ -12,7 +12,7 @@ try {
 $buildTime = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
 Set-Content 'build-info.txt' (($commitHash, $buildTime) -join "`n") -NoNewline
 
-python -O -m PyInstaller `
+pyinstaller `
     --name striker `
     --icon icon.ico `
     --onefile `
