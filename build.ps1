@@ -4,9 +4,6 @@ $key = -Join (
     ForEach-Object { [Char]$_ }
 )
 
-$upxDir = Split-Path ((Get-Command upx).Source)
-Write-Host 'UPX dir:' $upxdir
-
 try {
     $commitHash = (git rev-parse HEAD)
 } catch {
@@ -22,7 +19,6 @@ python -O -m PyInstaller `
     --noconsole `
     --clean `
     --log-level WARN `
-    --upx-dir $upxDir `
     --key $key `
     --add-data "assets;assets" `
     --add-data "font/SourceHanSerifSC-Medium.otf;font" `

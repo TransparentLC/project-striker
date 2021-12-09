@@ -7,23 +7,24 @@ on:
       - master
 
 jobs:
-  build-windows:
-    runs-on: windows-latest
-    env:
-      PYTHONIOENCODING: utf-8
+  build:
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+    strategy:
+      matrix:
+        os:
+          - windows-latest
+          - ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
           python-version: 3.x
-          architecture: x64
-      - name: Cache pip dependencies
-        uses: actions/cache@v2
-        id: cache-pip
-        with:
-          path: ~\AppData\Local\pip\Cache
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements-build.txt') }}
+          cache: pip
+          cache-dependency-path: requirements-build.txt
       - name: Install pip dependencies
         run: pip install -U -r requirements-build.txt
       - name: Cache font
@@ -36,23 +37,33 @@ jobs:
         if: steps.cache-font.outputs.cache-hit != 'true'
         run: |
           mkdir .font
-          iwr https://mirrors.cloud.tencent.com/adobe-fonts/source-han-serif/OTF/SimplifiedChinese/SourceHanSerifSC-Medium.otf -OutFile .font/SourceHanSerifSC-Medium.otf
+          wget https://mirrors.cloud.tencent.com/adobe-fonts/source-han-serif/OTF/SimplifiedChinese/SourceHanSerifSC-Medium.otf -O .font/SourceHanSerifSC-Medium.otf
       - name: Generate font subset
         run: python tool/generate-font-subset.py **/*.py .font/SourceHanSerifSC-Medium.otf font/SourceHanSerifSC-Medium.otf
       - name: Setup UPX
-        run: choco install upx --no-progress
+        run: |
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            choco install upx --no-progress
+          elif [ "$RUNNER_OS" == "Linux" ]; then
+            apt install upx-ucl
+          fi
       - name: Set vars
         id: vars
         run: |
           echo "::set-output name=commitShort::$(git rev-parse --short HEAD)"
-          echo "::set-output name=buildTime::$(Get-Date -Format 'yyyyMMdd-HHmmss')"
+          echo "::set-output name=buildTime::$(date +%Y%m%d-%H%M%S)"
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            echo "::set-output name=ext::.exe"
+          elif [ "$RUNNER_OS" == "Linux" ]; then
+            echo "::set-output name=ext::"
+          fi
       - name: Build executable
         run: |
-          ./build-windows.ps1
-          mv dist/striker.exe dist/striker-${{ steps.vars.outputs.buildTime }}-${{ steps.vars.outputs.commitShort }}.exe
-          Get-FileHash dist/striker-${{ steps.vars.outputs.buildTime }}-${{ steps.vars.outputs.commitShort }}.exe -Algorithm SHA256
+          bash build.sh
+          mv dist/striker${{ steps.vars.outputs.ext }} dist/striker-${{ steps.vars.outputs.buildTime }}-${{ steps.vars.outputs.commitShort }}-${{ matrix.os }}${{ steps.vars.outputs.ext }}
+          openssl sha256 dist/striker-${{ steps.vars.outputs.buildTime }}-${{ steps.vars.outputs.commitShort }}-${{ matrix.os }}${{ steps.vars.outputs.ext }}
       - name: Upload result
         uses: actions/upload-artifact@v2
         with:
-          name: striker
-          path: dist/striker-${{ steps.vars.outputs.buildTime }}-${{ steps.vars.outputs.commitShort }}.exe
+          name: striker-${{ matrix.os }}
+          path: dist/striker-${{ steps.vars.outputs.buildTime }}-${{ steps.vars.outputs.commitShort }}-${{ matrix.os }}${{ steps.vars.outputs.ext }}
