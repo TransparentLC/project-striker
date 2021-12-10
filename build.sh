@@ -14,6 +14,7 @@ pyiSeparator="${pyiSeparator:-:}"
 
 pyinstaller \
     --name striker \
+    --icon icon.ico \
     --onefile \
     --noconsole \
     --clean \
