@@ -41,7 +41,10 @@ jobs:
         if: steps.cache-font.outputs.cache-hit != 'true'
         run: |
           mkdir .font
-          curl https://mirrors.cloud.tencent.com/adobe-fonts/source-han-serif/OTF/SimplifiedChinese/SourceHanSerifSC-Medium.otf --no-progress-meter --output .font/SourceHanSerifSC-Medium.otf
+          curl \
+            https://mirrors.cloud.tencent.com/adobe-fonts/source-han-serif/OTF/SimplifiedChinese/SourceHanSerifSC-Medium.otf \
+            --no-progress-meter \
+            --output .font/SourceHanSerifSC-Medium.otf
       - name: Generate font subset
         run: python tool/generate-font-subset.py "**/*.py" .font/SourceHanSerifSC-Medium.otf font/SourceHanSerifSC-Medium.otf
       - name: Setup UPX

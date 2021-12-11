@@ -12,6 +12,7 @@
             "console": "integratedTerminal",
             "env": {
                 "PYGAME_HIDE_SUPPORT_PROMPT": "hide",
+                "WINDOWED": "1",
                 "DEBUG_INPUT_DISPLAY": "1",
                 "DEBUG_DISABLE_ENEMY_CACHE": "1",
                 // "DEBUG_DISABLE_BGM": "1",
