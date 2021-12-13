@@ -1,10 +1,256 @@
 BGM STAGE4
 SET_SCROLL_SPEED 1.5
 
+WAIT 360
+
+SPAWN 52 -27 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 71 -30 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 90 -46 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 111 -36 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 133 -35 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 150 -39 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 172 -26 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 194 -23 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 211 -20 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 234 -28 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 251 -22 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 272 -16 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 295 -41 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 315 -11 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 334 -45 0 scriptfiles/enemy/stage4/0.txt
+
+WAIT 315
+
+SPAWN 329 -12 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 310 -12 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 290 -37 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 275 -15 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 251 -25 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 232 -40 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 210 -13 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 191 -43 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 169 -38 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 153 -27 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 129 -19 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 114 -34 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 95 -19 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 73 -11 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 49 -23 0 scriptfiles/enemy/stage4/1.txt
+
+WAIT 300
+
+SPAWN 53 -39 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 71 -41 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 94 -45 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 112 -32 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 132 -19 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 155 -39 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 172 -42 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 190 -36 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 214 -13 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 230 -46 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 249 -16 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 274 -24 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 290 -48 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 310 -13 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 333 -24 0 scriptfiles/enemy/stage4/0.txt
+
+WAIT 270
+
+SPAWN 332 -10 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 309 -24 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 289 -28 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 269 -40 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 255 -10 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 233 -26 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 212 -46 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 194 -16 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 175 -14 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 151 -25 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 133 -16 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 113 -35 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 91 -45 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 69 -30 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 49 -47 0 scriptfiles/enemy/stage4/1.txt
+
+WAIT 300
+
+STORE 0 0
+INC 0 @ l05nfDPV
+    SPAWN 0 0 0 scriptfiles/enemy/stage4/2.txt
+JUMP_L %VAR_0% 5 @l05nfDPV
+WAIT 600
+STORE 0 0
+INC 0 @ mnd0k4Bx
+    SPAWN 0 0 0 scriptfiles/enemy/stage4/2.txt
+JUMP_L %VAR_0% 8 @mnd0k4Bx
+
+STORE 1 0
+INC 1 @ b7MgpOq8
+    WAIT 600
+    STORE 0 0
+    INC 0 @ fkwaEycp
+        SPAWN 0 0 0 scriptfiles/enemy/stage4/2.txt
+    JUMP_L %VAR_0% 8 @fkwaEycp
+    STORE 0 0
+    INC 0 @ 8tFMe1Gl
+        SPAWN 0 0 0 scriptfiles/enemy/stage4/3.txt
+    JUMP_L %VAR_0% 3 @8tFMe1Gl
+JUMP_L %VAR_1% 2 @b7MgpOq8
+
+STORE 1 0
+INC 1 @ MH9GJVQI
+    WAIT 600
+    STORE 0 0
+    INC 0 @ fkwaEycp
+        SPAWN 0 0 0 scriptfiles/enemy/stage4/2.txt
+    JUMP_L %VAR_0% 8 @fkwaEycp
+    STORE 0 0
+    INC 0 @ uKtjOcJC
+        SPAWN 0 0 0 scriptfiles/enemy/stage4/3.txt
+    JUMP_L %VAR_0% 6 @uKtjOcJC
+JUMP_L %VAR_1% 2 @MH9GJVQI
+
+WAIT 720
+
+SPAWN 50 -45 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 71 -39 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 94 -22 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 115 -16 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 131 -31 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 149 -44 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 169 -45 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 193 -43 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 215 -37 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 230 -30 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 249 -29 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 275 -44 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 289 -29 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 312 -44 0 scriptfiles/enemy/stage4/0.txt
+WAIT 5
+SPAWN 333 -19 0 scriptfiles/enemy/stage4/0.txt
+
+WAIT 300
+
+SPAWN 331 -24 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 315 -10 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 291 -22 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 274 -21 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 251 -38 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 232 -31 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 211 -20 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 194 -17 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 172 -37 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 152 -47 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 132 -30 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 112 -32 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 94 -19 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 72 -38 0 scriptfiles/enemy/stage4/1.txt
+WAIT 5
+SPAWN 52 -35 0 scriptfiles/enemy/stage4/1.txt
+
+WAIT 540
+RANDOM_INT 0 92 292
+SPAWN %VAR_0% 458 0 scriptfiles/enemy/stage4/boss.txt
+WAIT 60
+BOSS_WARNING
+WAIT 480
+BGM BOSS3
+
 STORE 0 1.5
 SET_SCROLL_SPEED %VAR_0% @ A8re3K9k
 WAIT 45
 ADD 0 .5
-JUMP_L %VAR_0% 5 @A8re3K9k
+JUMP_L %VAR_0% 8 @A8re3K9k
+
+WAIT 60 @ A0YqbeQ3
+JUMP_BOSS @A0YqbeQ3
+
+WAIT 210
+SET_CLEARED
+WAIT 390
+SHOW_RESULT
 
 HALT

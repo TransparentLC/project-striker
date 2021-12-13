@@ -140,11 +140,11 @@ BulletSizeTable = {
     'TYPE_C': 2.5,
     'TYPE_D': 3,
     'TYPE_E': 5,
-    'TYPE_A_2X': 4,
+    'TYPE_A_2X': 5,
     'TYPE_B_2X': 8,
     'TYPE_C_2X': 5,
     'TYPE_D_2X': 6,
-    'TYPE_E_2X': 10,
+    'TYPE_E_2X': 9,
 }
 
 class Engine:
@@ -274,7 +274,7 @@ class Engine:
         if opcode == Opcode.NOOP:
             pass
         elif opcode == Opcode.DEBUGGER:
-            print('Debugger triggered from line', self.pointer)
+            print('Debugger triggered from line', self.pointer, 'at frame', self.context.frameCounter)
         elif opcode == Opcode.WAIT:
             params: tuple[int] = params
             waitTime, = params

@@ -136,7 +136,7 @@ class Engine:
         if opcode == Opcode.NOOP:
             pass
         elif opcode == Opcode.DEBUGGER:
-            print('Debugger triggered from line', self.pointer)
+            print('Debugger triggered from line', self.pointer, 'at frame', self.context.frameCounter)
         elif opcode == Opcode.WAIT:
             params: tuple[int] = params
             waitTime, = params
