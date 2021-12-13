@@ -152,7 +152,7 @@ if __name__ == '__main__':
                             lib.utils.clamp(
                                 lib.globals.groupBoss.sprite.hitpoint - lib.globals.bossHitpointRangeMin,
                                 0, lib.globals.bossHitpointRangeMax - lib.globals.bossHitpointRangeMin
-                            ) / (lib.globals.bossHitpointRangeMax - lib.globals.bossHitpointRangeMin) * 204,
+                            ) / (lib.globals.bossHitpointRangeMax - lib.globals.bossHitpointRangeMin) * 408,
                             24
                         ),
                     )
