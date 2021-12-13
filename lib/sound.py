@@ -65,7 +65,7 @@ bgm: dict[str, tuple[str, str]] = {
 }
 
 def playBgm(bgmName: str):
-    if os.environ.get('DEBUG_DISABLE_BGM'):
+    if os.environ.get('STRIKER_DEBUG_DISABLE_BGM'):
         return
     bgmHeader, bgmLoop = bgm[bgmName]
     pygame.mixer.music.stop()

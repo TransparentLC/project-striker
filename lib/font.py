@@ -1,9 +1,9 @@
 import pygame
 
 FONT_FILE = 'font/SourceHanSerifSC-Medium.otf'
-FONT_SMALL = pygame.font.Font(FONT_FILE, 8)
-FONT_NORMAL = pygame.font.Font(FONT_FILE, 12)
-FONT_LARGE = pygame.font.Font(FONT_FILE, 16)
+FONT_SMALL = pygame.font.Font(FONT_FILE, 16)
+FONT_NORMAL = pygame.font.Font(FONT_FILE, 24)
+FONT_LARGE = pygame.font.Font(FONT_FILE, 32)
 
 class FontRenderer:
     def __init__(self, font: pygame.font.Font, color: pygame.Color) -> None:

@@ -19,7 +19,7 @@ def inputDisplay():
         pygame.draw.rect(
             lib.globals.screen,
             lib.constants.DEBUG_INPUT_DISPLAY_PRESSED if lib.globals.keys[key] else lib.constants.DEBUG_INPUT_DISPLAY_NOTPRESSED,
-            (500 + pos[0], 415 + pos[1], pos[2], pos[3])
+            (1140 + pos[0], 895 + pos[1], pos[2], pos[3])
         )
 
 def hitboxDisplay():

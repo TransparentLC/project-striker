@@ -67,7 +67,7 @@ if __name__ == '__main__':
                 lib.globals.stageEngine.update()
                 lib.globals.backgroundScrollOffset += lib.globals.backgroundScrollSpeed
 
-                if os.environ.get('DEBUG_PLAYER_INVINCIBLE'):
+                if os.environ.get('STRIKER_DEBUG_PLAYER_INVINCIBLE'):
                     player.invincibleRemain = player.frameCounter
 
                 for g in (
@@ -95,17 +95,20 @@ if __name__ == '__main__':
                         lib.globals.messageQueue.append(['Life Extend!', 180])
                         lib.sound.sfx['EXTEND_LIFE'].play()
 
-                lib.message.draw(lib.globals.stgSurface)
-
-                if os.environ.get('DEBUG_HITBOX_DISPLAY'):
+                if os.environ.get('STRIKER_DEBUG_HITBOX_DISPLAY'):
                     lib.debug.hitboxDisplay()
 
-                lib.globals.screen.blit(lib.globals.stgSurface, (16, 16))
+                if os.environ.get('STRIKER_STG_SCALE2X'):
+                    pygame.transform.scale2x(lib.globals.stgSurface, lib.globals.stgSurface2x)
+                else:
+                    pygame.transform.scale(lib.globals.stgSurface, (768, 896), lib.globals.stgSurface2x)
+                lib.message.draw(lib.globals.stgSurface2x)
+                lib.globals.screen.blit(lib.globals.stgSurface2x, (32, 32))
 
                 for text, (posX, posY) in (
-                    (str(lib.globals.score), (626, 38)),
-                    (str(lib.globals.grazeCount), (626, 154)),
-                    (str(len(lib.globals.groupEnemyBullet)), (626, 206)),
+                    (str(lib.globals.score), (1248, 76)),
+                    (str(lib.globals.grazeCount), (1248, 309)),
+                    (str(len(lib.globals.groupEnemyBullet)), (1248, 412)),
                     (
                         '★{0}  {1}/{2}'.format(
                             lib.globals.bossRemain,
@@ -117,20 +120,20 @@ if __name__ == '__main__':
                             lib.globals.bossHitpointRangeMax - lib.globals.bossHitpointRangeMin
                         )
                         if lib.globals.groupBoss.sprite else '???',
-                        (626, 264)
+                        (1248, 528)
                     ),
                 ):
                     renderedSurface = lib.font.FONT_LARGE.render(text, True, (255, 255, 255))
                     lib.globals.screen.blit(renderedSurface, (posX - renderedSurface.get_width(), posY - renderedSurface.get_height() // 2))
                 for text, (posX, posY) in (
-                    ('★' * lib.globals.lifeNum, (500, 94)),
+                    ('★' * lib.globals.lifeNum, (1000, 188)),
                     (
                         (
                             lib.utils.frameToSeconds(lib.globals.groupPlayer.sprite.hyperRemain)
                             if lib.globals.groupPlayer.sprite.hyperRemain
                             else '★' * lib.globals.hyperNum
                         ),
-                        (500, 124)
+                        (1000, 248)
                     ),
                 ):
                     renderedSurface = lib.font.FONT_LARGE.render(text, True, (255, 255, 255))
@@ -138,19 +141,19 @@ if __name__ == '__main__':
                 pygame.draw.rect(
                     lib.globals.screen,
                     (255, 255, 255),
-                    (418, 225, lib.utils.clamp(len(lib.globals.groupEnemyBullet), 0, 256) / 256 * 204, 12),
+                    (836, 450, lib.utils.clamp(len(lib.globals.groupEnemyBullet), 0, 256) / 256 * 408, 24),
                 )
                 if lib.globals.groupBoss.sprite:
                     pygame.draw.rect(
                         lib.globals.screen,
                         (255, 255, 255),
                         (
-                            418, 283,
+                            836, 566,
                             lib.utils.clamp(
                                 lib.globals.groupBoss.sprite.hitpoint - lib.globals.bossHitpointRangeMin,
                                 0, lib.globals.bossHitpointRangeMax - lib.globals.bossHitpointRangeMin
                             ) / (lib.globals.bossHitpointRangeMax - lib.globals.bossHitpointRangeMin) * 204,
-                            12
+                            24
                         ),
                     )
 
@@ -158,7 +161,7 @@ if __name__ == '__main__':
                     lib.sound.playBgm('TITLE')
                     lib.globals.currentScene = lib.scene.Scene.TITLE
 
-            if os.environ.get('DEBUG_INPUT_DISPLAY'):
+            if os.environ.get('STRIKER_DEBUG_INPUT_DISPLAY'):
                 lib.debug.inputDisplay()
 
             pygame.display.flip()

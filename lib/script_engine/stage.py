@@ -272,7 +272,7 @@ class Engine:
             enemy = lib.sprite.enemy.Enemy()
             enemy.position.update(x, y)
             enemy.angle = angle
-            if scriptFile in enemyScriptCache and not os.environ.get('DEBUG_DISABLE_ENEMY_CACHE'):
+            if scriptFile in enemyScriptCache and not os.environ.get('STRIKER_DEBUG_DISABLE_ENEMY_CACHE'):
                 script = enemyScriptCache[scriptFile]
             else:
                 with open(scriptFile, 'r', encoding='utf-8') as f:
@@ -289,7 +289,7 @@ class Engine:
             lib.sound.sfx['BOSS_ALERT'].play(loops=1)
         elif opcode == Opcode.SET_CLEARED:
             lib.globals.allCleared = True
-            lib.globals.messageQueue.append(['All clear!', 300])
+            lib.globals.messageQueue.append(['All Clear!', 300])
             lib.sound.sfx['EXTEND_LIFE'].play()
         elif opcode == Opcode.SHOW_RESULT:
             pygame.mixer.music.stop()

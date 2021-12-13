@@ -10,7 +10,7 @@ def draw(surface: pygame.Surface):
         return
     message = lib.globals.messageQueue[0]
     rendered = fontRenderer.render(message[0])
-    surface.blit(rendered, ((surface.get_width() - rendered.get_width()) / 2, 64))
+    surface.blit(rendered, ((surface.get_width() - rendered.get_width()) / 2, 128))
     message[1] -= 1
     if not message[1]:
         lib.globals.messageQueue.popleft()

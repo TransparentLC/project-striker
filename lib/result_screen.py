@@ -27,11 +27,11 @@ def draw(surface: pygame.Surface):
             'Type-A 诱导攻击型',
             'Type-B 广范围型',
             'Type-C 前方集中型',
-        )[lib.globals.optionType], (288, 160)),
-        (str(lib.globals.score), (288, 200)),
-        (str(lib.globals.grazeCount), (288, 240)),
-        (str(lib.globals.missedCount), (288, 280)),
-        (str(lib.globals.hyperUsedCount), (288, 320)),
+        )[lib.globals.optionType], (576, 320)),
+        (str(lib.globals.score), (576, 400)),
+        (str(lib.globals.grazeCount), (576, 480)),
+        (str(lib.globals.missedCount), (576, 560)),
+        (str(lib.globals.hyperUsedCount), (576, 640)),
     ):
         renderedSurface = lib.font.FONT_LARGE.render(text, True, (255, 255, 255))
         surface.blit(renderedSurface, (posX - renderedSurface.get_width(), posY - renderedSurface.get_height() // 2))
@@ -44,4 +44,4 @@ def draw(surface: pygame.Surface):
             commentSurface = commentText[2]
     else:
         commentSurface = commentText[1]
-    surface.blit(commentSurface, (354, 148))
+    surface.blit(commentSurface, (708, 296))
