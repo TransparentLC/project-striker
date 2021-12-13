@@ -13,7 +13,6 @@ pygame.display.set_caption(lib.constants.TITLE)
 screen = pygame.display.set_mode(
     (1280, 960),
     (
-        pygame.locals.HWSURFACE |
         pygame.locals.DOUBLEBUF |
         (pygame.locals.SCALED if os.environ.get('STRIKER_WINDOWED') else pygame.locals.FULLSCREEN)
     )
@@ -26,8 +25,8 @@ currentScene = lib.scene.Scene.TITLE
 menuChoice = 0
 menuSubChoice = 0
 
-stgSurface = pygame.Surface((384, 448), pygame.locals.HWSURFACE)
-stgSurface2x = pygame.Surface((768, 896), pygame.locals.HWSURFACE)
+stgSurface = pygame.Surface((384, 448))
+stgSurface2x = pygame.Surface((768, 896))
 stageEngine: lib.script_engine.stage.Engine = None
 
 backgroundScrollSpeed = 1.5
