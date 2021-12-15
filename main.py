@@ -76,19 +76,20 @@ if __name__ == '__main__':
                     for g in lib.globals.stgGroups:
                         g.update()
 
-                    for extendLimit in (
-                        200000,
-                        500000,
-                        1000000,
-                    ):
-                        if (
-                            lib.globals.scoreLastFrame < extendLimit and
-                            extendLimit <= lib.globals.score and
-                            lib.globals.lifeNum < 8
+                    if not lib.globals.continueCount:
+                        for extendLimit in (
+                            200000,
+                            500000,
+                            1000000,
                         ):
-                            lib.globals.lifeNum += 1
-                            lib.globals.messageQueue.append(['Life Extend!', 180])
-                            lib.sound.sfx['EXTEND_LIFE'].play()
+                            if (
+                                lib.globals.scoreLastFrame < extendLimit and
+                                extendLimit <= lib.globals.score and
+                                lib.globals.lifeNum < 8
+                            ):
+                                lib.globals.lifeNum += 1
+                                lib.globals.messageQueue.append(['Life Extend!', 180])
+                                lib.sound.sfx['EXTEND_LIFE'].play()
 
                 for g in lib.globals.stgGroups:
                     g.draw(lib.globals.stgSurface)
