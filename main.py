@@ -32,6 +32,7 @@ if __name__ == '__main__':
     lib.sound.playBgm('TITLE')
 
     player = lib.sprite.player.Player()
+    continueText = pygame.image.load('assets/continue.webp')
     loop = True
     freeze = False
     while loop:
@@ -62,38 +63,35 @@ if __name__ == '__main__':
                 lib.globals.screen.blit(lib.scene.BACKGROUND_STG, (0, 0))
                 lib.scroll_map.blitBackground(lib.globals.stgSurface)
                 # lib.globals.stgSurface.fill((255, 0, 255))
-                lib.globals.scoreLastFrame = lib.globals.score
 
-                lib.globals.stageEngine.update()
-                lib.globals.backgroundScrollOffset += lib.globals.backgroundScrollSpeed
+                if not lib.globals.continueRemain:
+                    lib.globals.scoreLastFrame = lib.globals.score
 
-                if os.environ.get('STRIKER_DEBUG_PLAYER_INVINCIBLE'):
-                    player.invincibleRemain = player.frameCounter
+                    lib.globals.stageEngine.update()
+                    lib.globals.backgroundScrollOffset += lib.globals.backgroundScrollSpeed
 
-                for g in (
-                    lib.globals.groupPlayer,
-                    lib.globals.groupPlayerOption,
-                    lib.globals.groupEnemy,
-                    lib.globals.groupPlayerBullet,
-                    lib.globals.groupEnemyBullet,
-                    lib.globals.groupParticle,
-                ):
-                    g.update()
-                    g.draw(lib.globals.stgSurface)
+                    if os.environ.get('STRIKER_DEBUG_PLAYER_INVINCIBLE'):
+                        player.invincibleRemain = player.frameCounter
 
-                for extendLimit in (
-                    200000,
-                    500000,
-                    1000000,
-                ):
-                    if (
-                        lib.globals.scoreLastFrame < extendLimit and
-                        extendLimit <= lib.globals.score and
-                        lib.globals.lifeNum < 8
+                    for g in lib.globals.stgGroups:
+                        g.update()
+
+                    for extendLimit in (
+                        200000,
+                        500000,
+                        1000000,
                     ):
-                        lib.globals.lifeNum += 1
-                        lib.globals.messageQueue.append(['Life Extend!', 180])
-                        lib.sound.sfx['EXTEND_LIFE'].play()
+                        if (
+                            lib.globals.scoreLastFrame < extendLimit and
+                            extendLimit <= lib.globals.score and
+                            lib.globals.lifeNum < 8
+                        ):
+                            lib.globals.lifeNum += 1
+                            lib.globals.messageQueue.append(['Life Extend!', 180])
+                            lib.sound.sfx['EXTEND_LIFE'].play()
+
+                for g in lib.globals.stgGroups:
+                    g.draw(lib.globals.stgSurface)
 
                 if os.environ.get('STRIKER_DEBUG_HITBOX_DISPLAY'):
                     lib.debug.hitboxDisplay()
@@ -102,11 +100,37 @@ if __name__ == '__main__':
                     pygame.transform.scale2x(lib.globals.stgSurface, lib.globals.stgSurface2x)
                 else:
                     pygame.transform.scale(lib.globals.stgSurface, (768, 896), lib.globals.stgSurface2x)
+
                 lib.message.draw(lib.globals.stgSurface2x)
+
+                if lib.globals.continueRemain:
+                    if lib.globals.continueEnabled:
+                        continueCountdownSurface = lib.font.FONT_LARGE.render(str(lib.globals.continueRemain // 60), True, (255, 255, 255))
+                        lib.globals.stgSurface2x.blits((
+                            (continueText, (192, 354)),
+                            (continueCountdownSurface, (384 - continueCountdownSurface.get_width() // 2, 542 - continueCountdownSurface.get_height())),
+                        ))
+                        if lib.globals.keys[pygame.K_z] and not lib.globals.keysLastFrame[pygame.K_z]:
+                            lib.sound.sfx['HYPER_ACTIVATE'].play()
+                            lib.globals.continueCount += 1
+                            lib.globals.continueRemain = 0
+                            lib.globals.lifeNum = lib.constants.INITIAL_LIFENUM + 1
+                        else:
+                            if lib.globals.continueRemain % 60 == 0:
+                                lib.sound.sfx['COUNTDOWN'].play()
+                            lib.globals.continueRemain -= 1
+                            if not lib.globals.continueRemain or (lib.globals.keys[pygame.K_x] and not lib.globals.keysLastFrame[pygame.K_x]):
+                                lib.sound.sfx['HYPER_END'].play()
+                                pygame.mixer.music.stop()
+                                lib.globals.currentScene = lib.scene.Scene.RESULT
+                    else:
+                        pygame.mixer.music.stop()
+                        lib.globals.currentScene = lib.scene.Scene.RESULT
+
                 lib.globals.screen.blit(lib.globals.stgSurface2x, (32, 32))
 
                 for text, (posX, posY) in (
-                    (str(lib.globals.score), (1248, 76)),
+                    (f'Continue×{lib.globals.continueCount}' if lib.globals.continueCount else str(lib.globals.score), (1248, 76)),
                     (str(lib.globals.grazeCount), (1248, 309)),
                     (str(len(lib.globals.groupEnemyBullet)), (1248, 412)),
                     (

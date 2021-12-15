@@ -253,6 +253,10 @@ OPERATION param0 param1 param2 ... @ tag # comment
 
 将表示通关的全局变量设为 True。
 
+`DISABLE_CONTINUE`
+
+设置不允许续关，残机用完直接跳转到结果画面。游戏开始时默认会设定成允许续关。
+
 `SHOW_RESULT`
 
 结束游戏，跳转到结果画面。

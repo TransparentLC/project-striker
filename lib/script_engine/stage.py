@@ -44,6 +44,7 @@ class Opcode(enum.IntEnum):
     BGM = enum.auto()
     BOSS_WARNING = enum.auto()
     SET_CLEARED = enum.auto()
+    DISABLE_CONTINUE = enum.auto()
     SHOW_RESULT = enum.auto()
 
     # = enum.auto()
@@ -117,6 +118,8 @@ class Engine:
                     result.append(lib.globals.groupPlayer.sprite.position.x)
                 elif value == '%PLAYER_Y%':
                     result.append(lib.globals.groupPlayer.sprite.position.y)
+                elif value == '%CONTINUE_COUNT%':
+                    result.append(lib.globals.continueCount)
                 else:
                     result.append(value)
         return result
@@ -291,6 +294,8 @@ class Engine:
             lib.globals.allCleared = True
             lib.globals.messageQueue.append(['All Clear!', 300])
             lib.sound.sfx['EXTEND_LIFE'].play()
+        elif opcode == Opcode.DISABLE_CONTINUE:
+            lib.globals.continueEnabled = False
         elif opcode == Opcode.SHOW_RESULT:
             pygame.mixer.music.stop()
             lib.globals.currentScene = lib.scene.Scene.RESULT

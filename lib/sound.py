@@ -13,6 +13,7 @@ sfx: dict[str, pygame.mixer.Sound] = {
     'PAUSE': pygame.mixer.Sound('sound/sfx/pause.ogg'),
     'PAGE': pygame.mixer.Sound('sound/sfx/page.ogg'),
     'MENU': pygame.mixer.Sound('sound/sfx/menu.ogg'),
+    'COUNTDOWN': pygame.mixer.Sound('sound/sfx/countdown.ogg'),
     'GRAZE_A': pygame.mixer.Sound('sound/sfx/graze-a.ogg'),
     'GRAZE_B': pygame.mixer.Sound('sound/sfx/graze-b.ogg'),
     'EXPLODE_PLAYER': pygame.mixer.Sound('sound/sfx/explode-player.ogg'),
@@ -36,6 +37,7 @@ sfx: dict[str, pygame.mixer.Sound] = {
 for value in sfx.values():
     value.set_volume(.2)
 
+sfx['COUNTDOWN'].set_volume(.5)
 sfx['PLAYER_SHOOT_A'].set_volume(.01)
 sfx['PLAYER_SHOOT_B'].set_volume(.01)
 sfx['PLAYER_SHOOT_HIT_A'].set_volume(.02)

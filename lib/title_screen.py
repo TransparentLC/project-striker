@@ -135,7 +135,6 @@ def update():
             lib.globals.groupPlayer.sprite.position.update(192, 400)
             lib.globals.groupPlayer.sprite.invincibleRemain = 0
             lib.globals.groupPlayer.sprite.hyperRemain = 0
-            lib.globals.groupPlayer.sprite.invincibleRemain = 0
             lib.globals.groupPlayer.sprite.deathWait = 0
             lib.globals.score = 0
             lib.globals.scoreLastFrame = 0
@@ -144,6 +143,9 @@ def update():
             lib.globals.hyperNum = lib.constants.INITIAL_HYPERNUM
             lib.globals.missedCount = 0
             lib.globals.hyperUsedCount = 0
+            lib.globals.continueCount = 0
+            lib.globals.continueRemain = 0
+            lib.globals.continueEnabled = True
             lib.globals.allCleared = False
             lib.globals.messageQueue.clear()
             for g in (

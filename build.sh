@@ -1,3 +1,5 @@
+set -e
+
 charset='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-=_+[]{};:",.<>/?\|`~'
 key=""
 for i in {0..15}; do
@@ -18,7 +20,6 @@ pyinstaller \
     --onefile \
     --noconsole \
     --clean \
-    --log-level WARN \
     --key $key \
     --add-data "assets${pyiSeparator}assets" \
     --add-data "font/SourceHanSerifSC-Medium.otf${pyiSeparator}font" \

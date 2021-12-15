@@ -42,6 +42,9 @@ hyperNum = 0
 optionType = 0
 missedCount = 0
 hyperUsedCount = 0
+continueCount = 0
+continueRemain = 0
+continueEnabled = True
 allCleared = False
 
 messageQueue: typing.Deque[tuple[str, int]] = collections.deque()
@@ -57,3 +60,11 @@ groupEnemy = pygame.sprite.Group()
 groupEnemyBullet = pygame.sprite.Group()
 groupBoss = pygame.sprite.GroupSingle()
 groupParticle = pygame.sprite.Group()
+stgGroups = (
+    groupPlayer,
+    groupPlayerOption,
+    groupEnemy,
+    groupPlayerBullet,
+    groupEnemyBullet,
+    groupParticle,
+)

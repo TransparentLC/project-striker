@@ -83,8 +83,7 @@ class Player(Sprite):
                     self.invincibleRemain = 150
                     self.position.update(playerInitialPosition)
                 else:
-                    pygame.mixer.music.stop()
-                    globals.currentScene = scene.Scene.RESULT
+                    globals.continueRemain = 600
                     self.deathWait = 1
 
         if self.invincibleRemain:
