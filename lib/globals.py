@@ -47,8 +47,6 @@ continueRemain = 0
 continueEnabled = True
 allCleared = False
 
-messageQueue: typing.Deque[tuple[str, int]] = collections.deque()
-
 bossRemain = 0
 bossHitpointRangeMin = 0
 bossHitpointRangeMax = 0

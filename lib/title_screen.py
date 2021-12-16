@@ -8,6 +8,7 @@ import lib.scene
 import lib.script_engine.stage
 import lib.sound
 import lib.sprite.option
+import lib.stg_overlay
 
 MENU = pygame.image.load('assets/ui-title-menu.webp').convert_alpha()
 MENU_ITEMS = tuple(
@@ -101,18 +102,21 @@ manualPages = tuple(fontNormalRenderer.render(x.strip()) for x in f'''
 ----------------
 # 借物表
 
-ＢＧＭ／ＳＥ：
 ＊魔王魂｜無料で使える森田交一の音楽
 　https://maou.audio/
-＊Pixabay
+＊Pixabay Royalty Free Sound Effects
 　https://pixabay.com/sound-effects/
+＊Source Han Serif
+　https://source.typekit.com/source-han-serif/
+＊Averia Serif Libre
+　http://iotic.com/averia/
 ----------------
 # 借物表
 
-图片素材：
-＊AFruitaday!制作的1943 - The Battle of Midway精灵图
-　https://www.spriters-resource.com/...
-　.../arcade/1943thebattleofmidway/
+＊Arcade game "1943 - The Battle of Midway" sprite sheet
+　ripped by "AFruitaday!"
+　https://www.spriters-resource.com/arcade/...
+　.../1943thebattleofmidway/
 ＊Unsplash
 　https://unsplash.com/
 ----------------
@@ -147,7 +151,8 @@ def update():
             lib.globals.continueRemain = 0
             lib.globals.continueEnabled = True
             lib.globals.allCleared = False
-            lib.globals.messageQueue.clear()
+            for i in range(len(lib.stg_overlay.overlayStatus)):
+                lib.stg_overlay.overlayStatus[i] = 0
             for g in (
                 lib.globals.groupPlayerOption,
                 lib.globals.groupPlayerBullet,

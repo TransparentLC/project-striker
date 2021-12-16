@@ -231,7 +231,7 @@ SPAWN 72 -38 0 scriptfiles/enemy/stage4/1.txt
 WAIT 5
 SPAWN 52 -35 0 scriptfiles/enemy/stage4/1.txt
 
-WAIT 540
+WAIT 720
 JUMP_NE %CONTINUE_COUNT% 0 @fZzvIU8f
 
 DISABLE_CONTINUE

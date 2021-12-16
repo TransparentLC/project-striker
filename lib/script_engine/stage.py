@@ -8,6 +8,7 @@ import lib.globals
 import lib.scene
 import lib.sound
 import lib.sprite
+import lib.stg_overlay
 import lib.utils
 
 class Opcode(enum.IntEnum):
@@ -287,12 +288,11 @@ class Engine:
 
             lib.sound.playBgm(bgmName)
         elif opcode == Opcode.BOSS_WARNING:
-            lib.globals.messageQueue.append(['WARNING!', 120])
-            lib.globals.messageQueue.append(['Powerful enemy is approaching.\n                  Are you ready?', 300])
+            lib.stg_overlay.overlayStatus[lib.stg_overlay.OverLayStatusIndex.WARNING_REMAIN] = 330
             lib.sound.sfx['BOSS_ALERT'].play(loops=1)
         elif opcode == Opcode.SET_CLEARED:
             lib.globals.allCleared = True
-            lib.globals.messageQueue.append(['All Clear!', 300])
+            lib.stg_overlay.overlayStatus[lib.stg_overlay.OverLayStatusIndex.CLEAR_REMAIN] = 240
             lib.sound.sfx['EXTEND_LIFE'].play()
         elif opcode == Opcode.DISABLE_CONTINUE:
             lib.globals.continueEnabled = False

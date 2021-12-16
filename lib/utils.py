@@ -13,6 +13,16 @@ def clamp(value: T, min: T, max: T) -> T:
 def frameToSeconds(frame: int) -> str:
     return f'{frame / 60:.02f}'
 
+def splitDigits(value: int) -> typing.Sequence[int]:
+    if not value:
+        return [0]
+    result = []
+    while value:
+        result.append(value % 10)
+        value //= 10
+    result.reverse()
+    return result
+
 def linearInterpolation(p: float, a: T, b: T) -> T:
     return a + (b - a) * p
 

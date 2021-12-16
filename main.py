@@ -13,7 +13,6 @@ import lib.constants
 import lib.debug
 import lib.font
 import lib.globals
-import lib.message
 import lib.scene
 import lib.sound
 import lib.sprite
@@ -24,15 +23,17 @@ import lib.sprite.explosion
 import lib.sprite.player
 import lib.script_engine.stage
 import lib.scroll_map
+import lib.stg_overlay
 import lib.title_screen
 import lib.result_screen
 import lib.utils
 
 if __name__ == '__main__':
+    # Hide cursor
+    pygame.mouse.set_cursor((8, 8), (0, 0), (0, 0, 0, 0, 0, 0, 0, 0), (0, 0, 0, 0, 0, 0, 0, 0))
     lib.sound.playBgm('TITLE')
 
     player = lib.sprite.player.Player()
-    continueText = pygame.image.load('assets/continue.webp')
     loop = True
     freeze = False
     while loop:
@@ -88,7 +89,7 @@ if __name__ == '__main__':
                                 lib.globals.lifeNum < 8
                             ):
                                 lib.globals.lifeNum += 1
-                                lib.globals.messageQueue.append(['Life Extend!', 180])
+                                lib.stg_overlay.overlayStatus[lib.stg_overlay.OverLayStatusIndex.LIFE_REMAIN] = 240
                                 lib.sound.sfx['EXTEND_LIFE'].play()
 
                 for g in lib.globals.stgGroups:
@@ -102,15 +103,11 @@ if __name__ == '__main__':
                 else:
                     pygame.transform.scale(lib.globals.stgSurface, (768, 896), lib.globals.stgSurface2x)
 
-                lib.message.draw(lib.globals.stgSurface2x)
+                lib.stg_overlay.update()
+                lib.stg_overlay.draw(lib.globals.stgSurface2x)
 
                 if lib.globals.continueRemain:
                     if lib.globals.continueEnabled:
-                        continueCountdownSurface = lib.font.FONT_LARGE.render(str(lib.globals.continueRemain // 60), True, (255, 255, 255))
-                        lib.globals.stgSurface2x.blits((
-                            (continueText, (192, 354)),
-                            (continueCountdownSurface, (384 - continueCountdownSurface.get_width() // 2, 542 - continueCountdownSurface.get_height())),
-                        ))
                         if lib.globals.keys[pygame.K_z] and not lib.globals.keysLastFrame[pygame.K_z]:
                             lib.sound.sfx['HYPER_ACTIVATE'].play()
                             lib.globals.continueCount += 1
@@ -119,12 +116,19 @@ if __name__ == '__main__':
                         else:
                             if lib.globals.continueRemain % 60 == 0:
                                 lib.sound.sfx['COUNTDOWN'].play()
-                            lib.globals.continueRemain -= 1
-                            if not lib.globals.continueRemain or (lib.globals.keys[pygame.K_x] and not lib.globals.keysLastFrame[pygame.K_x]):
+                            if lib.globals.keys[pygame.K_x] and not lib.globals.keysLastFrame[pygame.K_x]:
+                                lib.globals.continueRemain -= 60
+                                if lib.globals.continueRemain < 0:
+                                    lib.globals.continueRemain = 0
+                                lib.sound.sfx['COUNTDOWN'].play()
+                            else:
+                                lib.globals.continueRemain -= 1
+                            if not lib.globals.continueRemain:
                                 lib.sound.sfx['HYPER_END'].play()
                                 pygame.mixer.music.stop()
                                 lib.globals.currentScene = lib.scene.Scene.RESULT
                     else:
+                        lib.sound.sfx['HYPER_END'].play()
                         pygame.mixer.music.stop()
                         lib.globals.currentScene = lib.scene.Scene.RESULT
 

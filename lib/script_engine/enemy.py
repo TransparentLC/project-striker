@@ -11,6 +11,7 @@ import lib.sprite.debris
 import lib.sprite.enemy
 import lib.sprite.explosion
 import lib.sound
+import lib.stg_overlay
 import lib.utils
 
 class Opcode(enum.IntEnum):
@@ -579,17 +580,18 @@ class Engine:
         elif opcode == Opcode.BONUS_BULLET:
             bonus = len(lib.globals.groupEnemyBullet) * (50 + lib.globals.grazeCount // 3)
             lib.globals.score += bonus
-            lib.globals.messageQueue.append([f'Bonus!        {bonus:8d}', 180])
+            lib.stg_overlay.overlayStatus[lib.stg_overlay.OverLayStatusIndex.PHASE_BONUS_REMAIN] = 240
+            lib.stg_overlay.overlayStatus[lib.stg_overlay.OverLayStatusIndex.PHASE_BONUS_VALUE] = bonus
             lib.sound.sfx['BONUS'].play()
         elif opcode == Opcode.EXTEND_LIFE:
             if lib.globals.lifeNum < 8:
                 lib.globals.lifeNum += 1
-                lib.globals.messageQueue.append(['Life Extend!', 180])
+                lib.stg_overlay.overlayStatus[lib.stg_overlay.OverLayStatusIndex.LIFE_REMAIN] = 240
                 lib.sound.sfx['EXTEND_LIFE'].play()
         elif opcode == Opcode.EXTEND_HYPER:
             if lib.globals.hyperNum < 8:
                 lib.globals.hyperNum += 1
-                lib.globals.messageQueue.append(['Hyper Extend!', 180])
+                lib.stg_overlay.overlayStatus[lib.stg_overlay.OverLayStatusIndex.HYPER_REMAIN] = 240
                 lib.sound.sfx['EXTEND_HYPER'].play()
         elif opcode == Opcode.PRESET_ENEMY_A:
             # SET_TEXTURE ENEMY_A
