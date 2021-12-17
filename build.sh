@@ -21,7 +21,7 @@ pyinstaller \
     --noconsole \
     --clean \
     --key $key \
-    --log-level WARNING \
+    --log-level WARN \
     --add-data "assets${pyiSeparator}assets" \
     --add-data "font/SourceHanSerifSC-Medium.otf${pyiSeparator}font" \
     --add-data "scriptfiles${pyiSeparator}scriptfiles" \
