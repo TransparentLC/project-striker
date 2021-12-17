@@ -8,7 +8,7 @@
 
 <div align="center">
 
-![](https://yzf.qq.com/fsnb/kf-file/kf_pic/20211217/KFPIC_6H_WXIMAGE_22c6e43c6310450b8ffcdea107acd4c7.png)
+![](https://dd-static.jd.com/ddimg/jfs/t1/161575/12/27237/268036/61bc8bceE310fa3d6/92e0be2447ea02eb.png)
 
 </div>
 
