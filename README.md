@@ -6,11 +6,7 @@
 
 一个弹幕射击游戏。
 
-<div align="center">
-
 ![](https://dd-static.jd.com/ddimg/jfs/t1/161575/12/27237/268036/61bc8bceE310fa3d6/92e0be2447ea02eb.png)
-
-</div>
 
 ## 基本介绍
 
@@ -27,7 +23,7 @@
 
 ## 如何运行
 
-最简单的方式是直接下载使用 GitHub Actions 自动打包的，可以在 Windows/Linux x64 下运行的单个[可执行文件](https://github.com/TransparentLC/project-striker/actions)。打包使用 PyInstaller 完成。
+最简单的方式是直接下载使用 GitHub Actions 自动打包的，可以在 Windows/Linux x64 下运行的单个[可执行文件](https://github.com/TransparentLC/project-striker/actions/workflows/build.yml)。打包使用 PyInstaller 完成。
 
 未登录 GitHub 的话，可以在这里下载：
 
