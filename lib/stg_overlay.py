@@ -42,6 +42,7 @@ def draw(surface: pygame.Surface):
             (continueRemainSurface, (384 - continueRemainSurface.get_width() // 2, 576 - continueRemainSurface.get_height())),
         ))
 
+    blitSeq = []
     for img, remain, centerX, centerY in (
         (overlayHyperExtend, overlayStatus[OverLayStatusIndex.HYPER_REMAIN], 384, 96),
         (overlayLifeExtend, overlayStatus[OverLayStatusIndex.LIFE_REMAIN], 384, 96),
@@ -54,7 +55,18 @@ def draw(surface: pygame.Surface):
             img = pygame.transform.scale(img, (img.get_width(), int(lib.utils.linearInterpolation(remain / 30, 0, img.get_height()))))
         elif remain > 210:
             img = pygame.transform.scale(img, (img.get_width(), int(lib.utils.easeOutQuadInterpolation(1 - (remain - 210) / 30, 0, img.get_height()))))
-        surface.blit(img, (centerX - img.get_width() // 2, centerY - img.get_height() // 2))
+        blitSeq.append((img, (centerX - img.get_width() // 2, centerY - img.get_height() // 2)))
+    if overlayStatus[OverLayStatusIndex.WARNING_REMAIN]:
+        appearTime = 330 - overlayStatus[OverLayStatusIndex.WARNING_REMAIN]
+        if appearTime < 60:
+            appearTime %= 20
+            overlayWarning.set_alpha(abs(appearTime - 10) / 10 * 255)
+        elif appearTime > 300:
+            overlayWarning.set_alpha((330 - appearTime) / 30 * 255)
+        else:
+            overlayWarning.set_alpha(255)
+        blitSeq.append((overlayWarning, (384 - img.get_width() // 2, 240 - img.get_height() // 2)))
+    surface.blits(blitSeq)
 
     if overlayStatus[OverLayStatusIndex.PHASE_BONUS_REMAIN]:
         phaseBonusDigits = lib.utils.splitDigits(overlayStatus[OverLayStatusIndex.PHASE_BONUS_VALUE])
@@ -71,15 +83,3 @@ def draw(surface: pygame.Surface):
         if overlayStatus[OverLayStatusIndex.PHASE_BONUS_REMAIN] < 30:
             phaseBonusSurface = pygame.transform.scale(phaseBonusSurface, (phaseBonusSurface.get_width(), int(lib.utils.linearInterpolation(overlayStatus[OverLayStatusIndex.PHASE_BONUS_REMAIN] / 30, 0, phaseBonusSurface.get_height()))))
         surface.blit(phaseBonusSurface, (384 - phaseBonusSurface.get_width() // 2, 288 - phaseBonusSurface.get_height() // 2))
-
-    if overlayStatus[OverLayStatusIndex.WARNING_REMAIN]:
-        appearTime = 330 - overlayStatus[OverLayStatusIndex.WARNING_REMAIN]
-        if appearTime < 60:
-            appearTime %= 20
-            overlayWarning.set_alpha(abs(appearTime - 10) / 10 * 255)
-        elif appearTime > 300:
-            overlayWarning.set_alpha((330 - appearTime) / 30 * 255)
-        else:
-            overlayWarning.set_alpha(255)
-        surface.blit(overlayWarning, (384 - img.get_width() // 2, 240 - img.get_height() // 2))
-
