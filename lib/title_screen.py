@@ -97,8 +97,8 @@ manualPages = tuple(fontNormalRenderer.render(x.strip()) for x in f'''
 ＊奖残的分数是足够的，所以不需要刻意擦弹刷分（除非你知道你在做什
 　么），一不小心ＭＩＳＳ的话就得不偿失了。
 ＊弹幕密集的时候还是专注于避弹比较好，即使漏了几个杂鱼也没关系。
-＊有些ＢＯＳＳ的弹幕是从东方Ｐｒｏｊｅｃｔ系列里借鉴的，能看出被
-　借鉴的符卡有哪些吗？
+＊有些游戏机制和ＢＯＳＳ的弹幕是从东方Ｐｒｏｊｅｃｔ系列借鉴的，
+　有没有哪些“符卡”看上去有点眼熟呢？
 ----------------
 # 借物表
 
@@ -108,7 +108,7 @@ manualPages = tuple(fontNormalRenderer.render(x.strip()) for x in f'''
 　https://pixabay.com/sound-effects/
 ＊Source Han Serif
 　https://source.typekit.com/source-han-serif/
-＊Averia Serif Libre
+＊Avería – The Average Font
 　http://iotic.com/averia/
 ----------------
 # 借物表

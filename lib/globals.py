@@ -12,10 +12,7 @@ pygame.display.set_icon(pygame.image.load('assets/icon.webp'))
 pygame.display.set_caption(lib.constants.TITLE)
 screen = pygame.display.set_mode(
     (1280, 960),
-    (
-        pygame.locals.DOUBLEBUF |
-        (pygame.locals.SCALED if os.environ.get('STRIKER_WINDOWED') else pygame.locals.FULLSCREEN)
-    )
+    (pygame.locals.SCALED if os.environ.get('STRIKER_WINDOWED') else pygame.locals.FULLSCREEN)
 )
 clock = pygame.time.Clock()
 keys: typing.Sequence[bool] = None
