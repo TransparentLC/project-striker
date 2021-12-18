@@ -23,7 +23,7 @@ import lib.globals
 # 65-67 填充
 # 68-70 填充
 # 71-73 填充
-tiles = tuple(pygame.image.load(f'assets/map-{i}.webp') for i in range(74))
+tiles = tuple(pygame.image.load(f'assets/map-{i}.webp').convert() for i in range(74))
 
 backgrounds = []
 for x in os.listdir('scriptfiles/map'):

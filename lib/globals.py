@@ -1,7 +1,6 @@
 import collections
 import os
 import pygame
-import pygame.locals
 import typing
 
 import lib.constants
@@ -10,7 +9,7 @@ pygame.display.set_icon(pygame.image.load('assets/icon.webp'))
 pygame.display.set_caption(lib.constants.TITLE)
 screen = pygame.display.set_mode(
     (1280, 960),
-    (pygame.locals.SCALED if os.environ.get('STRIKER_WINDOWED') else pygame.locals.FULLSCREEN)
+    (pygame.SCALED if os.environ.get('STRIKER_WINDOWED') else pygame.FULLSCREEN)
 )
 clock = pygame.time.Clock()
 keys: typing.Sequence[bool] = None
