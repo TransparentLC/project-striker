@@ -4,11 +4,13 @@ import pygame
 import lib.constants
 import lib.globals
 import lib.font
-import lib.scene
+import lib.scene.stg
 import lib.script_engine.stage
 import lib.sound
 import lib.sprite.option
 import lib.stg_overlay
+
+background = pygame.image.load('assets/ui-title-background.webp').convert()
 
 MENU = pygame.image.load('assets/ui-title-menu.webp').convert_alpha()
 MENU_ITEMS = tuple(
@@ -186,7 +188,7 @@ def update():
                 ]
             with open('scriptfiles/stage/stage1.txt', 'r', encoding='utf-8') as f:
                 lib.globals.stageEngine = lib.script_engine.stage.Engine(f.read())
-            lib.globals.currentScene = lib.scene.Scene.STG
+            lib.globals.nextScene = lib.scene.stg
         elif lib.globals.menuChoice == 2:
             pygame.event.post(pygame.event.Event(pygame.QUIT))
 
@@ -206,7 +208,7 @@ def update():
         lib.sound.sfx['PAGE'].play()
 
 def draw(surface: pygame.Surface):
-    surface.blit(lib.scene.BACKGROUND_TITLE, (0, 0))
+    surface.blit(background, (0, 0))
     for index, item in enumerate(MENU_ITEMS):
         surface.blit(item[0 if lib.globals.menuChoice == index else 1], (64, 640 + index * 64))
 

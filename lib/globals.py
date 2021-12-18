@@ -5,8 +5,6 @@ import pygame.locals
 import typing
 
 import lib.constants
-import lib.script_engine.stage
-import lib.scene
 
 pygame.display.set_icon(pygame.image.load('assets/icon.webp'))
 pygame.display.set_caption(lib.constants.TITLE)
@@ -17,14 +15,16 @@ screen = pygame.display.set_mode(
 clock = pygame.time.Clock()
 keys: typing.Sequence[bool] = None
 keysLastFrame: typing.Sequence[bool] = None
-currentScene = lib.scene.Scene.TITLE
+
+currentScene = None
+nextScene = None
 
 menuChoice = 0
 menuSubChoice = 0
 
 stgSurface = pygame.Surface((384, 448))
 stgSurface2x = pygame.Surface((768, 896))
-stageEngine: lib.script_engine.stage.Engine = None
+stageEngine = None
 
 backgroundScrollSpeed = 1.5
 backgroundScrollOffset = 0

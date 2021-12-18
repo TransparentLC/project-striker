@@ -5,7 +5,7 @@ import random
 import typing
 
 import lib.globals
-import lib.scene
+import lib.scene.result
 import lib.sound
 import lib.sprite
 import lib.stg_overlay
@@ -298,7 +298,7 @@ class Engine:
             lib.globals.continueEnabled = False
         elif opcode == Opcode.SHOW_RESULT:
             pygame.mixer.music.stop()
-            lib.globals.currentScene = lib.scene.Scene.RESULT
+            lib.globals.nextScene = lib.scene.result
 
         # elif opcode == Opcode.:
         #     params: tuple[] = params

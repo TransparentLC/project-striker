@@ -2,9 +2,10 @@ import pygame
 
 import lib.globals
 import lib.font
-import lib.scene
+import lib.scene.title
 import lib.sound
 
+background = pygame.image.load('assets/ui-result-background.webp').convert()
 fontLargeRenderer = lib.font.FontRenderer(lib.font.FONT_LARGE, (255, 255, 255))
 
 # 一行16个全角字符
@@ -20,10 +21,10 @@ def update():
     if lib.globals.keys[pygame.K_z] and not lib.globals.keysLastFrame[pygame.K_z]:
         lib.sound.sfx['PAGE'].play()
         lib.sound.playBgm('TITLE')
-        lib.globals.currentScene = lib.scene.Scene.TITLE
+        lib.globals.nextScene = lib.scene.title
 
 def draw(surface: pygame.Surface):
-    surface.blit(lib.scene.BACKGROUND_RESULT, (0, 0))
+    surface.blit(background, (0, 0))
     for text, (posX, posY) in (
         ((
             'Type-A 诱导攻击型',

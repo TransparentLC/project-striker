@@ -1,14 +1,13 @@
 import pygame
 
-from .. import sprite
-from .. import globals
+import lib.sprite
+import lib.globals
 
 import lib.sprite.explosion
 
-r = globals.stgSurface.get_rect()
-bulletBoundary = pygame.Rect(-30, -30, r.width + 60, r.height + 60)
+bulletBoundary = pygame.Rect(-30, -30, 384 + 60, 448 + 60)
 
-class Bullet(sprite.Sprite):
+class Bullet(lib.sprite.Sprite):
     damage: int = 0
     size: float = 0
     speedRadius: float = 0
