@@ -1,5 +1,6 @@
-import os
 import pygame
+
+import lib.globals
 
 pygame.mixer.set_num_channels(64)
 
@@ -67,7 +68,7 @@ bgm: dict[str, tuple[str, str]] = {
 }
 
 def playBgm(bgmName: str):
-    if os.environ.get('STRIKER_DEBUG_DISABLE_BGM'):
+    if not lib.globals.config['bgm']:
         return
     bgmHeader, bgmLoop = bgm[bgmName]
     pygame.mixer.music.stop()

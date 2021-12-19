@@ -1,25 +1,35 @@
 import collections
+import json
 import os
 import pygame
 import typing
 
 import lib.constants
 
+try:
+    if not os.path.exists(lib.constants.DATA_DIR):
+        os.mkdir(lib.constants.DATA_DIR)
+    with open(f'{lib.constants.DATA_DIR}/config.json', 'r', encoding='utf-8') as f:
+        config = json.load(f)
+except:
+    config = {
+        'windowed': False,
+        'bgm': True,
+        'scale2x': False,
+        'inputDisplay': False,
+    }
+
 pygame.display.set_icon(pygame.image.load('assets/icon.webp'))
 pygame.display.set_caption(lib.constants.TITLE)
 screen = pygame.display.set_mode(
     (1280, 960),
-    (pygame.SCALED if os.environ.get('STRIKER_WINDOWED') else pygame.FULLSCREEN)
+    (pygame.SCALED if config['windowed'] else pygame.FULLSCREEN)
 )
 clock = pygame.time.Clock()
 keys: typing.Sequence[bool] = None
 keysLastFrame: typing.Sequence[bool] = None
-
 currentScene = None
 nextScene = None
-
-menuChoice = 0
-menuSubChoice = 0
 
 stgSurface = pygame.Surface((384, 448))
 stgSurface2x = pygame.Surface((768, 896))

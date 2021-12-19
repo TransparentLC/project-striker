@@ -6,15 +6,15 @@ import lib.scene.title
 import lib.sound
 import lib.globals
 
-from .title import background
+from .title import BACKGROUND
+from .title import MENU_ITEMS
+from .title import SHADE
 
 fontNormalRenderer = lib.font.FontRenderer(lib.font.FONT_NORMAL, (255, 255, 255))
 
 with open('build-info.txt', 'r', encoding='utf-8') as f:
     BUILD_INFO = f.read().splitlines()
 
-manualShade = pygame.Surface((1050, 700), pygame.SRCALPHA)
-pygame.draw.rect(manualShade, (0, 0, 0, 192), manualShade.get_rect(), 0, 8)
 # 一行42个全角字符，一页最多17行，用----------------分页
 manualPages = tuple(fontNormalRenderer.render(x.strip()) for x in f'''
 # 基本的介绍
@@ -29,10 +29,10 @@ manualPages = tuple(fontNormalRenderer.render(x.strip()) for x in f'''
 
 # 操作方法
 
-方向键　　　　　移动自机
+方向键　　　　　移动自机、在标题画面的菜单项中选择
 ＬＳｈｉｆｔ键　使用低速移动
-Ｚ键　　　　　　射击，按住不放就可以连射
-Ｘ键　　　　　　开启火力强化模式（后述）
+Ｚ键　　　　　　射击（按住不放就可以连射）、确认
+Ｘ键　　　　　　开启火力强化模式（后述）、取消
 Ｐ键　　　　　　暂停游戏，再按一下就会恢复
 Ｅｓｃ键　　　　返回标题画面
 ----------------
@@ -120,8 +120,10 @@ def update():
     if lib.globals.keys[pygame.K_x] and not lib.globals.keysLastFrame[pygame.K_x]:
         lib.globals.nextScene = lib.scene.title
         lib.sound.sfx['PAGE'].play()
+    currentPage %= len(manualPages)
 
 def draw(surface: pygame.Surface):
-    surface.blit(background, (0, 0))
-    surface.blit(manualShade, (115, 130))
-    surface.blit(manualPages[currentPage % len(manualPages)], (135, 144))
+    surface.blit(BACKGROUND, (0, 0))
+    surface.blit(MENU_ITEMS[1][0], (640 - MENU_ITEMS[1][0].get_width() // 2, 64))
+    surface.blit(SHADE, (115, 184))
+    surface.blit(manualPages[currentPage], (135, 198))

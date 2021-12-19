@@ -1,4 +1,5 @@
 import os
+import json
 import sys
 if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
     os.chdir(sys._MEIPASS)
@@ -46,12 +47,29 @@ if __name__ == '__main__':
             lib.globals.currentScene.update()
             lib.globals.currentScene.draw(lib.globals.screen)
 
-            if os.environ.get('STRIKER_DEBUG_INPUT_DISPLAY'):
-                lib.debug.inputDisplay()
+            if lib.globals.config['inputDisplay']:
+                for key, pos in (
+                    (pygame.K_LSHIFT, (10, 10, 45, 20)),
+                    (pygame.K_z, (10, 35, 20, 20)),
+                    (pygame.K_x, (35, 35, 20, 20)),
+                    (pygame.K_LEFT, (60, 35, 20, 20)),
+                    (pygame.K_DOWN, (85, 35, 20, 20)),
+                    (pygame.K_UP, (85, 10, 20, 20)),
+                    (pygame.K_RIGHT, (110, 35, 20, 20)),
+                ):
+                    pygame.draw.rect(
+                        lib.globals.screen,
+                        lib.constants.DEBUG_INPUT_DISPLAY_PRESSED if lib.globals.keys[key] else lib.constants.DEBUG_INPUT_DISPLAY_NOTPRESSED,
+                        (1140 + pos[0], 895 + pos[1], pos[2], pos[3])
+                    )
 
             pygame.display.flip()
             pygame.display.set_caption(f'{lib.constants.TITLE} (FPS: {lib.globals.clock.get_fps():.02f})')
 
-
         lib.globals.clock.tick(60)
+
+    # Write config before quit
+    with open(f'{lib.constants.DATA_DIR}/config.json', 'w', encoding='utf-8') as f:
+        json.dump(lib.globals.config, f, separators=(',', ':'))
+
     pygame.quit()

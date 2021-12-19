@@ -1,6 +1,8 @@
+import pathlib
 import pygame
 
 TITLE = 'Striker'
+DATA_DIR = f'{pathlib.Path.home()}/.striker'
 
 DEBUG_INPUT_DISPLAY_PRESSED = pygame.Color(255, 255, 0)
 DEBUG_INPUT_DISPLAY_NOTPRESSED = pygame.Color(127, 127, 127)

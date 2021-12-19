@@ -12,11 +12,7 @@
             "console": "integratedTerminal",
             "env": {
                 "PYGAME_HIDE_SUPPORT_PROMPT": "hide",
-                "STRIKER_WINDOWED": "1",
-                // "STRIKER_STG_SCALE2X": "1",
-                "STRIKER_DEBUG_INPUT_DISPLAY": "1",
                 "STRIKER_DEBUG_DISABLE_ENEMY_CACHE": "1",
-                // "STRIKER_DEBUG_DISABLE_BGM": "1",
                 // "STRIKER_DEBUG_HITBOX_DISPLAY": "1",
                 // "STRIKER_DEBUG_PLAYER_INVINCIBLE": "1",
             }

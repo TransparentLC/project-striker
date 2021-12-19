@@ -86,7 +86,7 @@ def draw(surface: pygame.Surface):
     if os.environ.get('STRIKER_DEBUG_HITBOX_DISPLAY'):
         lib.debug.hitboxDisplay()
 
-    if os.environ.get('STRIKER_STG_SCALE2X'):
+    if lib.globals.config['scale2x']:
         pygame.transform.scale2x(lib.globals.stgSurface, lib.globals.stgSurface2x)
     else:
         pygame.transform.scale(lib.globals.stgSurface, (768, 896), lib.globals.stgSurface2x)
