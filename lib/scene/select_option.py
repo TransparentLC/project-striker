@@ -44,6 +44,7 @@ def update():
         lib.globals.score = 0
         lib.globals.scoreLastFrame = 0
         lib.globals.grazeCount = 0
+        lib.globals.maxGetPoint = 10000
         lib.globals.lifeNum = lib.constants.INITIAL_LIFENUM
         lib.globals.hyperNum = lib.constants.INITIAL_HYPERNUM
         lib.globals.missedCount = 0
@@ -60,6 +61,7 @@ def update():
             lib.globals.groupEnemy,
             lib.globals.groupEnemyBullet,
             lib.globals.groupParticle,
+            lib.globals.groupItem,
         ):
             for s in g:
                 s.kill()

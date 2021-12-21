@@ -79,7 +79,8 @@ class PlayerBullet(lib.bullet.Bullet):
             for b in lib.globals.groupEnemyBullet:
                 b: lib.bullet.enemy_bullet.EnemyBullet
                 if self.position.distance_squared_to(b.position) < self.size ** 2:
-                    lib.globals.score += 5 + len(lib.globals.groupEnemyBullet) // 20
+                    lib.globals.score += 8 * len(lib.globals.groupEnemyBullet)
+                    lib.globals.maxGetPoint = max(10000, lib.globals.maxGetPoint - len(lib.globals.groupEnemyBullet) // 8)
                     self.bulletCancelRemain -= 1
                     b.explode()
                     if not self.bulletCancelRemain:
@@ -87,5 +88,5 @@ class PlayerBullet(lib.bullet.Bullet):
 
     def explode(self) -> None:
         super().explode()
-        lib.globals.score += self.damage
+        lib.globals.score += self.damage * (8 + lib.globals.maxGetPoint % 16)
         lib.sound.sfx[random.choice(('PLAYER_SHOOT_HIT_A', 'PLAYER_SHOOT_HIT_B', 'PLAYER_SHOOT_HIT_C', 'PLAYER_SHOOT_HIT_D'))].play()

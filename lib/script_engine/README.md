@@ -124,7 +124,7 @@ OPERATION param0 param1 param2 ... @ tag # comment
 
 设置敌机的血量。
 
-`SET_SCORE score:int`
+`SET_MAXGETPOINTADD score:int`
 
 设置敌机击破后的分数。
 
@@ -157,6 +157,10 @@ OPERATION param0 param1 param2 ... @ tag # comment
 `SET_EXPLODE_SFX sfx:str`
 
 设置击破后的音效。
+
+`SET_POINTITEM num:int`
+
+设置击破后掉落的奖分道具数，范围是以敌机中心为圆心、半径为贴图长和宽中较小者的圆。
 
 `SET_BOSS`
 
@@ -207,7 +211,7 @@ OPERATION param0 param1 param2 ... @ tag # comment
 `EXTEND_LIFE`
 `EXTEND_HYPER`
 
-奖励一个残机或火力强化。
+掉落一个残机或火力强化道具。
 
 `PRESET_ENEMY_A`
 

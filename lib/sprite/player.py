@@ -78,6 +78,7 @@ class Player(Sprite):
                 if lib.globals.lifeNum:
                     lib.globals.lifeNum -= 1
                     lib.globals.hyperNum = lib.constants.INITIAL_HYPERNUM
+                    lib.globals.maxGetPoint = max(10000, lib.globals.maxGetPoint * 4 // 5)
                     self.invincibleRemain = 150
                     self.position.update(playerInitialPosition)
                 else:
@@ -98,6 +99,8 @@ class Player(Sprite):
             lib.globals.hyperUsedCount += 1
             self.hyperRemain = lib.constants.HYPER_TIME
             self.invincibleRemain = lib.constants.HYPER_INVINCIBLE_TIME
+            for item in lib.globals.groupItem:
+                item.magnet = True
             lib.sound.sfx['HYPER_ACTIVATE'].play()
 
         if not self.deathWait:
@@ -141,7 +144,7 @@ class Player(Sprite):
             return
         lib.sound.sfx['EXPLODE_PLAYER'].play()
         explosion.ExplosionPlayer(self.position)
-        self.deathWait = 180
+        self.deathWait = 120
         self.hyperRemain = 0
         lib.globals.missedCount += 1
 

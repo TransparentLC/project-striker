@@ -30,11 +30,14 @@ def update():
         for g in lib.globals.stgGroups:
             g.update()
 
+        if lib.globals.groupBoss.sprite:
+            lib.globals.maxGetPoint = max(10000, lib.globals.maxGetPoint - 3)
+
         if not lib.globals.continueCount:
             for extendLimit in (
-                200000,
-                500000,
-                1000000,
+                # 200000,
+                # 500000,
+                # 1000000,
             ):
                 if (
                     lib.globals.scoreLastFrame < extendLimit and
@@ -98,8 +101,9 @@ def draw(surface: pygame.Surface):
 
     for text, (posX, posY) in (
         (f'Continue×{lib.globals.continueCount}' if lib.globals.continueCount else str(lib.globals.score), (1248, 76)),
-        (str(lib.globals.grazeCount), (1248, 309)),
-        (str(len(lib.globals.groupEnemyBullet)), (1248, 412)),
+        (str(lib.globals.maxGetPoint), (1248, 316)),
+        (str(lib.globals.grazeCount), (1248, 376)),
+        (str(len(lib.globals.groupEnemyBullet)), (1248, 466)),
         (
             '★{0}  {1}/{2}'.format(
                 lib.globals.bossRemain,
@@ -111,20 +115,20 @@ def draw(surface: pygame.Surface):
                 lib.globals.bossHitpointRangeMax - lib.globals.bossHitpointRangeMin
             )
             if lib.globals.groupBoss.sprite else '???',
-            (1248, 528)
+            (1248, 582)
         ),
     ):
         renderedSurface = lib.font.FONT_LARGE.render(text, True, (255, 255, 255))
         surface.blit(renderedSurface, (posX - renderedSurface.get_width(), posY - renderedSurface.get_height() // 2))
     for text, (posX, posY) in (
-        ('★' * lib.globals.lifeNum, (1000, 188)),
+        ('★' * lib.globals.lifeNum, (1000, 166)),
         (
             (
                 lib.utils.frameToSeconds(lib.globals.groupPlayer.sprite.hyperRemain)
                 if lib.globals.groupPlayer.sprite.hyperRemain
                 else '★' * lib.globals.hyperNum
             ),
-            (1000, 248)
+            (1000, 226)
         ),
     ):
         renderedSurface = lib.font.FONT_LARGE.render(text, True, (255, 255, 255))
@@ -132,14 +136,14 @@ def draw(surface: pygame.Surface):
     pygame.draw.rect(
         surface,
         (255, 255, 255),
-        (836, 450, lib.utils.clamp(len(lib.globals.groupEnemyBullet), 0, 256) / 256 * 408, 24),
+        (836, 504, lib.utils.clamp(len(lib.globals.groupEnemyBullet), 0, 256) / 256 * 408, 24),
     )
     if lib.globals.groupBoss.sprite:
         pygame.draw.rect(
             surface,
             (255, 255, 255),
             (
-                836, 566,
+                836, 620,
                 lib.utils.clamp(
                     lib.globals.groupBoss.sprite.hitpoint - lib.globals.bossHitpointRangeMin,
                     0, lib.globals.bossHitpointRangeMax - lib.globals.bossHitpointRangeMin

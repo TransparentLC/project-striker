@@ -8,14 +8,15 @@ import lib.sprite
 import lib.sprite.debris
 import lib.sprite.explosion
 import lib.sprite.player
+import lib.sprite.item
 import lib.utils
 
 r = lib.globals.stgSurface.get_rect()
 enemyBoundary = pygame.Rect(-30, -80, r.width + 60, r.height + 110)
 
 class Enemy(lib.sprite.Sprite):
-    score: int
     hitpoint: int
+    maxGetPointAdd: int
     invincibleRemain: int
     explosion: typing.Callable[[pygame.Vector2], lib.sprite.explosion.Explosion]
     debris: list[
@@ -27,12 +28,13 @@ class Enemy(lib.sprite.Sprite):
     ]
     scriptEngine: lib.script_engine.enemy.Engine
     explodeSfx: pygame.mixer.Sound
+    starNum: int
 
     def __init__(self) -> None:
         super().__init__(lib.globals.groupEnemy)
         self.interval = 5
         self.hitpoint = 1
-        self.score = 0
+        self.maxGetPointAdd = 0
         self.position = pygame.Vector2()
         self.speed = pygame.Vector2()
         self.boundary = enemyBoundary
@@ -42,6 +44,7 @@ class Enemy(lib.sprite.Sprite):
         self.invincibleRemain = 0
         self.scriptEngine = None
         self.explodeSfx = None
+        self.pointItemNum = 0
 
     def setScript(self, script: str) -> None:
         self.scriptEngine = lib.script_engine.enemy.Engine(self, script)
@@ -64,7 +67,14 @@ class Enemy(lib.sprite.Sprite):
                 self.scriptEngine.update()
             if self.explodeSfx:
                 self.explodeSfx.play()
-            lib.globals.score += self.score
+
+            minwh = min(self.rect.width, self.rect.height)
+            for i in range(self.pointItemNum):
+                pos = pygame.Vector2(random.random() * minwh, 0)
+                pos.rotate_ip(random.random() * 360)
+                pos += self.position
+                lib.sprite.item.Point(pos)
+            lib.globals.maxGetPoint += self.maxGetPointAdd
             self.kill()
             return
         if self.outOfBoundary:

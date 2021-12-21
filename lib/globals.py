@@ -43,6 +43,7 @@ backgroundSurfaces: typing.Deque[pygame.Surface] = collections.deque()
 score = 0
 scoreLastFrame = 0
 grazeCount = 0
+maxGetPoint = 0
 lifeNum = 0
 hyperNum = 0
 optionType = 0
@@ -57,6 +58,7 @@ bossRemain = 0
 bossHitpointRangeMin = 0
 bossHitpointRangeMax = 0
 
+groupItem = pygame.sprite.Group()
 groupPlayer = pygame.sprite.GroupSingle()
 groupPlayerOption = pygame.sprite.Group()
 groupPlayerBullet = pygame.sprite.Group()
@@ -65,6 +67,7 @@ groupEnemyBullet = pygame.sprite.Group()
 groupBoss = pygame.sprite.GroupSingle()
 groupParticle = pygame.sprite.Group()
 stgGroups = (
+    groupItem,
     groupPlayer,
     groupPlayerOption,
     groupEnemy,

@@ -3,6 +3,7 @@ import typing
 import pygame
 
 EmptyTexture = pygame.Surface((1, 1))
+EmptyTextureRect = EmptyTexture.get_rect()
 
 @dataclasses.dataclass
 class Hitbox:
@@ -14,7 +15,6 @@ class Sprite(pygame.sprite.Sprite):
     texturesRotated: typing.Optional[typing.Sequence[pygame.Surface]]
     position: pygame.Vector2
     angle: float = 0
-    angleLast: float = None
     frameCounter: int = 0
     interval: int = 1
     speed: pygame.Vector2

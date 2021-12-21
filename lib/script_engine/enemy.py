@@ -10,6 +10,7 @@ import lib.sprite
 import lib.sprite.debris
 import lib.sprite.enemy
 import lib.sprite.explosion
+import lib.sprite.item
 import lib.sound
 import lib.stg_overlay
 import lib.utils
@@ -48,7 +49,7 @@ class Opcode(enum.IntEnum):
     SET_POSITION_RELATIVE = enum.auto()
     SET_TEXTURE = enum.auto()
     SET_HITPOINT = enum.auto()
-    SET_SCORE = enum.auto()
+    SET_MAXGETPOINTADD = enum.auto()
     SET_INVINCIBLE = enum.auto()
     SET_EXPLOSION = enum.auto()
     SET_DEBRIS = enum.auto()
@@ -57,6 +58,7 @@ class Opcode(enum.IntEnum):
     SET_ANGLE = enum.auto()
     SET_ANGLE_RELATIVE = enum.auto()
     SET_EXPLODE_SFX = enum.auto()
+    SET_POINTITEM = enum.auto()
 
     SET_BOSS = enum.auto()
     SET_BOSS_REMAIN = enum.auto()
@@ -421,11 +423,11 @@ class Engine:
             hitpoint, = params
 
             self.context.hitpoint = hitpoint
-        elif opcode == Opcode.SET_SCORE:
+        elif opcode == Opcode.SET_MAXGETPOINTADD:
             params: tuple[int] = params
-            score, = params
+            num, = params
 
-            self.context.score = score
+            self.context.maxGetPointAdd = num
         elif opcode == Opcode.SET_INVINCIBLE:
             params: tuple[int] = params
             invincibleRemain, = params
@@ -472,6 +474,11 @@ class Engine:
             sfxName, = params
 
             self.context.explodeSfx = lib.sound.sfx[sfxName]
+        elif opcode == Opcode.SET_POINTITEM:
+            params: tuple[int] = params
+            num, = params
+
+            self.context.pointItemNum = num
         elif opcode == Opcode.SET_BOSS:
             lib.globals.groupBoss.sprite = self.context
         elif opcode == Opcode.SET_BOSS_REMAIN:
@@ -578,21 +585,16 @@ class Engine:
                 b: lib.bullet.enemy_bullet.EnemyBullet
                 b.explode()
         elif opcode == Opcode.BONUS_BULLET:
-            bonus = len(lib.globals.groupEnemyBullet) * (50 + lib.globals.grazeCount // 3)
+            bonus = len(lib.globals.groupEnemyBullet) * (lib.globals.maxGetPoint // 8)
             lib.globals.score += bonus
             lib.stg_overlay.overlayStatus[lib.stg_overlay.OverLayStatusIndex.PHASE_BONUS_REMAIN] = 240
             lib.stg_overlay.overlayStatus[lib.stg_overlay.OverLayStatusIndex.PHASE_BONUS_VALUE] = bonus
+            lib.globals.maxGetPoint += 8 * len(lib.globals.groupEnemyBullet)
             lib.sound.sfx['BONUS'].play()
         elif opcode == Opcode.EXTEND_LIFE:
-            if lib.globals.lifeNum < 8:
-                lib.globals.lifeNum += 1
-                lib.stg_overlay.overlayStatus[lib.stg_overlay.OverLayStatusIndex.LIFE_REMAIN] = 240
-                lib.sound.sfx['EXTEND_LIFE'].play()
+            lib.sprite.item.LifeExtend(self.context.position)
         elif opcode == Opcode.EXTEND_HYPER:
-            if lib.globals.hyperNum < 8:
-                lib.globals.hyperNum += 1
-                lib.stg_overlay.overlayStatus[lib.stg_overlay.OverLayStatusIndex.HYPER_REMAIN] = 240
-                lib.sound.sfx['EXTEND_HYPER'].play()
+            lib.sprite.item.HyperExtend(self.context.position)
         elif opcode == Opcode.PRESET_ENEMY_A:
             # SET_TEXTURE ENEMY_A
             # SET_EXPLOSION LARGE
@@ -604,7 +606,7 @@ class Engine:
             # SET_DEBRIS DEBRIS_A 20 -6 .125 2 1 5 1
             # SET_DEBRIS DEBRIS_B 0 12 .125 2 1 5 2
             # SET_DEBRIS DEBRIS_B 0 -10 .125 2 1 5 1
-            # SET_SCORE 1000
+            # SET_MAXGETPOINTADD 1000
             self.context.textures = EnemyTexturesTable['ENEMY_A']
             self.context.explosion = ExplosionTable['LARGE']
             self.context.hitbox = [

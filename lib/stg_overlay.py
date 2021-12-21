@@ -34,9 +34,7 @@ def update():
 
 def draw(surface: pygame.Surface):
     if lib.globals.continueRemain:
-        continueRemainDigits = lib.utils.splitDigits(lib.globals.continueRemain // 60)
-        continueRemainSurface = pygame.Surface((48 * len(continueRemainDigits), 64), pygame.SRCALPHA)
-        continueRemainSurface.blits((overlayNumber2x[x], (48 * i, 0)) for i, x in enumerate(continueRemainDigits))
+        continueRemainSurface = lib.utils.renderBitmapNumber(lib.globals.continueRemain // 60, overlayNumber2x)
         surface.blits((
             (overlayContinue, (224, 320)),
             (continueRemainSurface, (384 - continueRemainSurface.get_width() // 2, 576 - continueRemainSurface.get_height())),
