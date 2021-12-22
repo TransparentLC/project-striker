@@ -32,9 +32,7 @@ class Player(Sprite):
         self.speed = pygame.Vector2(0, 0)
         self.boundary = playerBoundary
         self.position = pygame.Vector2(playerInitialPosition)
-        self.hitbox = (
-            Hitbox(pygame.Vector2(0, 0), 3),
-        )
+        self.hitbox = (Hitbox(pygame.Vector2(0, 0), 2),)
         self.options = []
         self.interval = 5
 

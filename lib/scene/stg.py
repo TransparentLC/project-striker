@@ -36,8 +36,9 @@ def update():
         if not lib.globals.continueCount:
             for extendLimit in (
                 5000000,
-                10000000,
-                20000000,
+                15000000,
+                30000000,
+                50000000,
             ):
                 if (
                     lib.globals.scoreLastFrame < extendLimit and
