@@ -35,7 +35,7 @@ class Item(lib.sprite.Sprite):
     def __init__(self, position: pygame.Vector2, texture: pygame.Surface) -> None:
         super().__init__(lib.globals.groupItem)
         self.position = position
-        self.speed = pygame.Vector2(0, -1)
+        self.speed = pygame.Vector2(0, -.75)
         self.textures = (texture,)
         self.magnet = False
         self.image = lib.sprite.EmptyTexture
@@ -55,7 +55,7 @@ class Item(lib.sprite.Sprite):
         if s.deathWait and self.magnet:
             self.magnet = False
             self.speed.update(0, 0)
-        self.speed.y += .02
+        self.speed.y += .015
         if not s.deathWait:
             if s.position.y < lib.constants.ITEM_GET_BORDER:
                 self.magnet = True
@@ -89,8 +89,9 @@ class Point(Item):
             point = int(lib.utils.linearInterpolation((self.position.y - lib.constants.ITEM_GET_BORDER) / (448 - lib.constants.ITEM_GET_BORDER), .6, .25) * lib.globals.maxGetPoint)
             number = itemNumber
 
-        ItemEffect(self.position, lib.utils.renderBitmapNumber(point, number))
         lib.globals.score += point
+        ItemEffect(self.position, lib.utils.renderBitmapNumber(point, number))
+        lib.sound.sfx['GET_POINT'].play()
 
 class LifeExtend(Item):
     def __init__(self, position: pygame.Vector2) -> None:
@@ -100,8 +101,8 @@ class LifeExtend(Item):
         if lib.globals.lifeNum < 8:
             lib.globals.lifeNum += 1
         lib.stg_overlay.overlayStatus[lib.stg_overlay.OverLayStatusIndex.LIFE_REMAIN] = 240
-        lib.sound.sfx['EXTEND_LIFE'].play()
         ItemEffect(self.position, itemEffectLifeExtend)
+        lib.sound.sfx['EXTEND_LIFE'].play()
 
 class HyperExtend(Item):
     def __init__(self, position: pygame.Vector2) -> None:
@@ -111,5 +112,5 @@ class HyperExtend(Item):
         if lib.globals.hyperNum < 8:
             lib.globals.hyperNum += 1
         lib.stg_overlay.overlayStatus[lib.stg_overlay.OverLayStatusIndex.HYPER_REMAIN] = 240
-        lib.sound.sfx['EXTEND_HYPER'].play()
         ItemEffect(self.position, itemEffectHyperExtend)
+        lib.sound.sfx['EXTEND_HYPER'].play()

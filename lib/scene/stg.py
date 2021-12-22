@@ -31,13 +31,13 @@ def update():
             g.update()
 
         if lib.globals.groupBoss.sprite:
-            lib.globals.maxGetPoint = max(10000, lib.globals.maxGetPoint - 3)
+            lib.globals.maxGetPoint = max(10000, lib.globals.maxGetPoint - 2)
 
         if not lib.globals.continueCount:
             for extendLimit in (
-                # 200000,
-                # 500000,
-                # 1000000,
+                5000000,
+                10000000,
+                20000000,
             ):
                 if (
                     lib.globals.scoreLastFrame < extendLimit and

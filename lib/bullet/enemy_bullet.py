@@ -46,7 +46,7 @@ class EnemyBullet(lib.bullet.Bullet):
                     self.grazed = True
                     lib.globals.grazeCount += 1
                     lib.globals.score += len(lib.globals.groupEnemyBullet)
-                    if not lib.globals.groupBoss.sprite:
+                    if not lib.globals.groupBoss.sprite and not s.invincibleRemain and not s.hyperRemain:
                         lib.globals.maxGetPoint += len(lib.globals.groupEnemyBullet)
                     lib.sound.sfx[random.choice(('GRAZE_A', 'GRAZE_B'))].play()
                     break

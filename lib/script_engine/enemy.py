@@ -78,6 +78,7 @@ class Opcode(enum.IntEnum):
 
     CLEAR_BULLET = enum.auto()
     BONUS_BULLET = enum.auto()
+    DROP_POINTITEM = enum.auto()
     EXTEND_LIFE = enum.auto()
     EXTEND_HYPER = enum.auto()
 
@@ -585,12 +586,22 @@ class Engine:
                 b: lib.bullet.enemy_bullet.EnemyBullet
                 b.explode()
         elif opcode == Opcode.BONUS_BULLET:
-            bonus = len(lib.globals.groupEnemyBullet) * (lib.globals.maxGetPoint // 8)
+            bonus = len(lib.globals.groupEnemyBullet) * lib.globals.maxGetPoint // 8
             lib.globals.score += bonus
             lib.stg_overlay.overlayStatus[lib.stg_overlay.OverLayStatusIndex.PHASE_BONUS_REMAIN] = 240
             lib.stg_overlay.overlayStatus[lib.stg_overlay.OverLayStatusIndex.PHASE_BONUS_VALUE] = bonus
-            lib.globals.maxGetPoint += 8 * len(lib.globals.groupEnemyBullet)
+            lib.globals.maxGetPoint += 16 * len(lib.globals.groupEnemyBullet)
             lib.sound.sfx['BONUS'].play()
+        elif opcode == Opcode.DROP_POINTITEM:
+            params: tuple[int] = params
+            num, = params
+
+            minwh = min(self.context.rect.width, self.context.rect.height)
+            for i in range(num):
+                pos = pygame.Vector2(random.random() * minwh, 0)
+                pos.rotate_ip(random.random() * 360)
+                pos += self.context.position
+                lib.sprite.item.Point(pos)
         elif opcode == Opcode.EXTEND_LIFE:
             lib.sprite.item.LifeExtend(self.context.position)
         elif opcode == Opcode.EXTEND_HYPER:

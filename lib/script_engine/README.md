@@ -208,6 +208,10 @@ OPERATION param0 param1 param2 ... @ tag # comment
 
 根据同屏弹量结算一次加分。
 
+`DROP_POINTITEM num:int`
+
+掉落指定数量的得分道具。
+
 `EXTEND_LIFE`
 `EXTEND_HYPER`
 

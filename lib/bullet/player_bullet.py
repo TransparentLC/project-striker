@@ -80,7 +80,7 @@ class PlayerBullet(lib.bullet.Bullet):
                 b: lib.bullet.enemy_bullet.EnemyBullet
                 if self.position.distance_squared_to(b.position) < self.size ** 2:
                     lib.globals.score += 8 * len(lib.globals.groupEnemyBullet)
-                    lib.globals.maxGetPoint = max(10000, lib.globals.maxGetPoint - len(lib.globals.groupEnemyBullet) // 8)
+                    lib.globals.maxGetPoint = max(10000, lib.globals.maxGetPoint - max(4, len(lib.globals.groupEnemyBullet) // 32))
                     self.bulletCancelRemain -= 1
                     b.explode()
                     if not self.bulletCancelRemain:
