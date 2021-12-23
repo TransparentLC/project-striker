@@ -4,16 +4,16 @@
 ![size](https://img.shields.io/github/repo-size/TransparentLC/project-striker)
 ![lines](https://img.shields.io/tokei/lines/github/TransparentLC/project-striker)
 
-一个弹幕射击游戏。
+一个随便做做的弹幕射击游戏。
 
-![](https://dd-static.jd.com/ddimg/jfs/t1/161575/12/27237/268036/61bc8bceE310fa3d6/92e0be2447ea02eb.png)
+![](https://dd-static.jd.com/ddimg/jfs/t1/176673/26/24803/276538/61c40911E010c515e/5ef3c94ae5e79826.png)
 
 ## 基本介绍
 
 这是一个使用 [pygame](https://www.pygame.org/) 制作的简单（？）弹幕射击游戏，目的是回避弹幕并击破敌机，在每一关的最后有一个比较强的 BOSS，击破后就算是过关了。
 
 一共有 3 种机体和 4 个关卡，通关流程大概为 20 分钟。[（通关演示/云玩家通道）
-](https://hlsplayer.stream/video/stream.html?url=https://ae01.alicdn.com/kf/Hec9064265cd24f74b6206280a4d91437D.jpg)
+](https://hlsplayer.stream/video/stream.html?url=https://fs-im-kefu.7moor-fs2.com/im/2768a390-5474-11ea-afc9-7b323e3e16c0/C5KPb8eNLmwwSzIv.m3u8)
 
 音乐和图片用的都是免费素材，具体请参见后面的[借物表](#借物表)。没有剧情之类的设定。另外这个游戏里有不少借鉴东方 Project 的地方……
 
