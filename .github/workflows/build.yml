@@ -64,7 +64,7 @@ jobs:
           elif [ "$RUNNER_OS" == "Linux" ]; then
             ext=""
           elif [ "$RUNNER_OS" == "macOS" ]; then
-            ext=".app"
+            ext=".zip"
           fi
           echo "::set-output name=ext::${ext}"
           echo "::set-output name=executableName::striker-$(date +%Y%m%d-%H%M%S)-$(git rev-parse --short HEAD)-${{ runner.os }}${ext}"
@@ -74,11 +74,15 @@ jobs:
             export pyiSeparator=";"
           fi
           bash build.sh
-          mv dist/striker${{ steps.vars.outputs.ext }} dist/${{ steps.vars.outputs.executableName }}
-          ls -l dist
-          if [ "$RUNNER_OS" != "macOS" ]; then
-            openssl sha256 dist/${{ steps.vars.outputs.executableName }}
+          if [ "$RUNNER_OS" == "macOS" ]; then
+            cd dist
+            zip -r9 ${{ steps.vars.outputs.executableName }} striker.app
+            cd ..
+          else
+            mv dist/striker${{ steps.vars.outputs.ext }} dist/${{ steps.vars.outputs.executableName }}
           fi
+          ls -l dist
+          openssl sha256 dist/${{ steps.vars.outputs.executableName }}
       - name: Upload result
         uses: actions/upload-artifact@v2
         with:

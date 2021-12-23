@@ -23,18 +23,20 @@
 
 ## 如何运行
 
-最简单的方式是直接下载使用 GitHub Actions 自动打包的，可以在 Windows/Linux x64 下运行的单个[可执行文件](https://github.com/TransparentLC/project-striker/actions/workflows/build.yml)。打包使用 PyInstaller 完成。
+最简单的方式是直接下载[使用 GitHub Actions 自动打包](https://github.com/TransparentLC/project-striker/actions/workflows/build.yml)的，可以在 Windows/Linux 下运行的单个可执行文件或 macOS 下的 bundle。打包使用 PyInstaller 完成。
 
 未登录 GitHub 的话，可以在这里下载：
 
 * [Windows 版](https://nightly.link/TransparentLC/project-striker/workflows/build/master/striker-Windows)
 * [Linux 版](https://nightly.link/TransparentLC/project-striker/workflows/build/master/striker-Linux)
+* [macOS 版](https://nightly.link/TransparentLC/project-striker/workflows/build/master/striker-macOS)
 
 和系统相关的说明：
 
 * Windows 版可能会被 Windows Defender 或其它杀毒软件报毒，属于误报。
 * Linux 版打包和测试是在 Ubuntu 20.04 上进行的，并没有测试在其他 Linux 发行版上是否可以运行。
-* 虽然 GitHub Actions 也可以选择使用 macOS 的镜像，但是由于我没有环境测试且对 macOS 软件生态不了解，因此并没有添加相关的打包支持。
+* macOS 版的 bundle 文件夹包含在一个 ZIP 文件内。
+* 打包后的可执行文件为 x64 架构。
 
 也可以使用 `pip install -r requirements.txt` 安装依赖，并参见[这里](https://github.com/TransparentLC/project-striker/blob/master/font/README.md)下载字体后，直接从 `main.py` 以源代码形式运行（需要 Python 3.9 或以上版本，之前的版本或许也可以但我没有测试过）。
 
@@ -83,5 +85,4 @@
 * 自机判定点的显示（其实是因为没找到合适的图片素材）
 * 完整的背景卷轴设计（也是因为素材不够）
 * 键位修改（暂时可以用改键工具替代）
-* macOS 打包支持（对这方面完全哇嘎奶 QwQ）
 * ……
