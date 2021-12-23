@@ -6,7 +6,7 @@
 
 一个随便做做的弹幕射击游戏。
 
-![](https://dd-static.jd.com/ddimg/jfs/t1/176673/26/24803/276538/61c40911E010c515e/5ef3c94ae5e79826.png)
+![](https://user-images.githubusercontent.com/47057319/147250475-e5aa18cd-5607-4901-a924-4879b264f492.png)
 
 ## 基本介绍
 
