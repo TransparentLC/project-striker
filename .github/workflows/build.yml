@@ -20,7 +20,7 @@ jobs:
         os:
           - windows-latest
           - ubuntu-latest
-          # - macos-latest
+          - macos-latest
     steps:
       - uses: actions/checkout@v2
       - name: Setup Python
@@ -64,7 +64,7 @@ jobs:
           elif [ "$RUNNER_OS" == "Linux" ]; then
             ext=""
           elif [ "$RUNNER_OS" == "macOS" ]; then
-            ext=""
+            ext=".app"
           fi
           echo "::set-output name=ext::${ext}"
           echo "::set-output name=executableName::striker-$(date +%Y%m%d-%H%M%S)-$(git rev-parse --short HEAD)-${{ runner.os }}${ext}"
