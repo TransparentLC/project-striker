@@ -42,7 +42,7 @@ jobs:
         run: |
           mkdir .font
           curl \
-            https://mirrors.cloud.tencent.com/adobe-fonts/source-han-serif/OTF/SimplifiedChinese/SourceHanSerifSC-Medium.otf \
+            https://github.com/adobe-fonts/source-han-serif/raw/release/OTF/SimplifiedChinese/SourceHanSerifSC-Medium.otf \
             --no-progress-meter \
             --output .font/SourceHanSerifSC-Medium.otf
       - name: Generate font subset
