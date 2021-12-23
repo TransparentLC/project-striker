@@ -76,7 +76,9 @@ jobs:
           bash build.sh
           mv dist/striker${{ steps.vars.outputs.ext }} dist/${{ steps.vars.outputs.executableName }}
           ls -l dist
-          openssl sha256 dist/${{ steps.vars.outputs.executableName }}
+          if [ "$RUNNER_OS" != "macOS" ]; then
+            openssl sha256 dist/${{ steps.vars.outputs.executableName }}
+          fi
       - name: Upload result
         uses: actions/upload-artifact@v2
         with:
