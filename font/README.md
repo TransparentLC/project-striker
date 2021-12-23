@@ -2,7 +2,7 @@
 
 由于完整的字体文件大小较大（单个字重的 OTF 大小在 20 MB），因此并没有上传到仓库中，需要从以下链接之一下载 `SourceHanSerifSC-Medium.otf`，保存到这个目录：
 
-* https://github.com/adobe-fonts/source-han-serif/raw/release/OTF/SimplifiedChinese/SourceHanSerifSC-Medium.otf
+* https://raw.githubusercontent.com/adobe-fonts/source-han-serif/release/OTF/SimplifiedChinese/SourceHanSerifSC-Medium.otf
 * https://mirrors.cloud.tencent.com/adobe-fonts/source-han-serif/OTF/SimplifiedChinese/SourceHanSerifSC-Medium.otf
 * https://mirrors.tuna.tsinghua.edu.cn/adobe-fonts/source-han-serif/OTF/SimplifiedChinese/SourceHanSerifSC-Medium.otf
 * https://mirrors.sustech.edu.cn/adobe-fonts/source-han-serif/OTF/SimplifiedChinese/SourceHanSerifSC-Medium.otf
