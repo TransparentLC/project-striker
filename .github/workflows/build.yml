@@ -82,7 +82,13 @@ jobs:
             mv dist/striker${{ steps.vars.outputs.ext }} dist/${{ steps.vars.outputs.executableName }}
           fi
           ls -l dist
-          openssl sha256 dist/${{ steps.vars.outputs.executableName }}
+      - name: Get SHA-256 checksum of built executable
+        run: |
+          if [ "$RUNNER_OS" == "macOS" ]; then
+            openssl sha256 dist/striker.app/Contents/MacOS/striker
+          else
+            openssl sha256 dist/${{ steps.vars.outputs.executableName }}
+          fi
       - name: Upload result
         uses: actions/upload-artifact@v2
         with:
