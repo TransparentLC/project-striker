@@ -144,20 +144,20 @@ class OptionTypeB0(PlayerOption):
             lib.bullet.player_bullet.PlayerBullet(
                 self.position,
                 lib.bullet.player_bullet.bulletTexture2WayHyper,
-                size=lib.bullet.player_bullet.bulletSize2Way * 4 // 3, speed=10, angle=self.angle, damage=7,
+                size=lib.bullet.player_bullet.bulletSize2Way * 3 // 2, speed=10, angle=self.angle, damage=7,
                 flags=lib.bullet.player_bullet.PlayerBulletFlags.BULLET_CANCELLING
             )
             lib.bullet.player_bullet.PlayerBullet(
                 self.position,
                 lib.bullet.player_bullet.bulletTexture1WayHyper,
-                size=lib.bullet.player_bullet.bulletSize1Way * 4 // 3, speed=12, angle=self.angle - 7, damage=3,
+                size=lib.bullet.player_bullet.bulletSize1Way * 3 // 2, speed=12, angle=self.angle - 7, damage=3,
                 flags=lib.bullet.player_bullet.PlayerBulletFlags.BULLET_CANCELLING
             )
             if not self.slow:
                 lib.bullet.player_bullet.PlayerBullet(
                     self.position,
                     lib.bullet.player_bullet.bulletTexture1WayHyper,
-                    size=lib.bullet.player_bullet.bulletSize1Way * 4 // 3, speed=12, angle=self.angle + 3, damage=3,
+                    size=lib.bullet.player_bullet.bulletSize1Way * 3 // 2, speed=12, angle=self.angle + 3, damage=3,
                     flags=lib.bullet.player_bullet.PlayerBulletFlags.BULLET_CANCELLING
                 )
             self.shootWait = 6
@@ -165,18 +165,18 @@ class OptionTypeB0(PlayerOption):
             lib.bullet.player_bullet.PlayerBullet(
                 self.position,
                 lib.bullet.player_bullet.bulletTexture2Way,
-                size=lib.bullet.player_bullet.bulletSize2Way * 4 // 3, speed=8, angle=self.angle, damage=5
+                size=lib.bullet.player_bullet.bulletSize2Way * 3 // 2, speed=8, angle=self.angle, damage=5
             )
             lib.bullet.player_bullet.PlayerBullet(
                 self.position,
                 lib.bullet.player_bullet.bulletTexture1Way,
-                size=lib.bullet.player_bullet.bulletSize1Way * 4 // 3, speed=10, angle=self.angle - 7, damage=3
+                size=lib.bullet.player_bullet.bulletSize1Way * 3 // 2, speed=10, angle=self.angle - 7, damage=3
             )
             if not self.slow:
                 lib.bullet.player_bullet.PlayerBullet(
                     self.position,
                     lib.bullet.player_bullet.bulletTexture1Way,
-                    size=lib.bullet.player_bullet.bulletSize1Way * 4 // 3, speed=10, angle=self.angle + 3, damage=3
+                    size=lib.bullet.player_bullet.bulletSize1Way * 3 // 2, speed=10, angle=self.angle + 3, damage=3
                 )
             self.shootWait = 10 if self.slow else 15
         lib.sound.sfx[random.choice(('PLAYER_SHOOT_A', 'PLAYER_SHOOT_B'))].play()
