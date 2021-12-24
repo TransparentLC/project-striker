@@ -34,7 +34,7 @@ class ItemEffect(pygame.sprite.Sprite):
 class Item(lib.sprite.Sprite):
     def __init__(self, position: pygame.Vector2, texture: pygame.Surface) -> None:
         super().__init__(lib.globals.groupItem)
-        self.position = position
+        self.position = pygame.Vector2(position)
         self.speed = pygame.Vector2(0, -.75)
         self.textures = (texture,)
         self.magnet = False
