@@ -85,3 +85,103 @@
 * 完整的背景卷轴设计（也是因为素材不够）
 * 键位修改（暂时可以用改键工具替代）
 * ……
+
+## 目录结构
+
+<details>
+
+```plaintext
+project-striker
+│  .gitignore
+│  build-info.txt # 在打包时记录打包时间及对应的commit信息
+│  build.ps1 # 打包脚本
+│  build.sh # 打包脚本
+│  icon.ico
+│  LICENSE
+│  main.py # 入口文件
+│  README.md
+│  requirements-build.txt
+│  requirements.txt
+│
+├─.github
+│  └─workflows
+│          build.yml # Github Actions 自动打包脚本
+│
+├─.vscode
+│      launch.json
+│
+├─assets # 图片素材
+│      ...
+│
+├─font # 字体
+│      README.md
+│      SourceHanSerifSC-Medium.otf
+│
+├─lib
+│  │  constants.py # 部分常数
+│  │  debug.py # 测试用函数，目前只有显示弹幕判定大小
+│  │  font.py # 字体渲染，主要是处理多行文本
+│  │  globals.py # 全局变量
+│  │  scroll_map.py # 背景卷轴
+│  │  sound.py # 背景音乐和音效播放
+│  │  stg_overlay.py # 游戏主界面上提示分数/残机奖励等等的图层
+│  │  utils.py # 一些工具函数及各种插值函数
+│  │  __init__.py
+│  │
+│  ├─bullet
+│  │  enemy_bullet.py # 敌机弹幕相关
+│  │  player_bullet.py # 自机弹幕相关
+│  │  __init__.py
+│  │
+│  ├─scene # 游戏中的各个界面
+│  │  config.py
+│  │  manual.py
+│  │  result.py
+│  │  select_option.py
+│  │  stg.py
+│  │  title.py
+│  │  __init__.py
+│  │
+│  ├─script_engine # 敌机行动脚本和关卡脚本的解析
+│  │  enemy.py
+│  │  README.md
+│  │  stage.py
+│  │  __init__.py
+│  │
+│  └─sprite # 各种活动块相关
+│     debris.py # 击破敌机后的碎片效果
+│     enemy.py # 敌机
+│     explosion.py # 击破敌机后的爆炸效果
+│     item.py # 道具
+│     option.py # 自机的子机
+│     player.py # 自机
+│     __init__.py
+│
+├─psd # 背景图片的源文件
+│     ...
+│
+├─scriptfiles
+│  ├─enemy # 敌机脚本
+│  │      ...
+│  │
+│  ├─map # 背景卷轴内容
+│  │      ...
+│  │
+│  └─stage # 关卡脚本
+│         ...
+│
+├─sound
+│  ├─bgm # 背景音乐
+│  │      ...
+│  │
+│  └─sfx # 音效
+│         ...
+│
+└─tool # 其他的工具脚本
+        generate-font-subset.py # 生成子集化字体
+        map-editor.html # 背景卷轴编辑器
+        script-tag.py # 在编写脚本时生成随机的标签
+        webp-lossless.py # 将图片无损转换为webp
+```
+
+</details>
