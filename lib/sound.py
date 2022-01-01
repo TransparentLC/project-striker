@@ -75,6 +75,6 @@ def playBgm(bgmName: str):
         return
     bgmHeader, bgmLoop = bgm[bgmName]
     pygame.mixer.music.stop()
-    pygame.mixer.music.load(bgmHeader)
+    pygame.mixer.music.load(lib.utils.getResourceHandler(bgmHeader))
     pygame.mixer.music.play()
-    pygame.mixer.music.queue(bgmLoop, loops=-1)
+    pygame.mixer.music.queue(lib.utils.getResourceHandler(bgmLoop), loops=-1)
