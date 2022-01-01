@@ -266,8 +266,8 @@ class Engine:
             scriptFile, = params
 
             self.halted = True
-            with open(scriptFile, 'r', encoding='utf-8') as f:
-                lib.globals.stageEngine = Engine(f.read())
+            with lib.utils.getResourceHandler(scriptFile) as f:
+                lib.globals.stageEngine = Engine(f.read().decode())
         elif opcode == Opcode.SPAWN:
             # (-30, -80) (424, 478)
             params: tuple[float, float, float, str] = params
