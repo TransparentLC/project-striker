@@ -28,9 +28,13 @@ tileset = pygame.image.load(lib.utils.getResourceHandler('assets/map-tileset.web
 tiles = tuple(tileset.subsurface(((x & 15) << 5, (x & -16) << 1, 32, 32)).convert() for x in range(74))
 
 backgrounds = []
-for x in os.listdir('scriptfiles/map'):
-    with open(f'scriptfiles/map/{x}', 'r') as f:
-        tileData = f.read()
+for x in (
+    (y for y in lib.utils.PACKED_RESOURCE_HANDLER.getnames() if y.startswith('scriptfiles/map/'))
+    if lib.utils.PACKED_RESOURCE_HANDLER else
+    (f'scriptfiles/map/{y}' for y in os.listdir('scriptfiles/map'))
+):
+    with lib.utils.getResourceHandler(x) as f:
+        tileData = f.read().decode('utf-8')
 
         blitSequence: list[tuple[pygame.Surface, tuple[float, float]]] = []
         y = 0

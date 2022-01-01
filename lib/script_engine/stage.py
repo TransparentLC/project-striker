@@ -279,8 +279,8 @@ class Engine:
             if scriptFile in enemyScriptCache and not os.environ.get('STRIKER_DEBUG_DISABLE_ENEMY_CACHE'):
                 script = enemyScriptCache[scriptFile]
             else:
-                with open(scriptFile, 'r', encoding='utf-8') as f:
-                    script = f.read()
+                with lib.utils.getResourceHandler(scriptFile) as f:
+                    script = f.read().decode('utf-8')
             enemy.setScript(script)
         elif opcode == Opcode.BGM:
             params: tuple[str] = params

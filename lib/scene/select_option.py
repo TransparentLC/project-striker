@@ -88,8 +88,8 @@ def update():
                 lib.sprite.option.OptionTypeC(8, pygame.Vector2(25, 0), pygame.Vector2(10, -15), 0, 0),
             ]
 
-        with open('scriptfiles/stage/stage1.txt', 'r', encoding='utf-8') as f:
-            lib.globals.stageEngine = lib.script_engine.stage.Engine(f.read())
+        with lib.utils.getResourceHandler('scriptfiles/stage/stage1.txt') as f:
+            lib.globals.stageEngine = lib.script_engine.stage.Engine(f.read().decode('utf-8'))
         lib.globals.nextScene = lib.scene.stg
 
 def draw(surface: pygame.Surface):
