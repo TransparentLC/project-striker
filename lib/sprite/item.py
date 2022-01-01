@@ -8,7 +8,7 @@ import lib.sprite.player
 import lib.stg_overlay
 import lib.utils
 
-itemSurface = pygame.image.load('assets/item.webp').convert_alpha()
+itemSurface = pygame.image.load(lib.utils.getResourceHandler('assets/item.webp')).convert_alpha()
 itemNumber = tuple(itemSurface.subsurface((6 * x, 0, 6, 8)) for x in range(10))
 itemNumberHighlight = tuple(itemSurface.subsurface((6 * x, 8, 6, 8)) for x in range(10))
 itemImage = tuple(itemSurface.subsurface((16 * x, 16, 16, 16)) for x in range(5))

@@ -1,8 +1,15 @@
+import os
 import pathlib
 import pygame
 
 TITLE = 'Striker'
 DATA_DIR = f'{pathlib.Path.home()}/.striker'
+
+if os.path.exists('build-info.txt'):
+    with open('build-info.txt', 'r', encoding='utf-8') as f:
+        BUILD_INFO = f.read().splitlines()
+else:
+    BUILD_INFO = None
 
 DEBUG_INPUT_DISPLAY_PRESSED = pygame.Color(255, 255, 0)
 DEBUG_INPUT_DISPLAY_NOTPRESSED = pygame.Color(127, 127, 127)

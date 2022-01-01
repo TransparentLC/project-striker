@@ -1,6 +1,7 @@
 import platform
 import pygame
 
+import lib.constants
 import lib.font
 import lib.scene.title
 import lib.sound
@@ -11,9 +12,6 @@ from .title import MENU_ITEMS
 from .title import SHADE
 
 fontNormalRenderer = lib.font.FontRenderer(lib.font.FONT_NORMAL, (255, 255, 255))
-
-with open('build-info.txt', 'r', encoding='utf-8') as f:
-    BUILD_INFO = f.read().splitlines()
 
 # 一行42个全角字符，一页最多17行，用----------------分页
 manualPages = tuple(fontNormalRenderer.render(x.strip()) for x in f'''
@@ -108,8 +106,8 @@ manualPages = tuple(fontNormalRenderer.render(x.strip()) for x in f'''
 源代码以GNU AGPL 3.0许可证发布。
 https://github.com/TransparentLC/project-striker
 
-Commit: {BUILD_INFO[0]}
-Build time: {BUILD_INFO[1]}
+Commit: {lib.constants.BUILD_INFO[0] if lib.constants.BUILD_INFO else '???'}
+Build time: {lib.constants.BUILD_INFO[1] if lib.constants.BUILD_INFO else '???'}
 
 Built with:
 　Python {platform.python_version()}

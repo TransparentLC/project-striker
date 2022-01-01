@@ -91,15 +91,15 @@ class Opcode(enum.IntEnum):
     # = enum.auto()
 
 EnemyTexturesTable = {
-    'ENEMY_A': tuple(pygame.image.load(f'assets/enemy-a-{i}.webp').convert_alpha() for i in range(2)),
-    'ENEMY_B': tuple(pygame.image.load(f'assets/enemy-b-{i}.webp').convert_alpha() for i in range(2)),
-    'ENEMY_C': tuple(pygame.image.load(f'assets/enemy-c-{i}.webp').convert_alpha() for i in range(2)),
-    'ENEMY_D': tuple(pygame.image.load(f'assets/enemy-d-{i}.webp').convert_alpha() for i in range(2)),
-    'ENEMY_E': tuple(pygame.image.load(f'assets/enemy-e-{i}.webp').convert_alpha() for i in range(2)),
-    'BOSS_A': tuple(pygame.image.load(f'assets/boss-a-{i}.webp').convert_alpha() for i in range(2)),
-    'BOSS_B': tuple(pygame.image.load(f'assets/boss-b-{i}.webp').convert_alpha() for i in range(2)),
-    'BOSS_C': tuple(pygame.image.load(f'assets/boss-c-{i}.webp').convert_alpha() for i in range(2)),
-    'BOSS_D': tuple(pygame.image.load(f'assets/boss-d-{i}.webp').convert_alpha() for i in range(2)),
+    'ENEMY_A': tuple(pygame.image.load(lib.utils.getResourceHandler(f'assets/enemy-a-{i}.webp')).convert_alpha() for i in range(2)),
+    'ENEMY_B': tuple(pygame.image.load(lib.utils.getResourceHandler(f'assets/enemy-b-{i}.webp')).convert_alpha() for i in range(2)),
+    'ENEMY_C': tuple(pygame.image.load(lib.utils.getResourceHandler(f'assets/enemy-c-{i}.webp')).convert_alpha() for i in range(2)),
+    'ENEMY_D': tuple(pygame.image.load(lib.utils.getResourceHandler(f'assets/enemy-d-{i}.webp')).convert_alpha() for i in range(2)),
+    'ENEMY_E': tuple(pygame.image.load(lib.utils.getResourceHandler(f'assets/enemy-e-{i}.webp')).convert_alpha() for i in range(2)),
+    'BOSS_A': tuple(pygame.image.load(lib.utils.getResourceHandler(f'assets/boss-a-{i}.webp')).convert_alpha() for i in range(2)),
+    'BOSS_B': tuple(pygame.image.load(lib.utils.getResourceHandler(f'assets/boss-b-{i}.webp')).convert_alpha() for i in range(2)),
+    'BOSS_C': tuple(pygame.image.load(lib.utils.getResourceHandler(f'assets/boss-c-{i}.webp')).convert_alpha() for i in range(2)),
+    'BOSS_D': tuple(pygame.image.load(lib.utils.getResourceHandler(f'assets/boss-d-{i}.webp')).convert_alpha() for i in range(2)),
 }
 
 MoveInterpolationFunctionTable = {
@@ -126,16 +126,16 @@ DebrisTable = {
 }
 
 BulletTextureTable = {
-    'TYPE_A': pygame.image.load('assets/enemy-bullet-a.webp').convert_alpha(),
-    'TYPE_B': pygame.image.load('assets/enemy-bullet-b.webp').convert_alpha(),
-    'TYPE_C': pygame.image.load('assets/enemy-bullet-c.webp').convert_alpha(),
-    'TYPE_D': pygame.image.load('assets/enemy-bullet-d.webp').convert_alpha(),
-    'TYPE_E': pygame.image.load('assets/enemy-bullet-e.webp').convert_alpha(),
-    'TYPE_A_2X': pygame.image.load('assets/enemy-bullet-a-2x.webp').convert_alpha(),
-    'TYPE_B_2X': pygame.image.load('assets/enemy-bullet-b-2x.webp').convert_alpha(),
-    'TYPE_C_2X': pygame.image.load('assets/enemy-bullet-c-2x.webp').convert_alpha(),
-    'TYPE_D_2X': pygame.image.load('assets/enemy-bullet-d-2x.webp').convert_alpha(),
-    'TYPE_E_2X': pygame.image.load('assets/enemy-bullet-e-2x.webp').convert_alpha(),
+    'TYPE_A': pygame.image.load(lib.utils.getResourceHandler('assets/enemy-bullet-a.webp')).convert_alpha(),
+    'TYPE_B': pygame.image.load(lib.utils.getResourceHandler('assets/enemy-bullet-b.webp')).convert_alpha(),
+    'TYPE_C': pygame.image.load(lib.utils.getResourceHandler('assets/enemy-bullet-c.webp')).convert_alpha(),
+    'TYPE_D': pygame.image.load(lib.utils.getResourceHandler('assets/enemy-bullet-d.webp')).convert_alpha(),
+    'TYPE_E': pygame.image.load(lib.utils.getResourceHandler('assets/enemy-bullet-e.webp')).convert_alpha(),
+    'TYPE_A_2X': pygame.image.load(lib.utils.getResourceHandler('assets/enemy-bullet-a-2x.webp')).convert_alpha(),
+    'TYPE_B_2X': pygame.image.load(lib.utils.getResourceHandler('assets/enemy-bullet-b-2x.webp')).convert_alpha(),
+    'TYPE_C_2X': pygame.image.load(lib.utils.getResourceHandler('assets/enemy-bullet-c-2x.webp')).convert_alpha(),
+    'TYPE_D_2X': pygame.image.load(lib.utils.getResourceHandler('assets/enemy-bullet-d-2x.webp')).convert_alpha(),
+    'TYPE_E_2X': pygame.image.load(lib.utils.getResourceHandler('assets/enemy-bullet-e-2x.webp')).convert_alpha(),
 }
 
 BulletSizeTable = {

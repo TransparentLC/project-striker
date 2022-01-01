@@ -3,6 +3,7 @@ import random
 
 import lib.globals
 import lib.sprite
+import lib.utils
 
 class Debris(lib.sprite.Sprite):
     def __init__(self, position: pygame.Vector2, spreadSpeed: float, rotateSpeed: float) -> None:
@@ -26,7 +27,7 @@ class DebrisA(Debris):
             spreadSpeed,
             rotateSpeed,
         )
-        self.textures = tuple(pygame.image.load(f'assets/debris-a-{i}.webp').convert_alpha() for i in range(8))
+        self.textures = tuple(pygame.image.load(lib.utils.getResourceHandler(f'assets/debris-a-{i}.webp')).convert_alpha() for i in range(8))
 
 class DebrisB(Debris):
     def __init__(self, position: pygame.Vector2, spreadSpeed: float, rotateSpeed: float) -> None:
@@ -35,4 +36,4 @@ class DebrisB(Debris):
             spreadSpeed,
             rotateSpeed,
         )
-        self.textures = tuple(pygame.image.load(f'assets/debris-b-{i}.webp').convert_alpha() for i in range(8))
+        self.textures = tuple(pygame.image.load(lib.utils.getResourceHandler(f'assets/debris-b-{i}.webp')).convert_alpha() for i in range(8))

@@ -12,6 +12,8 @@ buildTime=$(date "+%Y-%m-%d %H:%M:%S")
 echo $commitHash > build-info.txt
 echo -n $buildTime >> build-info.txt
 
+tar cf resources.tar assets scriptfiles sound
+
 pyiSeparator="${pyiSeparator:-:}"
 
 pyinstaller \
@@ -22,10 +24,7 @@ pyinstaller \
     --clean \
     --key $key \
     --log-level WARN \
-    --add-data "assets${pyiSeparator}assets" \
     --add-data "font/SourceHanSerifSC-Medium.otf${pyiSeparator}font" \
-    --add-data "scriptfiles${pyiSeparator}scriptfiles" \
-    --add-data "sound${pyiSeparator}sound" \
     --add-data "build-info.txt${pyiSeparator}." \
-    --collect-submodules lib \
+    --add-data "resources.tar${pyiSeparator}." \
     main.py

@@ -1,14 +1,16 @@
 import platform
 import pygame
 
+import lib.constants
 import lib.globals
 import lib.font
 import lib.sound
+import lib.utils
 
-BACKGROUND = pygame.image.load('assets/ui-title-background.webp').convert()
+BACKGROUND = pygame.image.load(lib.utils.getResourceHandler('assets/ui-title-background.webp')).convert()
 SHADE = pygame.Surface((1050, 700), pygame.SRCALPHA)
 pygame.draw.rect(SHADE, (0, 0, 0, 192), SHADE.get_rect(), 0, 8)
-MENU = pygame.image.load('assets/ui-title-menu.webp').convert_alpha()
+MENU = pygame.image.load(lib.utils.getResourceHandler('assets/ui-title-menu.webp')).convert_alpha()
 MENU_ITEMS = tuple(
     (
         MENU.subsurface((0, x * 64, 256, 64)),
@@ -21,12 +23,13 @@ import lib.scene.config
 import lib.scene.manual
 import lib.scene.select_option
 
-with open('build-info.txt', 'r', encoding='utf-8') as f:
-    BUILD_INFO = f.read().splitlines()
-
 VERSION_TEXT = tuple(lib.font.FONT_SMALL.render(x, True, (255, 255, 255)) for x in (
-    f'Built at {BUILD_INFO[1]} (Commit {BUILD_INFO[0][:7]}) with Python {platform.python_version()} Pygame {pygame.version.ver}',
-    '© 2021 TransparentLC https://akarin.dev',
+    (
+        f'Built at {lib.constants.BUILD_INFO[1]} (Commit {lib.constants.BUILD_INFO[0][:7]}) with Python {platform.python_version()} Pygame {pygame.version.ver}'
+        if lib.constants.BUILD_INFO else
+        f'Built with Python {platform.python_version()} Pygame {pygame.version.ver}'
+    ),
+    '© 2022 TransparentLC https://akarin.dev',
 ))
 
 menuChoice = 0

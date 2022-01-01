@@ -4,7 +4,7 @@ import pygame
 import lib.globals
 import lib.utils
 
-overlay = pygame.image.load('assets/overlay.webp')
+overlay = pygame.image.load(lib.utils.getResourceHandler('assets/overlay.webp'))
 overlayPhaseBonus = overlay.subsurface((0, 0, 512, 48))
 overlayLifeExtend = overlay.subsurface((0, 48, 256, 48))
 overlayHyperExtend = overlay.subsurface((256, 48, 256, 48))

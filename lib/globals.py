@@ -5,6 +5,7 @@ import pygame
 import typing
 
 import lib.constants
+import lib.utils
 
 try:
     if not os.path.exists(lib.constants.DATA_DIR):
@@ -19,7 +20,7 @@ except:
         'inputDisplay': False,
     }
 
-pygame.display.set_icon(pygame.image.load('assets/icon.webp'))
+pygame.display.set_icon(pygame.image.load(lib.utils.getResourceHandler('assets/icon.webp')))
 pygame.display.set_caption(lib.constants.TITLE)
 screen = pygame.display.set_mode(
     (1280, 960),

@@ -54,7 +54,7 @@
 * <kbd>P</kbd> 暂停游戏，再按一下就会恢复
 * <kbd>Esc</kbd> 在游戏过程中返回标题画面
 
-（想要改键或使用手柄？试试 [PowerToys](https://github.com/microsoft/PowerToys)、[JoyToKey](https://joytokey.net/)之类的有按键映射功能的工具吧）
+（想要改键或使用手柄？试试 [PowerToys](https://github.com/microsoft/PowerToys)、[JoyToKey](https://joytokey.net/) 之类的有按键映射功能的工具吧）
 
 ## “太难了，根本不能通关” >_<
 
@@ -178,10 +178,10 @@ project-striker
 │         ...
 │
 └─tool # 其他的工具脚本
-        generate-font-subset.py # 生成子集化字体
-        map-editor.html # 背景卷轴编辑器
-        script-tag.py # 在编写脚本时生成随机的标签
-        webp-lossless.py # 将图片无损转换为webp
+      generate-font-subset.py # 生成子集化字体
+      map-editor.html # 背景卷轴编辑器
+      script-tag.py # 在编写脚本时生成随机的标签
+      webp-lossless.py # 将图片无损转换为webp
 ```
 
 </details>

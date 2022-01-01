@@ -3,6 +3,7 @@ import pygame
 import random
 
 import lib.globals
+import lib.utils
 
 # 00-03 背景
 # 04-09 右下外转角
@@ -23,7 +24,7 @@ import lib.globals
 # 65-67 填充
 # 68-70 填充
 # 71-73 填充
-tileset = pygame.image.load('assets/map-tileset.webp').convert()
+tileset = pygame.image.load(lib.utils.getResourceHandler('assets/map-tileset.webp')).convert()
 tiles = tuple(tileset.subsurface(((x & 15) << 5, (x & -16) << 1, 32, 32)).convert() for x in range(74))
 
 backgrounds = []

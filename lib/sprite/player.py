@@ -15,11 +15,11 @@ playerBoundary = pygame.Rect(13, 8, 384 - 2 * 13, 448 - 2 * 8)
 playerInitialPosition = pygame.Vector2(192, 400)
 
 class Player(Sprite):
-    texturesIdle = tuple(pygame.image.load(f'assets/player-idle-{i}.webp').convert_alpha() for i in range(2))
-    texturesTurnL0 = tuple(pygame.image.load(f'assets/player-turn-l-0-{i}.webp').convert_alpha() for i in range(2))
-    texturesTurnL1 = tuple(pygame.image.load(f'assets/player-turn-l-1-{i}.webp').convert_alpha() for i in range(2))
-    texturesTurnR0 = tuple(pygame.image.load(f'assets/player-turn-r-0-{i}.webp').convert_alpha() for i in range(2))
-    texturesTurnR1 = tuple(pygame.image.load(f'assets/player-turn-r-1-{i}.webp').convert_alpha() for i in range(2))
+    texturesIdle = tuple(pygame.image.load(lib.utils.getResourceHandler(f'assets/player-idle-{i}.webp')).convert_alpha() for i in range(2))
+    texturesTurnL0 = tuple(pygame.image.load(lib.utils.getResourceHandler(f'assets/player-turn-l-0-{i}.webp')).convert_alpha() for i in range(2))
+    texturesTurnL1 = tuple(pygame.image.load(lib.utils.getResourceHandler(f'assets/player-turn-l-1-{i}.webp')).convert_alpha() for i in range(2))
+    texturesTurnR0 = tuple(pygame.image.load(lib.utils.getResourceHandler(f'assets/player-turn-r-0-{i}.webp')).convert_alpha() for i in range(2))
+    texturesTurnR1 = tuple(pygame.image.load(lib.utils.getResourceHandler(f'assets/player-turn-r-1-{i}.webp')).convert_alpha() for i in range(2))
 
     turnCounter = 0
     invincibleRemain = 0

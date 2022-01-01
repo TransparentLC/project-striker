@@ -10,11 +10,11 @@ import lib.utils
 import lib.bullet.player_bullet
 
 class PlayerOption(lib.sprite.Sprite):
-    texturesIdle = tuple(pygame.image.load(f'assets/player-option-idle-{i}.webp').convert_alpha() for i in range(2))
-    texturesTurnL0 = tuple(pygame.image.load(f'assets/player-option-turn-l-0-{i}.webp').convert_alpha() for i in range(2))
-    texturesTurnL1 = tuple(pygame.image.load(f'assets/player-option-turn-l-1-{i}.webp').convert_alpha() for i in range(2))
-    texturesTurnR0 = tuple(pygame.image.load(f'assets/player-option-turn-r-0-{i}.webp').convert_alpha() for i in range(2))
-    texturesTurnR1 = tuple(pygame.image.load(f'assets/player-option-turn-r-1-{i}.webp').convert_alpha() for i in range(2))
+    texturesIdle = tuple(pygame.image.load(lib.utils.getResourceHandler(f'assets/player-option-idle-{i}.webp')).convert_alpha() for i in range(2))
+    texturesTurnL0 = tuple(pygame.image.load(lib.utils.getResourceHandler(f'assets/player-option-turn-l-0-{i}.webp')).convert_alpha() for i in range(2))
+    texturesTurnL1 = tuple(pygame.image.load(lib.utils.getResourceHandler(f'assets/player-option-turn-l-1-{i}.webp')).convert_alpha() for i in range(2))
+    texturesTurnR0 = tuple(pygame.image.load(lib.utils.getResourceHandler(f'assets/player-option-turn-r-0-{i}.webp')).convert_alpha() for i in range(2))
+    texturesTurnR1 = tuple(pygame.image.load(lib.utils.getResourceHandler(f'assets/player-option-turn-r-1-{i}.webp')).convert_alpha() for i in range(2))
 
     offsetNormal: pygame.Vector2
     offsetSlow: pygame.Vector2

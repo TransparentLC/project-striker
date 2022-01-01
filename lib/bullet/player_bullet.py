@@ -16,13 +16,13 @@ class PlayerBulletFlags(enum.IntFlag):
     LOCKING = enum.auto()
     BULLET_CANCELLING = enum.auto()
 
-bulletTexture1Way = pygame.image.load('assets/player-bullet-a.webp').convert_alpha()
-bulletTexture2Way = pygame.image.load('assets/player-bullet-b.webp').convert_alpha()
-bulletTexture4Way = pygame.image.load('assets/player-bullet-c.webp').convert_alpha()
-bulletTexture1WayHyper = pygame.image.load('assets/player-bullet-a-hyper.webp').convert_alpha()
-bulletTexture2WayHyper = pygame.image.load('assets/player-bullet-b-hyper.webp').convert_alpha()
-bulletTexture4WayHyper = pygame.image.load('assets/player-bullet-c-hyper.webp').convert_alpha()
-bulletTextureHoming = pygame.image.load('assets/player-bullet-d.webp').convert_alpha()
+bulletTexture1Way = pygame.image.load(lib.utils.getResourceHandler('assets/player-bullet-a.webp')).convert_alpha()
+bulletTexture2Way = pygame.image.load(lib.utils.getResourceHandler('assets/player-bullet-b.webp')).convert_alpha()
+bulletTexture4Way = pygame.image.load(lib.utils.getResourceHandler('assets/player-bullet-c.webp')).convert_alpha()
+bulletTexture1WayHyper = pygame.image.load(lib.utils.getResourceHandler('assets/player-bullet-a-hyper.webp')).convert_alpha()
+bulletTexture2WayHyper = pygame.image.load(lib.utils.getResourceHandler('assets/player-bullet-b-hyper.webp')).convert_alpha()
+bulletTexture4WayHyper = pygame.image.load(lib.utils.getResourceHandler('assets/player-bullet-c-hyper.webp')).convert_alpha()
+bulletTextureHoming = pygame.image.load(lib.utils.getResourceHandler('assets/player-bullet-d.webp')).convert_alpha()
 
 bulletSize1Way = 4
 bulletSize2Way = 8

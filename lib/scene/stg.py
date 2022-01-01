@@ -13,7 +13,7 @@ import lib.stg_overlay
 import lib.sprite.player
 import lib.utils
 
-background = pygame.image.load('assets/ui-stg-background.webp').convert()
+background = pygame.image.load(lib.utils.getResourceHandler('assets/ui-stg-background.webp')).convert()
 
 def update():
     player: lib.sprite.player.Player = lib.globals.groupPlayer.sprite

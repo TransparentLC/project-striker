@@ -6,11 +6,12 @@ import lib.script_engine.stage
 import lib.sound
 import lib.sprite.option
 import lib.stg_overlay
+import lib.utils
 
 from .title import BACKGROUND
 from .title import MENU_ITEMS
 
-OPTION = pygame.image.load('assets/ui-title-select.webp').convert_alpha()
+OPTION = pygame.image.load(lib.utils.getResourceHandler('assets/ui-title-select.webp')).convert_alpha()
 OPTION_ITEMS = tuple(OPTION.subsurface((0, x * 256, 768, 256)) for x in range(3))
 
 import lib.scene.stg

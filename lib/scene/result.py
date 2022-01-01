@@ -4,8 +4,9 @@ import lib.globals
 import lib.font
 import lib.scene.title
 import lib.sound
+import lib.utils
 
-background = pygame.image.load('assets/ui-result-background.webp').convert()
+background = pygame.image.load(lib.utils.getResourceHandler('assets/ui-result-background.webp')).convert()
 fontLargeRenderer = lib.font.FontRenderer(lib.font.FONT_LARGE, (255, 255, 255))
 
 # 一行16个全角字符
