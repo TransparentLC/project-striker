@@ -20,11 +20,14 @@ class Sprite(pygame.sprite.Sprite):
     speed: pygame.Vector2
     boundary: pygame.Rect
     hitbox: list[Hitbox]
+    hitboxAbsoluteCached: typing.Optional[tuple[Hitbox]]
 
     def __init__(self, *groups: pygame.sprite.AbstractGroup) -> None:
         super().__init__(*groups)
+        self.hitboxAbsoluteCached = None
 
     def update(self) -> None:
+        self.hitboxAbsoluteCached = None
         self.position += self.speed
         if hasattr(self, 'texturesRotated') and self.texturesRotated:
             self.image = self.texturesRotated[(self.frameCounter // self.interval) % len(self.texturesRotated)]
@@ -45,4 +48,6 @@ class Sprite(pygame.sprite.Sprite):
 
     @property
     def hitboxAbsolute(self) -> typing.Sequence[Hitbox]:
-        return tuple(Hitbox(h.offset.rotate(-self.angle) + self.position, h.size) for h in self.hitbox)
+        if not self.hitboxAbsoluteCached:
+            self.hitboxAbsoluteCached = tuple(Hitbox(h.offset.rotate(-self.angle) + self.position, h.size) for h in self.hitbox)
+        return self.hitboxAbsoluteCached

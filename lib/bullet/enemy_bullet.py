@@ -35,8 +35,14 @@ class EnemyBullet(lib.bullet.Bullet):
 
         s: lib.sprite.player.Player = lib.globals.groupPlayer.sprite
         if not s.deathWait:
-            for h in s.hitboxAbsolute:
-                distance = (h.offset - self.position).length() - h.size - self.size
+            for h in s.hitbox:
+                p = h.offset + s.position
+                rSum = h.size + self.size
+                # rCheck = rSum + lib.constants.GRAZE_RANGE
+                d = p - self.position
+                # if rCheck < d.y or d.y < -rCheck or rCheck < d.x or d.x < -rCheck:
+                #     continue
+                distance = d.length() - rSum
                 if distance < 0:
                     if not s.invincibleRemain:
                         s.explode()

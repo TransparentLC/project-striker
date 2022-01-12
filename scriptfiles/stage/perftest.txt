@@ -1,0 +1,8 @@
+SET_SCROLL_SPEED 1.5
+SPAWN 192 -64 0 scriptfiles/enemy/perftest/boss.txt
+WAIT 60 @ c8yUyzCF
+JUMP_BOSS @c8yUyzCF
+WAIT 60
+SET_CLEARED
+SHOW_RESULT
+HALT
