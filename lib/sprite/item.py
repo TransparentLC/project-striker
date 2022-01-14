@@ -12,8 +12,8 @@ itemSurface = pygame.image.load(lib.utils.getResourceHandler('assets/item.webp')
 itemNumber = tuple(itemSurface.subsurface((6 * x, 0, 6, 8)) for x in range(10))
 itemNumberHighlight = tuple(itemSurface.subsurface((6 * x, 8, 6, 8)) for x in range(10))
 itemImage = tuple(itemSurface.subsurface((16 * x, 16, 16, 16)) for x in range(5))
-itemEffectLifeExtend = itemSurface.subsurface((64, 0, 16, 8))
-itemEffectHyperExtend = itemSurface.subsurface((64, 8, 16, 8))
+itemEffectLifeExtend = itemSurface.subsurface((64, 0, 32, 8))
+itemEffectHyperExtend = itemSurface.subsurface((64, 8, 32, 8))
 itemBoundary = pygame.Rect(-20, -20, 384 + 20, 448 + 20)
 
 class ItemEffect(pygame.sprite.Sprite):
