@@ -11,6 +11,7 @@ import pygame.locals
 pygame.init()
 
 import lib.constants
+import lib.font
 import lib.sound
 import lib.utils
 import lib.globals
@@ -41,6 +42,7 @@ if __name__ == '__main__':
                 pygame.display.set_caption(f'{lib.constants.TITLE} (Paused)')
             else:
                 pygame.mixer.music.unpause()
+                pygame.display.set_caption(lib.constants.TITLE)
 
         if not freeze:
             lib.globals.currentScene = lib.globals.nextScene
@@ -63,8 +65,12 @@ if __name__ == '__main__':
                         (1140 + pos[0], 895 + pos[1], pos[2], pos[3])
                     )
 
+            fps = lib.globals.clock.get_fps()
+            # if abs(1 - fps / 60) > .05:
+            #     print(fps, len(lib.globals.groupEnemyBullet))
+            fpsSurface = lib.font.FONT_SMALL.render(f'FPS: {fps:.02f}', True, (255, 255, 255) if abs(1 - fps / 60) < .05 else (255, 255, 0))
+            lib.globals.screen.blit(fpsSurface, (1190, 930))
             pygame.display.flip()
-            pygame.display.set_caption(f'{lib.constants.TITLE} (FPS: {lib.globals.clock.get_fps():.02f})')
 
         lib.globals.clock.tick(60)
 
