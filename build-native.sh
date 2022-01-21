@@ -10,7 +10,7 @@ $CXX -Wall \
     -fPIC \
     -s \
     -shared \
-    -static \
+    ${useStatic:+-static} \
     -fvisibility=hidden \
     -o libstgnative${libExtension} \
     native/xbrz/xbrz.h \
