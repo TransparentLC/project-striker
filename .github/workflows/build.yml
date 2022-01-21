@@ -86,8 +86,8 @@ jobs:
           if [ "$RUNNER_OS" == "Windows" ]; then
             export pyiSeparator=";"
             export libExtension=".dll"
-            export useStatic=1
-            export useUpx=1
+            export useStatic=true
+            export useUpx=true
           elif [ "$RUNNER_OS" == "macOS" ]; then
             export libExtension=".dylib"
           fi

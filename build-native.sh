@@ -19,6 +19,6 @@ $CXX \
     native/xbrz/xbrz.cpp \
     -x c native/effects/effects.c
 
-if [ -z ${useUpx+x} ]; then
+if [ "${useUpx}" = true ]; then
     upx --lzma libstgnative${libExtension}
 fi
