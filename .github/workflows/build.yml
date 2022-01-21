@@ -87,6 +87,7 @@ jobs:
             export pyiSeparator=";"
             export libExtension=".dll"
             export useStatic=1
+            export useUpx=1
           elif [ "$RUNNER_OS" == "macOS" ]; then
             export libExtension=".dylib"
           fi

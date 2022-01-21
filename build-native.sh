@@ -18,4 +18,7 @@ $CXX \
     native/xbrz/xbrz.h \
     native/xbrz/xbrz.cpp \
     -x c native/effects/effects.c
-upx --lzma libstgnative${libExtension} || true
+
+if [ -z ${useUpx+x} ]; then
+    upx --lzma libstgnative${libExtension}
+fi
