@@ -4,9 +4,9 @@ import pygame
 import lib.constants
 import lib.debug
 import lib.font
+import lib.globals
 import lib.scene.result
 import lib.scene.title
-import lib.globals
 import lib.scroll_map
 import lib.sound
 import lib.stg_overlay

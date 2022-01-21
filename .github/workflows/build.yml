@@ -56,6 +56,19 @@ jobs:
           elif [ "$RUNNER_OS" == "macOS" ]; then
             brew install upx
           fi
+      - name: Setup gcc/g++
+        run: |
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            choco install mingw --no-progress
+          elif [ "$RUNNER_OS" == "Linux" ]; then
+            sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+            sudo apt install gcc-11 g++-11
+            echo "CC=gcc-11" >> $GITHUB_ENV
+            echo "CXX=g++-11" >> $GITHUB_ENV
+          elif [ "$RUNNER_OS" == "macOS" ]; then
+            echo "CC=gcc-11" >> $GITHUB_ENV
+            echo "CXX=g++-11" >> $GITHUB_ENV
+          fi
       - name: Set vars
         id: vars
         run: |
@@ -72,7 +85,11 @@ jobs:
         run: |
           if [ "$RUNNER_OS" == "Windows" ]; then
             export pyiSeparator=";"
+            export libExtension=".dll"
+          elif [ "$RUNNER_OS" == "macOS" ]; then
+            export libExtension=".dylib"
           fi
+          bash build-native.sh
           bash build.sh
           if [ "$RUNNER_OS" == "macOS" ]; then
             cd dist

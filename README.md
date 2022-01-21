@@ -38,7 +38,18 @@
 * macOS 版的 bundle 文件夹包含在一个 ZIP 文件内。
 * 打包后的可执行文件为 x64 架构。
 
-也可以使用 `pip install -r requirements.txt` 安装依赖，并参见[这里](https://github.com/TransparentLC/project-striker/blob/master/font/README.md)下载字体后，直接从 `main.py` 以源代码形式运行（需要 Python 3.9 或以上版本，之前的版本或许也可以但我没有测试过）。
+也可以从源代码运行，不过稍微有些麻烦：
+
+<details>
+
+* 需要 Python 3.9 或以上版本，使用之前的版本或许也可以运行，但我没有测试过。
+* 使用 `pip install -r requirements.txt` 安装依赖。
+* 参见[这里](https://github.com/TransparentLC/project-striker/blob/master/font/README.md)下载字体。
+* 设置好 `gcc` 和 `g++` 后，执行 `build-native.sh` 编译 C/C++ 的函数库。如果有安装 `upx` 的话还会进行压缩。
+    * 对于 Windows 用户，已经准备了编译好的 DLL。
+* 从 `main.py` 开始运行即可。
+
+</details>
 
 配置数据存储在用户目录下，删除即可完全初始化：
 
@@ -77,6 +88,7 @@
 * [Avería – The Average Font](http://iotic.com/averia/) 使用的字体
 * [Arcade game "1943 - The Battle of Midway" sprite sheet ripped by "AFruitaday!"](https://www.spriters-resource.com/arcade/1943thebattleofmidway/) 几乎所有的精灵图
 * [Unsplash](https://unsplash.com/) 部分背景图片素材
+* [xBRZ: "Scale by rules" - high quality image upscaling filter by Zenju](https://sourceforge.net/projects/xbrz/files/xBRZ/) 像素画放大算法
 
 ## 可以改进的部分
 
@@ -174,6 +186,9 @@ project-striker
 │     option.py # 自机的子机
 │     player.py # 自机
 │     __init__.py
+│
+├─native # 以C/C++代码编译的函数库
+│     ...
 │
 ├─psd # 背景图片的源文件
 │     ...

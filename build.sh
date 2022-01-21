@@ -15,6 +15,7 @@ echo -n $buildTime >> build-info.txt
 tar cf resources.tar assets font/SourceHanSerifSC-Medium.otf scriptfiles sound
 
 pyiSeparator="${pyiSeparator:-:}"
+libExtension="${libExtension:-.so}"
 
 pyinstaller \
     --name striker \
@@ -26,4 +27,5 @@ pyinstaller \
     --log-level WARN \
     --add-data "build-info.txt${pyiSeparator}." \
     --add-data "resources.tar${pyiSeparator}." \
+    --add-data "libstgnative${libExtension}${pyiSeparator}." \
     main.py

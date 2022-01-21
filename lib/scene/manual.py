@@ -100,6 +100,8 @@ manualPages = tuple(fontNormalRenderer.render(x.strip()) for x in f'''
 　https://www.spriters-resource.com/arcade/1943thebattleofmidway/
 ＊Unsplash
 　https://unsplash.com/
+＊xBRZ: "Scale by rules" - high quality image upscaling filter by Zenju
+　https://sourceforge.net/projects/xbrz/files/xBRZ/
 ----------------
 # 关于
 

@@ -1,6 +1,7 @@
 import enum
 import pygame
 
+import lib.native_utils
 import lib.globals
 import lib.utils
 
@@ -15,7 +16,7 @@ overlayNumber = (
     *(overlay.subsurface((320 + 24 * x, 96, 24, 32)) for x in range(5)),
     *(overlay.subsurface((320 + 24 * x, 128, 24, 32)) for x in range(5)),
 )
-overlayNumber2x = tuple(pygame.transform.scale2x(x) for x in overlayNumber)
+overlayNumber2x = tuple(lib.native_utils.xbrzScale(2, x) for x in overlayNumber)
 
 class OverLayStatusIndex(enum.IntEnum):
     LIFE_REMAIN = 0
