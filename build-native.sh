@@ -4,7 +4,9 @@ CC="${CXX:-gcc}"
 CXX="${CXX:-g++}"
 libExtension="${libExtension:-.so}"
 
-$CXX -Wall \
+$CXX \
+    -std=c++17 \
+    -Wall \
     -O3 \
     -flto \
     -fPIC \
