@@ -18,4 +18,4 @@ $CXX \
     native/xbrz/xbrz.h \
     native/xbrz/xbrz.cpp \
     -x c native/effects/effects.c
-upx --ultra-brute libstgnative${libExtension} || true
+upx --lzma libstgnative${libExtension} || true
