@@ -134,21 +134,6 @@ private:
 template <class T> inline
 T square(T value) { return value * value; }
 
-
-#if 0
-inline
-double distRGB(uint32_t pix1, uint32_t pix2)
-{
-    const double r_diff = static_cast<int>(getRed  (pix1)) - getRed  (pix2);
-    const double g_diff = static_cast<int>(getGreen(pix1)) - getGreen(pix2);
-    const double b_diff = static_cast<int>(getBlue (pix1)) - getBlue (pix2);
-
-    //euklidean RGB distance
-    return std::sqrt(square(r_diff) + square(g_diff) + square(b_diff));
-}
-#endif
-
-
 inline
 double distYCbCr(uint32_t pix1, uint32_t pix2, double lumaWeight)
 {
@@ -220,11 +205,6 @@ double distYCbCrBuffered(uint32_t pix1, uint32_t pix2)
                          (static_cast<unsigned char>(g_diff / 2) <<  8) |
                          (static_cast<unsigned char>(b_diff / 2));
 
-#if 0 //attention: the following calculation creates an asymmetric color distance!!! (e.g. r_diff=46 will be unpacked as 45, but r_diff=-46 unpacks to -47
-    const size_t index = (((r_diff + 0xFF) / 2) << 16) | //slightly reduce precision (division by 2) to squeeze value into single byte
-                         (((g_diff + 0xFF) / 2) <<  8) |
-                         (( b_diff + 0xFF) / 2);
-#endif
     return diffToDist[index];
 }
 
@@ -252,8 +232,7 @@ struct BlendResult
     /**/blend_j, blend_k;
 };
 
-
-struct Kernel_3x3
+struct __attribute__((__may_alias__)) Kernel_3x3
 {
     uint32_t
     a, b, c,
@@ -1251,105 +1230,3 @@ void xbrz::nearestNeighborScale(const uint32_t* src, int srcWidth, int srcHeight
                          trg, trgWidth, trgHeight, trgWidth * sizeof(uint32_t),
     0, trgHeight, [](uint32_t pix) { return pix; });
 }
-
-
-#if 0
-//#include <ppl.h>
-void bilinearScaleCpu(const uint32_t* src, int srcWidth, int srcHeight,
-                      /**/  uint32_t* trg, int trgWidth, int trgHeight)
-{
-    const int TASK_GRANULARITY = 16;
-
-    concurrency::task_group tg;
-
-    for (int i = 0; i < trgHeight; i += TASK_GRANULARITY)
-        tg.run([=]
-    {
-        const int iLast = std::min(i + TASK_GRANULARITY, trgHeight);
-        xbrz::bilinearScale(src, srcWidth, srcHeight, srcWidth * sizeof(uint32_t),
-                            trg, trgWidth, trgHeight, trgWidth * sizeof(uint32_t),
-        i, iLast, [](uint32_t pix) { return pix; });
-    });
-    tg.wait();
-}
-
-
-//Perf: AMP vs CPU: merely ~10% shorter runtime (scaling 1280x800 -> 1920x1080)
-//#include <amp.h>
-void bilinearScaleAmp(const uint32_t* src, int srcWidth, int srcHeight, //throw concurrency::runtime_exception
-                      /**/  uint32_t* trg, int trgWidth, int trgHeight)
-{
-    //C++ AMP reference:       https://msdn.microsoft.com/en-us/library/hh289390.aspx
-    //introduction to C++ AMP: https://msdn.microsoft.com/en-us/magazine/hh882446.aspx
-    using namespace concurrency;
-    //TODO: pitch
-
-    if (srcHeight <= 0 || srcWidth <= 0) return;
-
-    const float scaleX = static_cast<float>(trgWidth ) / srcWidth;
-    const float scaleY = static_cast<float>(trgHeight) / srcHeight;
-
-    array_view<const uint32_t, 2> srcView(srcHeight, srcWidth, src);
-    array_view<      uint32_t, 2> trgView(trgHeight, trgWidth, trg);
-    trgView.discard_data();
-
-    parallel_for_each(trgView.extent, [=](index<2> idx) restrict(amp) //throw ?
-    {
-        const int y = idx[0];
-        const int x = idx[1];
-        //Perf notes:
-        //    -> float-based calculation is (almost) 2x as fas as double!
-        //    -> no noticeable improvement via tiling: https://msdn.microsoft.com/en-us/magazine/hh882447.aspx
-        //    -> no noticeable improvement with restrict(amp,cpu)
-        //    -> iterating over y-axis only is significantly slower!
-        //    -> pre-calculating x,y-dependent variables in a buffer + array_view<> is ~ 20 % slower!
-        const int y1 = srcHeight * y / trgHeight;
-        int y2 = y1 + 1;
-        if (y2 == srcHeight) --y2;
-
-        const float yy1 = y / scaleY - y1;
-        const float y2y = 1 - yy1;
-        //-------------------------------------
-        const int x1 = srcWidth * x / trgWidth;
-        int x2 = x1 + 1;
-        if (x2 == srcWidth) --x2;
-
-        const float xx1 = x / scaleX - x1;
-        const float x2x = 1 - xx1;
-        //-------------------------------------
-        const float x2xy2y = x2x * y2y;
-        const float xx1y2y = xx1 * y2y;
-        const float x2xyy1 = x2x * yy1;
-        const float xx1yy1 = xx1 * yy1;
-
-        auto interpolate = [=](int offset)
-        {
-            /*
-                https://en.wikipedia.org/wiki/Bilinear_interpolation
-                (c11(x2 - x) + c21(x - x1)) * (y2 - y ) +
-                (c12(x2 - x) + c22(x - x1)) * (y  - y1)
-            */
-            const auto c11 = (srcView(y1, x1) >> (8 * offset)) & 0xff;
-            const auto c21 = (srcView(y1, x2) >> (8 * offset)) & 0xff;
-            const auto c12 = (srcView(y2, x1) >> (8 * offset)) & 0xff;
-            const auto c22 = (srcView(y2, x2) >> (8 * offset)) & 0xff;
-
-            return c11 * x2xy2y + c21 * xx1y2y +
-                   c12 * x2xyy1 + c22 * xx1yy1;
-        };
-
-        const float bi = interpolate(0);
-        const float gi = interpolate(1);
-        const float ri = interpolate(2);
-        const float ai = interpolate(3);
-
-        const auto b = static_cast<uint32_t>(bi + 0.5f);
-        const auto g = static_cast<uint32_t>(gi + 0.5f);
-        const auto r = static_cast<uint32_t>(ri + 0.5f);
-        const auto a = static_cast<uint32_t>(ai + 0.5f);
-
-        trgView(y, x) = (a << 24) | (r << 16) | (g << 8) | b;
-    });
-    trgView.synchronize(); //throw ?
-}
-#endif

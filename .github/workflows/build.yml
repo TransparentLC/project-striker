@@ -87,12 +87,16 @@ jobs:
             export pyiSeparator=";"
             export libExtension=".dll"
             export useStatic=true
-            export useUpx=true
           elif [ "$RUNNER_OS" == "macOS" ]; then
             export libExtension=".dylib"
           fi
           bash build-native.sh
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            upx --ultra-brute libstgnative${libExtension}
+          fi
+
           bash build.sh
+
           if [ "$RUNNER_OS" == "macOS" ]; then
             cd dist
             zip -r9 ${{ steps.vars.outputs.executableName }} striker.app

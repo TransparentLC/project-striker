@@ -10,15 +10,11 @@ $CXX \
     -O3 \
     -flto \
     -fPIC \
+    -fvisibility=hidden \
     -s \
     -shared \
     ${useStatic:+-static} \
-    -fvisibility=hidden \
     -o libstgnative${libExtension} \
     native/xbrz/xbrz.h \
     native/xbrz/xbrz.cpp \
     -x c native/effects/effects.c
-
-if [ "${useUpx}" = true ]; then
-    upx --lzma libstgnative${libExtension}
-fi
