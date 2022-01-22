@@ -37,7 +37,8 @@ class Item(lib.sprite.Sprite):
         self.position = pygame.Vector2(position)
         self.speed = pygame.Vector2(0, -.75)
         self.textures = (texture,)
-        self.magnet = False
+        self.magnetNear = False
+        self.magnetBorder = False
         self.image = lib.sprite.EmptyTexture
         self.rect = lib.sprite.EmptyTextureRect
         self.boundary = itemBoundary
@@ -52,28 +53,29 @@ class Item(lib.sprite.Sprite):
             self.kill()
 
         s: lib.sprite.player.Player = lib.globals.groupPlayer.sprite
-        if s.deathWait and self.magnet:
-            self.magnet = False
+        if s.deathWait and (self.magnetNear or self.magnetBorder):
+            self.magnetNear = False
+            self.magnetBorder = False
             self.speed.update(0, 0)
-        self.speed.y += .015
+        self.speed.y = min(self.speed.y + .015, 1.5)
         if not s.deathWait:
             if s.position.y < lib.constants.ITEM_GET_BORDER:
-                self.magnet = True
+                self.magnetBorder = True
 
             distance = (s.position - self.position).length()
             if distance < lib.constants.ITEM_GAIN_RANGE:
                 self.gain()
                 self.kill()
                 return
-            elif distance < lib.constants.ITEM_MAGNET_RANGE:
-                self.magnet = True
+            elif not self.magnetBorder and distance < lib.constants.ITEM_MAGNET_RANGE:
+                self.magnetNear = True
 
-            if self.magnet:
+            if self.magnetNear or self.magnetBorder:
                 delta = s.position - self.position
                 if delta.length_squared() >= 36:
                     delta.normalize_ip()
-                    delta *= 6
-                delta.y -= .02
+                    delta *= 8 if self.magnetBorder else 5
+                delta.y -= .015
                 self.speed.update(delta)
 
 class Point(Item):
@@ -82,7 +84,7 @@ class Point(Item):
 
     def gain(self):
         # 25%-60% 100%
-        if self.position.y < lib.constants.ITEM_GET_BORDER:
+        if self.magnetBorder:
             point = lib.globals.maxGetPoint
             number = itemNumberHighlight
         else:

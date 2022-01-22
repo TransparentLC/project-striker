@@ -98,7 +98,7 @@ class Player(Sprite):
             self.hyperRemain = lib.constants.HYPER_TIME
             self.invincibleRemain = lib.constants.HYPER_INVINCIBLE_TIME
             for item in lib.globals.groupItem:
-                item.magnet = True
+                item.magnetNear = True
             lib.sound.sfx['HYPER_ACTIVATE'].play()
 
         if not self.deathWait:
