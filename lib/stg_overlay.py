@@ -5,13 +5,13 @@ import lib.native_utils
 import lib.globals
 import lib.utils
 
-overlay = pygame.image.load(lib.utils.getResourceHandler('assets/overlay.webp'))
+overlay = pygame.image.load(lib.utils.getResourceHandler('assets/overlay.webp')).convert_alpha()
 overlayPhaseBonus = overlay.subsurface((0, 0, 512, 48))
 overlayLifeExtend = overlay.subsurface((0, 48, 256, 48))
 overlayHyperExtend = overlay.subsurface((256, 48, 256, 48))
 overlayAllClear = overlay.subsurface((0, 96, 320, 80))
 overlayContinue = overlay.subsurface((0, 176, 320, 80))
-overlayWarning = overlay.subsurface((0, 256, 320, 128))
+overlayWarning = lib.native_utils.xbrzScale(2, overlay.subsurface((0, 256, 320, 128)))
 overlayNumber = (
     *(overlay.subsurface((320 + 24 * x, 96, 24, 32)) for x in range(5)),
     *(overlay.subsurface((320 + 24 * x, 128, 24, 32)) for x in range(5)),
@@ -64,7 +64,7 @@ def draw(surface: pygame.Surface):
             overlayWarning.set_alpha((330 - appearTime) / 30 * 255)
         else:
             overlayWarning.set_alpha(255)
-        blitSeq.append((overlayWarning, (384 - img.get_width() // 2, 240 - img.get_height() // 2)))
+        blitSeq.append((overlayWarning, (384 - overlayWarning.get_width() // 2, 320 - overlayWarning.get_height() // 2)))
     surface.blits(blitSeq)
 
     if overlayStatus[OverLayStatusIndex.PHASE_BONUS_REMAIN]:

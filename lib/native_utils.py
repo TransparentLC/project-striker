@@ -52,7 +52,7 @@ def perspectiveBlit(
     horizon: float, fov: float, scaling: float,
     offset: pygame.Vector2, rotate: float = 0,
     repeat: bool = False
-) -> pygame.Surface:
+):
     if src.get_parent() is not None:
         src = src.copy()
     sw, sh = src.get_size()
@@ -73,4 +73,3 @@ def perspectiveBlit(
     bp = dest.get_buffer()
     bp.write(destBuf)
     del bp
-    return dest
