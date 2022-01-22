@@ -45,8 +45,9 @@
 * 需要 Python 3.9 或以上版本，使用之前的版本或许也可以运行，但我没有测试过。
 * 使用 `pip install -r requirements.txt` 安装依赖。
 * 参见[这里](https://github.com/TransparentLC/project-striker/blob/master/font/README.md)下载字体。
-* 设置好 `gcc` 和 `g++` 后，执行 `build-native.sh` 编译 C/C++ 的函数库。如果有安装 `upx` 的话还会进行压缩。
+* 安装好 `gcc` 和 `g++` ，然后执行 `build-native.sh` 编译 C/C++ 的函数库。
     * 对于 Windows 用户，已经准备了编译好的 DLL。
+    * 对于 macOS 用户，在编译前需要执行 `export libExtension=".dylib"`。
 * 从 `main.py` 开始运行即可。
 
 </details>
