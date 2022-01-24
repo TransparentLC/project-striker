@@ -6,6 +6,7 @@ import typing
 T = typing.TypeVar('T')
 
 PACKED_RESOURCE_HANDLER = tarfile.open('resources.tar', 'r:') if os.path.exists('resources.tar') else None
+MODDED_RESOURCE_HANDLER = tarfile.open(os.environ.get('STRIKER_MODDED_RESOURCE'), 'r:') if os.environ.get('STRIKER_MODDED_RESOURCE') is not None and os.path.exists(os.environ.get('STRIKER_MODDED_RESOURCE')) else None
 
 def clamp(value: T, min: T, max: T) -> T:
     if value < min:
@@ -36,7 +37,12 @@ def renderBitmapNumber(value: int, bitmapDigits: typing.Sequence[pygame.Surface]
     return result
 
 def getResourceHandler(path: str) -> typing.IO[bytes] :
-    return PACKED_RESOURCE_HANDLER.extractfile(path) if PACKED_RESOURCE_HANDLER and path in PACKED_RESOURCE_HANDLER.getnames() else open(path, 'rb')
+    if MODDED_RESOURCE_HANDLER and path in MODDED_RESOURCE_HANDLER.getnames():
+        return MODDED_RESOURCE_HANDLER.extractfile(path)
+    elif PACKED_RESOURCE_HANDLER and path in PACKED_RESOURCE_HANDLER.getnames():
+        return PACKED_RESOURCE_HANDLER.extractfile(path)
+    else:
+        return open(path, 'rb')
 
 def linearInterpolation(p: float, a: T, b: T) -> T:
     return a + (b - a) * p
