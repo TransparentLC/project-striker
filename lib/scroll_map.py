@@ -26,6 +26,8 @@ import lib.utils
 # 71-73 填充
 tileset = pygame.image.load(lib.utils.getResourceHandler('assets/map-tileset.webp')).convert()
 tiles = tuple(tileset.subsurface(((x & 15) << 5, (x & -16) << 1, 32, 32)).convert() for x in range(74))
+whiteMask = pygame.Surface((384, 448))
+whiteMask.fill((255, 255, 255))
 
 backgrounds = []
 for x in (
@@ -60,4 +62,11 @@ def blitBackground(surface: pygame.Surface):
     blitSequence: list[tuple[pygame.Surface, tuple[float, float]]] = []
     for i, s in enumerate(lib.globals.backgroundSurfaces):
         blitSequence.append((s, (0, i * -448 + lib.globals.backgroundScrollOffset)))
+
+    if lib.globals.backgroundMaskChangeSpeed:
+        lib.globals.backgroundMaskAlpha = int(lib.utils.clamp(lib.globals.backgroundMaskAlpha + lib.globals.backgroundMaskChangeSpeed, 0, 255))
+    whiteMask.set_alpha(lib.globals.backgroundMaskAlpha)
+    if lib.globals.backgroundMaskAlpha:
+        blitSequence.append((whiteMask, (0, 0)))
+
     surface.blits(blitSequence)

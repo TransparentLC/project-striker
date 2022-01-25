@@ -54,6 +54,9 @@ def update():
         lib.globals.continueRemain = 0
         lib.globals.continueEnabled = True
         lib.globals.allCleared = False
+        lib.globals.backgroundScrollOffset = 0
+        lib.globals.backgroundMaskAlpha = 0
+        lib.globals.backgroundMaskChangeSpeed = 0
         for i in range(len(lib.stg_overlay.overlayStatus)):
             lib.stg_overlay.overlayStatus[i] = 0
         for g in (

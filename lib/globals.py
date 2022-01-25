@@ -38,6 +38,8 @@ stageEngine = None
 
 backgroundScrollSpeed = 1.5
 backgroundScrollOffset = 0
+backgroundMaskAlpha = 0
+backgroundMaskChangeSpeed = 0
 # 只使用append和popleft作为队列使用
 backgroundSurfaces: typing.Deque[pygame.Surface] = collections.deque()
 

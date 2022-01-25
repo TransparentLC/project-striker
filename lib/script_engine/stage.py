@@ -40,6 +40,8 @@ class Opcode(enum.IntEnum):
     FDIV = enum.auto()
 
     SET_SCROLL_SPEED = enum.auto()
+    SET_MASK_ALPHA = enum.auto()
+    SET_MASK_SPEED = enum.auto()
     LOAD_STAGE = enum.auto()
     SPAWN = enum.auto()
     BGM = enum.auto()
@@ -261,6 +263,16 @@ class Engine:
             speed, = params
 
             lib.globals.backgroundScrollSpeed = speed
+        elif opcode == Opcode.SET_MASK_ALPHA:
+            params: tuple[int] = params
+            alpha, = params
+
+            lib.globals.backgroundMaskAlpha = alpha
+        elif opcode == Opcode.SET_MASK_SPEED:
+            params: tuple[int] = params
+            speed, = params
+
+            lib.globals.backgroundMaskChangeSpeed = speed
         elif opcode == Opcode.LOAD_STAGE:
             params: tuple[str] = params
             scriptFile, = params

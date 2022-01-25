@@ -241,6 +241,14 @@ OPERATION param0 param1 param2 ... @ tag # comment
 
 设置背景卷轴移动的速度。
 
+`SET_MASK_ALPHA alpha:int`
+
+设置背景卷轴上的白色遮罩的不透明度。
+
+`SET_MASK_SPEED speed:int`
+
+设置背景卷轴上的白色遮罩的不透明度的变化速度。
+
 `LOAD_STAGE script:str`
 
 加载另一个关卡脚本，当前运行的这个脚本将会被替代。
