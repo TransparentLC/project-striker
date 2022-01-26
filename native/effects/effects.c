@@ -27,9 +27,6 @@ void perspective_blit(
     int32_t dh2 = destHeight / 2;
 
     for (int32_t y = -dh2; y < dh2; y++) {
-        if (y + dh2 < horizon) {
-            continue;
-        }
         for (int32_t x = -dw2; x < dw2; x++) {
             float px = x;
             float py = -fov;

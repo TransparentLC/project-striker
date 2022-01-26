@@ -7,7 +7,7 @@ libExtension="${libExtension:-.so}"
 $CXX \
     -std=c++17 \
     -Wall \
-    -O3 \
+    -Ofast \
     -flto \
     -fPIC \
     -fvisibility=hidden \
