@@ -63,6 +63,8 @@ class Opcode(enum.IntEnum):
     SET_BOSS = enum.auto()
     SET_BOSS_REMAIN = enum.auto()
     SET_BOSS_HPRANGE = enum.auto()
+    SET_PHASE_NAME = enum.auto()
+    SET_PHASE_BONUS = enum.auto()
 
     MOVE = enum.auto()
     MOVE_RELATIVE = enum.auto()
@@ -77,7 +79,7 @@ class Opcode(enum.IntEnum):
     SFX = enum.auto()
 
     CLEAR_BULLET = enum.auto()
-    BONUS_BULLET = enum.auto()
+    BONUS_PHASE = enum.auto()
     DROP_POINTITEM = enum.auto()
     EXTEND_LIFE = enum.auto()
     EXTEND_HYPER = enum.auto()
@@ -493,6 +495,20 @@ class Engine:
 
             lib.globals.bossHitpointRangeMin = hpMin
             lib.globals.bossHitpointRangeMax = hpMax
+        elif opcode == Opcode.SET_PHASE_NAME:
+            params: tuple[int] = params
+            index, = params
+
+            lib.stg_overlay.overlayStatus[lib.stg_overlay.OverLayStatusIndex.PHASE_NAME_VALUE] = index
+            lib.stg_overlay.overlayStatus[lib.stg_overlay.OverLayStatusIndex.PHASE_NAME_REMAIN] = 120 if index else 0
+            if index:
+                lib.sound.sfx['PHASE_START'].play()
+        elif opcode == Opcode.SET_PHASE_BONUS:
+            params: tuple[int, int] = params
+            multiple, drop = params
+
+            lib.globals.phaseBonus = multiple * lib.globals.maxGetPoint
+            lib.globals.phaseBonusDrop = drop
         elif opcode == Opcode.MOVE:
             params: tuple[float, float, int, str] = params
             x, y, time, mode = params
@@ -585,12 +601,14 @@ class Engine:
             for b in lib.globals.groupEnemyBullet:
                 b: lib.bullet.enemy_bullet.EnemyBullet
                 b.explode()
-        elif opcode == Opcode.BONUS_BULLET:
-            bonus = len(lib.globals.groupEnemyBullet) * lib.globals.maxGetPoint // 8
+        elif opcode == Opcode.BONUS_PHASE:
+            bonus = len(lib.globals.groupEnemyBullet) * lib.globals.maxGetPoint // 16 + lib.globals.phaseBonus
             lib.globals.score += bonus
+            lib.globals.phaseBonusPerfect = bool(lib.globals.phaseBonus)
             lib.stg_overlay.overlayStatus[lib.stg_overlay.OverLayStatusIndex.PHASE_BONUS_REMAIN] = 240
             lib.stg_overlay.overlayStatus[lib.stg_overlay.OverLayStatusIndex.PHASE_BONUS_VALUE] = bonus
             lib.globals.maxGetPoint += 16 * len(lib.globals.groupEnemyBullet)
+            lib.globals.phaseBonus = 0
             lib.sound.sfx['BONUS'].play()
         elif opcode == Opcode.DROP_POINTITEM:
             params: tuple[int] = params

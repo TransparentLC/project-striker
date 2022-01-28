@@ -32,6 +32,7 @@ def update():
 
         if lib.globals.groupBoss.sprite:
             lib.globals.maxGetPoint = max(10000, lib.globals.maxGetPoint - 2)
+        lib.globals.phaseBonus = max(0, lib.globals.phaseBonus - lib.globals.phaseBonusDrop)
 
         if not lib.globals.continueCount:
             for extendLimit in (

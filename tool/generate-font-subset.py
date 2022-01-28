@@ -5,13 +5,16 @@ import os
 import sys
 import string
 
-globPath, fontPath, fontSubsetPath = sys.argv[1:]
+fontPath = sys.argv[1]
+fontSubsetPath = sys.argv[2]
+globPath = sys.argv[3:]
 
 charset = set(string.printable)
-for file in glob.glob(globPath, recursive=True):
-    with open(file, 'r', encoding='utf-8') as f:
-        print('Collecting:', file)
-        charset.update(f.read())
+for g in globPath:
+    for file in glob.glob(g, recursive=True):
+        with open(file, 'r', encoding='utf-8') as f:
+            print('Collecting:', file)
+            charset.update(f.read())
 print('Charset size:', len(charset))
 print(''.join(sorted(charset)))
 

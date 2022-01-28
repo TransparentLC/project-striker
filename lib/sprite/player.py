@@ -90,6 +90,7 @@ class Player(Sprite):
 
         if self.hyperRemain:
             self.hyperRemain -= 1
+            lib.globals.phaseBonus = 0
             if not self.hyperRemain:
                 lib.sound.sfx['HYPER_END'].play()
         elif lib.globals.keys[pygame.K_x] and lib.globals.hyperNum and not self.deathWait:
@@ -144,6 +145,7 @@ class Player(Sprite):
         explosion.ExplosionPlayer(self.position)
         self.deathWait = 120
         self.hyperRemain = 0
+        lib.globals.phaseBonus = 0
         lib.globals.missedCount += 1
 
 Player()

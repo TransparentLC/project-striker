@@ -1,6 +1,7 @@
+import math
 import os
-import tarfile
 import pygame
+import tarfile
 import typing
 
 T = typing.TypeVar('T')
@@ -36,6 +37,29 @@ def renderBitmapNumber(value: int, bitmapDigits: typing.Sequence[pygame.Surface]
     result.blits((bitmapDigits[x], (width * i, 0)) for i, x in enumerate(digits))
     return result
 
+outlineOffsetCache: dict[tuple[int, int], set[tuple[int, int]]] = dict()
+
+def renderOutlinedText(font: pygame.font.Font, text: str, color: pygame.Color, outlineColor: pygame.Color, outlineWidth: int, divide: int = None) -> pygame.Surface:
+    outlineSurface = font.render(text, True, outlineColor)
+    resultSurface = pygame.Surface(tuple(x + 2 * outlineWidth for x in outlineSurface.get_size()), pygame.SRCALPHA)
+    if divide is None:
+        divide = outlineWidth * 4
+    offsetCacheKey = (divide, outlineWidth)
+    if offsetCacheKey not in outlineOffsetCache:
+        outlineOffsetCache[offsetCacheKey] = set()
+        for r in range(1, outlineWidth + 1):
+            outlineOffsetCache[offsetCacheKey].update(
+                (
+                    round(outlineWidth + r * math.cos(i / divide * 2 * math.pi)),
+                    round(outlineWidth + r * math.sin(i / divide * 2 * math.pi)),
+                )
+                for i in range(divide)
+            )
+    blitSequence: list[tuple[pygame.Surface, tuple[float, float]]] = [(outlineSurface, x) for x in outlineOffsetCache[offsetCacheKey]]
+    blitSequence.append((font.render(text, True, color), (outlineWidth, outlineWidth)))
+    resultSurface.blits(blitSequence)
+    return resultSurface
+
 def getResourceHandler(path: str) -> typing.IO[bytes] :
     if MODDED_RESOURCE_HANDLER and path in MODDED_RESOURCE_HANDLER.getnames():
         return MODDED_RESOURCE_HANDLER.extractfile(path)
@@ -63,5 +87,4 @@ def easeOutCubicInterpolation(p: float, a: T, b: T) -> T:
     return a + (b - a) * ((p - 1) ** 3 + 1)
 
 def easeInOutCubicInterpolation(p: float, a: T, b: T) -> T:
-    # t => t<.5 ? 4*t*t*t : (t-1)*(2*t-2)*(2*t-2)+1,
     return a + (b - a) * ((4 * (p ** 3)) if p < .5 else (1 + (p - 1) * ((2 * p - 2) ** 2)))

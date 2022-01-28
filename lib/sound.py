@@ -11,6 +11,7 @@ sfx: dict[str, pygame.mixer.Sound] = {
     'HYPER_ACTIVATE': pygame.mixer.Sound(lib.utils.getResourceHandler('sound/sfx/hyper-activate.ogg')),
     'HYPER_END': pygame.mixer.Sound(lib.utils.getResourceHandler('sound/sfx/hyper-end.ogg')),
     'BOSS_ALERT': pygame.mixer.Sound(lib.utils.getResourceHandler('sound/sfx/boss-alert.ogg')),
+    'PHASE_START': pygame.mixer.Sound(lib.utils.getResourceHandler('sound/sfx/phase-start.ogg')),
     'BONUS': pygame.mixer.Sound(lib.utils.getResourceHandler('sound/sfx/bonus.ogg')),
     'PAUSE': pygame.mixer.Sound(lib.utils.getResourceHandler('sound/sfx/pause.ogg')),
     'PAGE': pygame.mixer.Sound(lib.utils.getResourceHandler('sound/sfx/page.ogg')),

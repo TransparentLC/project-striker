@@ -2,7 +2,12 @@
 
 BGM STAGE2
 SET_SCROLL_SPEED 1.5
-WAIT 210
+
+SET_MASK_SPEED -5
+WAIT 60
+SET_MASK_SPEED 0
+WAIT 150
+# WAIT 210
 
 SPAWN 50 -10 0 scriptfiles/enemy/stage2/0.txt
 WAIT 20
@@ -183,7 +188,11 @@ SET_SCROLL_SPEED .8
 SPAWN 192 -64 0 scriptfiles/enemy/stage2/boss.txt
 WAIT 60 @ c8yUyzCF
 JUMP_BOSS @c8yUyzCF
-WAIT 420
+
+# WAIT 420
+WAIT 360
+SET_MASK_SPEED 5
+WAIT 60
 LOAD_STAGE scriptfiles/stage/stage3.txt
 
 HALT

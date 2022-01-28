@@ -46,7 +46,7 @@ jobs:
             --no-progress-meter \
             --output .font/SourceHanSerifSC-Medium.otf
       - name: Generate font subset
-        run: python tool/generate-font-subset.py "**/*.py" .font/SourceHanSerifSC-Medium.otf font/SourceHanSerifSC-Medium.otf
+        run: python tool/generate-font-subset.py .font/SourceHanSerifSC-Medium.otf font/SourceHanSerifSC-Medium.otf "**/*.py" scriptfiles/manual.txt scriptfiles/phase-name.txt
       - name: Setup UPX
         run: |
           if [ "$RUNNER_OS" == "Windows" ]; then

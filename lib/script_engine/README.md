@@ -174,6 +174,14 @@ OPERATION param0 param1 param2 ... @ tag # comment
 
 设置在右侧显示的 BOSS 血量范围，例如设置成 2000 - 3000 且 BOSS 当前血量为 2400，则会显示为“400/1000”。当前血量超过范围则显示为范围的长度，小于范围时会跳转到 `REGISTER_BOSSBREAK` 所指的位置（如果设定了的话）并显示为 0.
 
+`SET_PHASE_NAME index:int`
+
+设置 BOSS 的攻击名称，`index` 为 0 则表示取消名称显示，设为其他的值则对应 `scriptfiles/phase-name.txt` 中对应行的文本。
+
+`SET_PHASE_BONUS multiple:int drop:int`
+
+设置 BOSS 的强力攻击的完美击破奖励为最大得点的某个倍数。并设置每帧减少的分数。
+
 `MOVE          x:float y:float time:int mode:str`
 
 `MOVE_RELATIVE x:float y:float time:int mode:str`
@@ -204,9 +212,9 @@ OPERATION param0 param1 param2 ... @ tag # comment
 
 消除屏幕上的所有敌弹。
 
-`BONUS_BULLET`
+`BONUS_PHASE`
 
-根据同屏弹量结算一次加分。
+在击破 BOSS 的一个攻击阶段后结算分数奖励。
 
 `DROP_POINTITEM num:int`
 
