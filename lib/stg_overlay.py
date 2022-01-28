@@ -20,8 +20,8 @@ overlayNumber = (
 )
 overlayNumber2x = tuple(lib.native_utils.xbrzScale(2, x) for x in overlayNumber)
 overlayNumberSmall = tuple(overlay.subsurface((320 + 12 * x, 208, 12, 16)) for x in range(10))
-with open('scriptfiles/phase-name.txt', 'r', encoding='utf-8') as f:
-    phaseName = f.read().splitlines()
+with lib.utils.getResourceHandler('scriptfiles/phase-name.txt') as f:
+    phaseName = f.read().decode('utf-8').splitlines()
 overlayPhaseName = tuple(lib.utils.renderOutlinedText(lib.font.FONT_NORMAL, x, (255, 255, 255), (0, 0, 0), 3, 18) for x in phaseName)
 overlayPhaseName2x = tuple(lib.native_utils.xbrzScale(2, x) for x in overlayPhaseName)
 overlayPhaseCompletionBonusText = overlay.subsurface((320, 224, 192, 20))
