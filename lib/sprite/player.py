@@ -54,7 +54,7 @@ class Player(Sprite):
             lib.bullet.player_bullet.PlayerBullet(
                 self.position,
                 lib.bullet.player_bullet.bulletTexture4WayHyper,
-                size=lib.bullet.player_bullet.bulletSize4Way, speed=16, angle=self.angle, damage=25,
+                size=lib.bullet.player_bullet.bulletSize4Way * 2, speed=16, angle=self.angle, damage=25,
                 flags=lib.bullet.player_bullet.PlayerBulletFlags.BULLET_CANCELLING
             )
             self.shootWait = 6
