@@ -8,7 +8,7 @@ import lib.utils
 
 overlay = pygame.image.load(lib.utils.getResourceHandler('assets/overlay.webp')).convert_alpha()
 overlayPhaseBonus = overlay.subsurface((0, 0, 512, 48))
-overlayPhasePerfectBonus = overlay.subsurface((0, 48, 512, 48))
+overlayPhaseBonusFailed = overlay.subsurface((0, 48, 512, 48))
 overlayLifeExtend = overlay.subsurface((0, 96, 256, 48))
 overlayHyperExtend = overlay.subsurface((256, 96, 256, 48))
 overlayAllClear = overlay.subsurface((0, 144, 320, 80))
@@ -24,9 +24,8 @@ with lib.utils.getResourceHandler('scriptfiles/phase-name.txt') as f:
     phaseName = f.read().decode('utf-8').splitlines()
 overlayPhaseName = tuple(lib.utils.renderOutlinedText(lib.font.FONT_NORMAL, x, (255, 255, 255), (0, 0, 0), 3, 18) for x in phaseName)
 overlayPhaseName2x = tuple(lib.native_utils.xbrzScale(2, x) for x in overlayPhaseName)
-overlayPhaseCompletionBonusText = overlay.subsurface((320, 224, 192, 20))
-overlayPhasePerfectBonusText = overlay.subsurface((320, 244, 192, 20))
-overlayPhasePerfectBonusFailed = overlay.subsurface((448, 144, 64, 20))
+overlayPhaseBonusText = overlay.subsurface((448, 144, 54, 20))
+overlayPhaseBonusFailedText = overlay.subsurface((448, 164, 54, 20))
 
 class OverLayStatusIndex(enum.IntEnum):
     LIFE_REMAIN = 0
@@ -58,7 +57,7 @@ def draw(surface: pygame.Surface):
         (overlayHyperExtend, overlayStatus[OverLayStatusIndex.HYPER_REMAIN], 384, 96),
         (overlayLifeExtend, overlayStatus[OverLayStatusIndex.LIFE_REMAIN], 384, 96),
         (
-            overlayPhasePerfectBonus if lib.globals.phaseBonusPerfect else overlayPhaseBonus,
+            overlayPhaseBonus if overlayStatus[OverLayStatusIndex.PHASE_BONUS_VALUE] else overlayPhaseBonusFailed,
             overlayStatus[OverLayStatusIndex.PHASE_BONUS_REMAIN], 384, 192
         ),
         (overlayAllClear, overlayStatus[OverLayStatusIndex.CLEAR_REMAIN], 384, 192),
@@ -92,7 +91,7 @@ def draw(surface: pygame.Surface):
             overlayWarning.set_alpha(255)
         blitSeq.append((overlayWarning, (384 - overlayWarning.get_width() // 2, 320 - overlayWarning.get_height() // 2)))
 
-    if overlayStatus[OverLayStatusIndex.PHASE_BONUS_REMAIN]:
+    if overlayStatus[OverLayStatusIndex.PHASE_BONUS_REMAIN] and overlayStatus[OverLayStatusIndex.PHASE_BONUS_VALUE]:
         phaseBonusDigits = lib.utils.splitDigits(overlayStatus[OverLayStatusIndex.PHASE_BONUS_VALUE])
         phaseBonusSurface = pygame.Surface((24 * len(phaseBonusDigits), 64), pygame.SRCALPHA)
         blitSeqInner = []
@@ -141,19 +140,15 @@ def draw(surface: pygame.Surface):
                 (752 - phaseNameSurface.get_width(), lib.utils.easeInOutCubicInterpolation(interpolationP, 768, 16))
             )
         if overlayStatus[OverLayStatusIndex.PHASE_NAME_REMAIN] < 30:
+            bonusText = lib.utils.renderBitmapNumber(lib.globals.phaseBonus, overlayNumberSmall) if lib.globals.phaseBonus else overlayPhaseBonusFailedText
+            alpha = round(lib.utils.linearInterpolation(
+                overlayStatus[OverLayStatusIndex.PHASE_NAME_REMAIN] / 30,
+                255, 0
+            ))
             for b in (
-                (overlayPhaseCompletionBonusText, (16, 18)),
-                (lib.utils.renderBitmapNumber(len(lib.globals.groupEnemyBullet) * lib.globals.maxGetPoint // 16, overlayNumberSmall), (176, 20)),
-                (overlayPhasePerfectBonusText, (16, 34)),
-                (
-                    (lib.utils.renderBitmapNumber(lib.globals.phaseBonus, overlayNumberSmall), (176, 36))
-                    if lib.globals.phaseBonus else
-                    (overlayPhasePerfectBonusFailed, (176, 34))
-                ),
+                (overlayPhaseBonusText, (590, 54)),
+                (bonusText, (740 - bonusText.get_width(), 56 if lib.globals.phaseBonus else 54)),
             ):
-                b[0].set_alpha(round(lib.utils.linearInterpolation(
-                    overlayStatus[OverLayStatusIndex.PHASE_NAME_REMAIN] / 30,
-                    255, 0
-                )))
+                b[0].set_alpha(alpha)
                 blitSeq.append(b)
     surface.blits(blitSeq)

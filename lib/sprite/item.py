@@ -11,9 +11,10 @@ import lib.utils
 itemSurface = pygame.image.load(lib.utils.getResourceHandler('assets/item.webp')).convert_alpha()
 itemNumber = tuple(itemSurface.subsurface((6 * x, 0, 6, 8)) for x in range(10))
 itemNumberHighlight = tuple(itemSurface.subsurface((6 * x, 8, 6, 8)) for x in range(10))
-itemImage = tuple(itemSurface.subsurface((16 * x, 16, 16, 16)) for x in range(5))
+itemImage = tuple(itemSurface.subsurface((16 * x, 16, 16, 16)) for x in range(6))
 itemEffectLifeExtend = itemSurface.subsurface((64, 0, 32, 8))
 itemEffectHyperExtend = itemSurface.subsurface((64, 8, 32, 8))
+
 itemBoundary = pygame.Rect(-20, -20, 384 + 20, 448 + 20)
 
 class ItemEffect(pygame.sprite.Sprite):
@@ -92,7 +93,20 @@ class Point(Item):
             number = itemNumber
 
         lib.globals.score += point
+        lib.globals.maxGetPoint += 4
         ItemEffect(self.position, lib.utils.renderBitmapNumber(point, number))
+        lib.sound.sfx['GET_POINT'].play()
+
+class PointBullet(Item):
+    def __init__(self, position: pygame.Vector2) -> None:
+        super().__init__(position, itemImage[5])
+        self.magnetBorder = True
+
+    def gain(self):
+        point = lib.globals.maxGetPoint // 16
+        lib.globals.score += point
+        lib.globals.maxGetPoint += 16
+        ItemEffect(self.position, lib.utils.renderBitmapNumber(point, itemNumber))
         lib.sound.sfx['GET_POINT'].play()
 
 class LifeExtend(Item):
