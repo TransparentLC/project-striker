@@ -11,7 +11,7 @@ import lib.utils
 itemSurface = pygame.image.load(lib.utils.getResourceHandler('assets/item.webp')).convert_alpha()
 itemNumber = tuple(itemSurface.subsurface((6 * x, 0, 6, 8)) for x in range(10))
 itemNumberHighlight = tuple(itemSurface.subsurface((6 * x, 8, 6, 8)) for x in range(10))
-itemImage = tuple(itemSurface.subsurface((16 * x, 16, 16, 16)) for x in range(6))
+itemImage = tuple(itemSurface.subsurface((16 * x, 16, 16, 16)) for x in range(5))
 itemEffectLifeExtend = itemSurface.subsurface((64, 0, 32, 8))
 itemEffectHyperExtend = itemSurface.subsurface((64, 8, 32, 8))
 
@@ -81,7 +81,7 @@ class Item(lib.sprite.Sprite):
 
 class Point(Item):
     def __init__(self, position: pygame.Vector2) -> None:
-        super().__init__(position, itemImage[4])
+        super().__init__(position, itemImage[2])
 
     def gain(self):
         # 25%-60% 100%
@@ -99,19 +99,31 @@ class Point(Item):
 
 class PointBullet(Item):
     def __init__(self, position: pygame.Vector2) -> None:
-        super().__init__(position, itemImage[5])
+        super().__init__(position, itemImage[3])
+        self.speed.y = -.5
+
+    def update(self) -> None:
+        if self.frameCounter == 60:
+            self.magnetBorder = True
+        super().update()
+
+    def gain(self):
+        lib.globals.score += lib.globals.maxGetPoint // 16
+        lib.globals.maxGetPoint += 16
+        lib.sound.sfx['GET_POINT'].play()
+
+class PointClear(Item):
+    def __init__(self, position: pygame.Vector2) -> None:
+        super().__init__(position, itemImage[4])
         self.magnetBorder = True
 
     def gain(self):
-        point = lib.globals.maxGetPoint // 16
-        lib.globals.score += point
-        lib.globals.maxGetPoint += 16
-        ItemEffect(self.position, lib.utils.renderBitmapNumber(point, itemNumber))
+        lib.globals.score += len(lib.globals.groupEnemyBullet) * 8
         lib.sound.sfx['GET_POINT'].play()
 
 class LifeExtend(Item):
     def __init__(self, position: pygame.Vector2) -> None:
-        super().__init__(position, itemImage[2])
+        super().__init__(position, itemImage[0])
 
     def gain(self):
         if lib.globals.lifeNum < 8:
@@ -122,7 +134,7 @@ class LifeExtend(Item):
 
 class HyperExtend(Item):
     def __init__(self, position: pygame.Vector2) -> None:
-        super().__init__(position, itemImage[3])
+        super().__init__(position, itemImage[1])
 
     def gain(self):
         if lib.globals.hyperNum < 8:

@@ -60,7 +60,7 @@ def renderOutlinedText(font: pygame.font.Font, text: str, color: pygame.Color, o
     resultSurface.blits(blitSequence)
     return resultSurface
 
-def getResourceHandler(path: str) -> typing.IO[bytes] :
+def getResourceHandler(path: str) -> typing.IO[bytes]:
     if MODDED_RESOURCE_HANDLER and path in MODDED_RESOURCE_HANDLER.getnames():
         return MODDED_RESOURCE_HANDLER.extractfile(path)
     elif PACKED_RESOURCE_HANDLER and path in PACKED_RESOURCE_HANDLER.getnames():

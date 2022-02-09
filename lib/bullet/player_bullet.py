@@ -8,6 +8,7 @@ import lib.constants
 import lib.globals
 import lib.sprite.enemy
 import lib.sprite.explosion
+import lib.sprite.item
 import lib.sound
 import lib.utils
 
@@ -79,7 +80,7 @@ class PlayerBullet(lib.bullet.Bullet):
             for b in lib.globals.groupEnemyBullet:
                 b: lib.bullet.enemy_bullet.EnemyBullet
                 if self.position.distance_squared_to(b.position) < self.size ** 2:
-                    lib.globals.score += 8 * len(lib.globals.groupEnemyBullet)
+                    lib.sprite.item.PointClear(pygame.Vector2(self.position))
                     lib.globals.maxGetPoint = max(10000, lib.globals.maxGetPoint - max(4, len(lib.globals.groupEnemyBullet) // 32))
                     self.bulletCancelRemain -= 1
                     b.explode()
