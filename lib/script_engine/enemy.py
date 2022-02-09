@@ -612,6 +612,8 @@ class Engine:
             lib.globals.score += lib.globals.phaseBonus
             lib.stg_overlay.overlayStatus[lib.stg_overlay.OverLayStatusIndex.PHASE_BONUS_REMAIN] = 240
             lib.stg_overlay.overlayStatus[lib.stg_overlay.OverLayStatusIndex.PHASE_BONUS_VALUE] = lib.globals.phaseBonus
+            if lib.globals.phaseBonus:
+                lib.globals.phaseBonusCount += 1
             lib.globals.phaseBonus = 0
         elif opcode == Opcode.DROP_POINTITEM:
             params: tuple[int] = params

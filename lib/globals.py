@@ -49,6 +49,7 @@ grazeCount = 0
 maxGetPoint = 0
 phaseBonus = 0
 phaseBonusDrop = 0
+phaseBonusCount = 0
 lifeNum = 0
 hyperNum = 0
 optionType = 0
