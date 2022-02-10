@@ -74,8 +74,10 @@ if __name__ == '__main__':
 
         lib.globals.clock.tick(60)
 
-    # Write config before quit
-    with open(f'{lib.constants.DATA_DIR}/config.json', 'w', encoding='utf-8') as f:
+    # Write config and savedata before quit
+    with open(lib.constants.PATH_CONFIG, 'w', encoding='utf-8') as f:
         json.dump(lib.globals.config, f, separators=(',', ':'))
+    with open(lib.constants.PATH_SAVEDATA, 'w', encoding='utf-8') as f:
+        json.dump(lib.globals.savedata, f, separators=(',', ':'))
 
     pygame.quit()

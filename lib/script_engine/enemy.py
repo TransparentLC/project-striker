@@ -500,7 +500,7 @@ class Engine:
             params: tuple[int] = params
             index, = params
 
-            lib.stg_overlay.overlayStatus[lib.stg_overlay.OverLayStatusIndex.PHASE_NAME_VALUE] = index
+            lib.globals.phaseIndex = index
             lib.stg_overlay.overlayStatus[lib.stg_overlay.OverLayStatusIndex.PHASE_NAME_REMAIN] = 120 if index else 0
             if index:
                 lib.sound.sfx['PHASE_START'].play()
@@ -609,11 +609,14 @@ class Engine:
                 b.explode()
             lib.sound.sfx['BONUS'].play()
         elif opcode == Opcode.BONUS_PHASE:
+            lib.globals.savedata[lib.globals.optionType]['phaseHistory'][lib.globals.phaseIndex - 1]['total'] += 1
             lib.globals.score += lib.globals.phaseBonus
             lib.stg_overlay.overlayStatus[lib.stg_overlay.OverLayStatusIndex.PHASE_BONUS_REMAIN] = 240
             lib.stg_overlay.overlayStatus[lib.stg_overlay.OverLayStatusIndex.PHASE_BONUS_VALUE] = lib.globals.phaseBonus
             if lib.globals.phaseBonus:
                 lib.globals.phaseBonusCount += 1
+                lib.globals.savedata[lib.globals.optionType]['phaseHistory'][lib.globals.phaseIndex - 1]['bonus'] += 1
+            lib.globals.phaseIndex = 0
             lib.globals.phaseBonus = 0
         elif opcode == Opcode.DROP_POINTITEM:
             params: tuple[int] = params

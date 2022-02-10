@@ -1,5 +1,6 @@
 import pygame
 
+import lib.constants
 import lib.globals
 import lib.font
 import lib.scene.title
@@ -28,16 +29,12 @@ def update():
 def draw(surface: pygame.Surface):
     surface.blit(background, (0, 0))
     for text, (posX, posY) in (
-        ((
-            'Type-A 诱导攻击型',
-            'Type-B 广范围型',
-            'Type-C 前方集中型',
-        )[lib.globals.optionType], (576, 280)),
+        (lib.constants.OPTION_TYPE_NAME[lib.globals.optionType], (576, 280)),
         (f'Continue×{lib.globals.continueCount}' if lib.globals.continueCount else str(lib.globals.score), (576, 360)),
         (str(lib.globals.grazeCount), (576, 440)),
         (str(lib.globals.missedCount), (576, 520)),
         (str(lib.globals.hyperUsedCount), (576, 600)),
-        (f'{lib.globals.phaseBonusCount}/{len(lib.stg_overlay.phaseName)}', (576, 680)),
+        (f'{lib.globals.phaseBonusCount} / {len(lib.constants.PHASE_NAME)}', (576, 680)),
     ):
         renderedSurface = lib.font.FONT_LARGE.render(text, True, (255, 255, 255))
         surface.blit(renderedSurface, (posX - renderedSurface.get_width(), posY - renderedSurface.get_height() // 2))

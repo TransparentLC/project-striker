@@ -93,14 +93,19 @@ class Player(Sprite):
             lib.globals.phaseBonus = 0
             if not self.hyperRemain:
                 lib.sound.sfx['HYPER_END'].play()
-        elif lib.globals.keys[pygame.K_x] and lib.globals.hyperNum and not self.deathWait:
-            lib.globals.hyperNum -= 1
-            lib.globals.hyperUsedCount += 1
-            self.hyperRemain = lib.constants.HYPER_TIME
-            self.invincibleRemain = lib.constants.HYPER_INVINCIBLE_TIME
-            for item in lib.globals.groupItem:
-                item.magnetNear = True
-            lib.sound.sfx['HYPER_ACTIVATE'].play()
+        if lib.globals.keys[pygame.K_x] and not lib.globals.keysLastFrame[pygame.K_x]:
+            if self.hyperRemain:
+                self.hyperRemain = 0
+                self.invincibleRemain = 0
+                lib.sound.sfx['HYPER_END'].play()
+            elif lib.globals.hyperNum and not self.deathWait:
+                lib.globals.hyperNum -= 1
+                lib.globals.hyperUsedCount += 1
+                self.hyperRemain = lib.constants.HYPER_TIME
+                self.invincibleRemain = lib.constants.HYPER_INVINCIBLE_TIME
+                for item in lib.globals.groupItem:
+                    item.magnetNear = True
+                lib.sound.sfx['HYPER_ACTIVATE'].play()
 
         if not self.deathWait:
             speed = lib.constants.PLAYER_SPEED_SLOW if lib.globals.keys[pygame.K_LSHIFT] else lib.constants.PLAYER_SPEED_NORMAL

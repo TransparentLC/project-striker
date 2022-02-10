@@ -1,4 +1,5 @@
 fonttools == 4.*
+jsonschema == 4.*
 pygame == 2.*
 pyinstaller == 4.*
 # tinyaes == 1.*

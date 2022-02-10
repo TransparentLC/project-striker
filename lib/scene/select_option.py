@@ -50,6 +50,7 @@ def update():
         lib.globals.hyperNum = lib.constants.INITIAL_HYPERNUM
         lib.globals.missedCount = 0
         lib.globals.hyperUsedCount = 0
+        lib.globals.phaseIndex = 0
         lib.globals.phaseBonusCount = 0
         lib.globals.continueCount = 0
         lib.globals.continueRemain = 0

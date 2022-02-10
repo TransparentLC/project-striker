@@ -1,6 +1,7 @@
 import enum
 import pygame
 
+import lib.constants
 import lib.font
 import lib.native_utils
 import lib.globals
@@ -20,12 +21,12 @@ overlayNumber = (
 )
 overlayNumber2x = tuple(lib.native_utils.xbrzScale(2, x) for x in overlayNumber)
 overlayNumberSmall = tuple(overlay.subsurface((320 + 12 * x, 208, 12, 16)) for x in range(10))
-with lib.utils.getResourceHandler('scriptfiles/phase-name.txt') as f:
-    phaseName = f.read().decode('utf-8').splitlines()
-overlayPhaseName = tuple(lib.utils.renderOutlinedText(lib.font.FONT_NORMAL, x, (255, 255, 255), (0, 0, 0), 3, 18) for x in phaseName)
+overlayPhaseName = tuple(lib.utils.renderOutlinedText(lib.font.FONT_NORMAL, x, (255, 255, 255), (0, 0, 0), 3, 18) for x in lib.constants.PHASE_NAME)
 overlayPhaseName2x = tuple(lib.native_utils.xbrzScale(2, x) for x in overlayPhaseName)
-overlayPhaseBonusText = overlay.subsurface((448, 144, 54, 20))
-overlayPhaseBonusFailedText = overlay.subsurface((448, 164, 54, 20))
+overlayPhaseBonusText = overlay.subsurface((448, 144, 64, 20))
+overlayPhaseHistoryText = overlay.subsurface((448, 164, 64, 20))
+overlayPhaseBonusFailedText = overlay.subsurface((448, 184, 52, 20))
+overlayPhaseHistoryDivide = overlay.subsurface((500, 184, 12, 20))
 
 class OverLayStatusIndex(enum.IntEnum):
     LIFE_REMAIN = 0
@@ -35,7 +36,6 @@ class OverLayStatusIndex(enum.IntEnum):
     PHASE_BONUS_REMAIN = 4
     PHASE_NAME_REMAIN = 5
     PHASE_BONUS_VALUE = 6
-    PHASE_NAME_VALUE = 7
 
 overlayStatus = [0, 0, 0, 0, 0, 0, 0, 0]
 
@@ -116,10 +116,10 @@ def draw(surface: pygame.Surface):
             )
         blitSeq.append((phaseBonusSurface, (384 - phaseBonusSurface.get_width() // 2, 288 - phaseBonusSurface.get_height() // 2)))
 
-    if overlayStatus[OverLayStatusIndex.PHASE_NAME_VALUE]:
+    if lib.globals.phaseIndex:
         if overlayStatus[OverLayStatusIndex.PHASE_NAME_REMAIN] > 60:
             interpolationP = 1 - (overlayStatus[OverLayStatusIndex.PHASE_NAME_REMAIN] - 60) / 60
-            phaseNameSurface = overlayPhaseName2x[overlayStatus[OverLayStatusIndex.PHASE_NAME_VALUE] - 1]
+            phaseNameSurface = overlayPhaseName2x[lib.globals.phaseIndex - 1]
             phaseNameSurface = pygame.transform.scale(
                 phaseNameSurface,
                 tuple(
@@ -134,20 +134,34 @@ def draw(surface: pygame.Surface):
             )
         else:
             interpolationP = 1 - overlayStatus[OverLayStatusIndex.PHASE_NAME_REMAIN] / 60
-            phaseNameSurface = overlayPhaseName[overlayStatus[OverLayStatusIndex.PHASE_NAME_VALUE] - 1]
+            phaseNameSurface = overlayPhaseName[lib.globals.phaseIndex - 1]
             surface.blit(
                 phaseNameSurface,
                 (752 - phaseNameSurface.get_width(), lib.utils.easeInOutCubicInterpolation(interpolationP, 768, 16))
             )
         if overlayStatus[OverLayStatusIndex.PHASE_NAME_REMAIN] < 30:
             bonusText = lib.utils.renderBitmapNumber(lib.globals.phaseBonus, overlayNumberSmall) if lib.globals.phaseBonus else overlayPhaseBonusFailedText
+            historyText = lib.utils.renderBitmapNumber(
+                lib.globals.savedata[lib.globals.optionType]['phaseHistory'][lib.globals.phaseIndex - 1]['bonus'],
+                overlayNumberSmall,
+            )
             alpha = round(lib.utils.linearInterpolation(
                 overlayStatus[OverLayStatusIndex.PHASE_NAME_REMAIN] / 30,
                 255, 0
             ))
             for b in (
-                (overlayPhaseBonusText, (590, 54)),
-                (bonusText, (740 - bonusText.get_width(), 56 if lib.globals.phaseBonus else 54)),
+                (overlayPhaseBonusText, (450, 54)),
+                (bonusText, (600 - bonusText.get_width(), 56 if lib.globals.phaseBonus else 54)),
+                (overlayPhaseHistoryText, (605, 54)),
+                (historyText, (705 - historyText.get_width(), 56)),
+                (overlayPhaseHistoryDivide, (705, 54)),
+                (
+                    lib.utils.renderBitmapNumber(
+                        lib.globals.savedata[lib.globals.optionType]['phaseHistory'][lib.globals.phaseIndex - 1]['total'],
+                        overlayNumberSmall,
+                    ),
+                    (715, 56),
+                ),
             ):
                 b[0].set_alpha(alpha)
                 blitSeq.append(b)
