@@ -13,7 +13,7 @@
 这是一个使用 [pygame](https://www.pygame.org/) 制作的简单（？）弹幕射击游戏，目的是回避弹幕并击破敌机，在每一关的最后有一个比较强的 BOSS，击破后就算是过关了。
 
 一共有 3 种机体和 4 个关卡，通关流程大概为 20 分钟。[（通关演示/云玩家通道）
-](https://hlsplayer.stream/video/stream.html?url=https://fs-im-kefu.7moor-fs2.com/im/2768a390-5474-11ea-afc9-7b323e3e16c0/C5KPb8eNLmwwSzIv.m3u8)
+](https://www.hlsplayer.net/#type=m3u8&src=https%3A%2F%2Ffs-im-kefu.7moor-fs2.com%2Fim%2F2768a390-5474-11ea-afc9-7b323e3e16c0%2FC5KPb8eNLmwwSzIv.m3u8)
 
 音乐和图片用的都是免费素材，具体请参见后面的[借物表](#借物表)。没有剧情之类的设定。另外这个游戏里有不少借鉴东方 Project 的地方……
 
@@ -98,6 +98,7 @@
 * 更多的性能优化（人家的弹幕游戏引擎随随便便就[同屏几千甚至上万发](https://cowlevel.net/article/1882071)，你这一千发好意思吗）
 * 完整的背景卷轴设计（素材不够）
 * 键位修改（暂时可以用改键工具替代）
+* Replay 系统
 * ……
 
 ## 一些技术性较强的高级内容
