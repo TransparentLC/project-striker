@@ -108,11 +108,11 @@ groupEnemyBullet = pygame.sprite.Group()
 groupBoss = pygame.sprite.GroupSingle()
 groupParticle = pygame.sprite.Group()
 stgGroups = (
-    groupItem,
     groupPlayer,
     groupPlayerOption,
     groupEnemy,
     groupPlayerBullet,
     groupEnemyBullet,
+    groupItem,
     groupParticle,
 )

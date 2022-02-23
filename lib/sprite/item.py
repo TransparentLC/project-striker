@@ -115,7 +115,12 @@ class PointBullet(Item):
 class PointClear(Item):
     def __init__(self, position: pygame.Vector2) -> None:
         super().__init__(position, itemImage[4])
-        self.magnetBorder = True
+        self.speed.y = -.5
+
+    def update(self) -> None:
+        if self.frameCounter == 30:
+            self.magnetNear = True
+        super().update()
 
     def gain(self):
         lib.globals.score += len(lib.globals.groupEnemyBullet) * 8
