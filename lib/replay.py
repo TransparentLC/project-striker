@@ -24,6 +24,9 @@ KEY_MAPPING = {
     1 << 7: pygame.K_c, # Unused
 }
 
+# ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ
+# ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ
+# ０１２３４５６７８９＋－＝．，！？＠：；［］（）＿／｛｝｜～＾＃＄％＆＊
 replayNameChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-=.,!?@:;[]()_/{}|~^#$%&* '
 replayNameCharsAscii = tuple(ord(x) for x in replayNameChars)
 replayNameCharsHalfWidth = {ord(x): x for x in replayNameChars}
