@@ -1,7 +1,6 @@
 import collections
 import enum
 import pygame
-import random
 import typing
 
 import lib.bullet.enemy_bullet
@@ -349,12 +348,12 @@ class Engine:
             params: tuple[int, int, int] = params
             address, minValue, maxValue = params
 
-            self.vars[address] = random.randint(minValue, maxValue)
+            self.vars[address] = lib.globals.stgRandom.randint(minValue, maxValue)
         elif opcode == Opcode.RANDOM_FLOAT:
             params: tuple[int, float, float] = params
             address, minValue, maxValue = params
 
-            self.vars[address] = minValue + (maxValue - minValue) * random.random()
+            self.vars[address] = minValue + (maxValue - minValue) * lib.globals.stgRandom.random()
         elif opcode == Opcode.CALC_OFFSET:
             params: tuple[int, float, float] = params
             address, x, y = params
@@ -536,7 +535,7 @@ class Engine:
 
             self.context.speed.update(0, 0)
             self.movementQueue.append((
-                pygame.Vector2(x + random.random() * width, y + random.random() * height),
+                pygame.Vector2(x + lib.globals.stgRandom.random() * width, y + lib.globals.stgRandom.random() * height),
                 time,
                 MoveInterpolationFunctionTable[mode],
             ))
@@ -609,11 +608,12 @@ class Engine:
                 b.explode()
             lib.sound.sfx['BONUS'].play()
         elif opcode == Opcode.BONUS_PHASE:
-            lib.globals.savedata[lib.globals.optionType]['phaseHistory'][lib.globals.phaseIndex - 1]['total'] += 1
+            if lib.globals.replayRecording:
+                lib.globals.savedata[lib.globals.optionType]['phaseHistory'][lib.globals.phaseIndex - 1]['total'] += 1
             lib.globals.score += lib.globals.phaseBonus
             lib.stg_overlay.overlayStatus[lib.stg_overlay.OverLayStatusIndex.PHASE_BONUS_REMAIN] = 240
             lib.stg_overlay.overlayStatus[lib.stg_overlay.OverLayStatusIndex.PHASE_BONUS_VALUE] = lib.globals.phaseBonus
-            if lib.globals.phaseBonus:
+            if lib.globals.replayRecording and lib.globals.phaseBonus:
                 lib.globals.phaseBonusCount += 1
                 lib.globals.savedata[lib.globals.optionType]['phaseHistory'][lib.globals.phaseIndex - 1]['bonus'] += 1
             lib.globals.phaseIndex = 0
@@ -624,8 +624,8 @@ class Engine:
 
             minwh = min(self.context.rect.width, self.context.rect.height)
             for i in range(num):
-                pos = pygame.Vector2(random.random() * minwh, 0)
-                pos.rotate_ip(random.random() * 360)
+                pos = pygame.Vector2(lib.globals.stgRandom.random() * minwh, 0)
+                pos.rotate_ip(lib.globals.stgRandom.random() * 360)
                 pos += self.context.position
                 lib.sprite.item.Point(pos)
         elif opcode == Opcode.EXTEND_LIFE:

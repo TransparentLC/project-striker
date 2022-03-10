@@ -50,6 +50,6 @@ def update():
 
 def draw(surface: pygame.Surface):
     surface.blit(BACKGROUND, (0, 0))
-    surface.blit(MENU_ITEMS[1][0], (640 - MENU_ITEMS[1][0].get_width() // 2, 64))
+    surface.blit(MENU_ITEMS[3][0], (640 - MENU_ITEMS[1][0].get_width() // 2, 64))
     surface.blit(SHADE, (115, 184))
     surface.blit(manualPages[currentPage], (135, 198))

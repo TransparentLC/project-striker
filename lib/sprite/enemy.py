@@ -70,8 +70,8 @@ class Enemy(lib.sprite.Sprite):
 
             minwh = min(self.rect.width, self.rect.height)
             for i in range(self.pointItemNum):
-                pos = pygame.Vector2(random.random() * minwh, 0)
-                pos.rotate_ip(random.random() * 360)
+                pos = pygame.Vector2(lib.globals.stgRandom.random() * minwh, 0)
+                pos.rotate_ip(lib.globals.stgRandom.random() * 360)
                 pos += self.position
                 lib.sprite.item.Point(pos)
             lib.globals.maxGetPoint += self.maxGetPointAdd

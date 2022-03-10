@@ -27,8 +27,20 @@ if __name__ == '__main__':
     loop = True
     freeze = False
     while loop:
+        keyPressed = pygame.key.get_pressed()
         lib.globals.keysLastFrame = lib.globals.keys
-        lib.globals.keys = pygame.key.get_pressed()
+        lib.globals.keys = {k: keyPressed[k] for k in (
+            pygame.K_UP,
+            pygame.K_DOWN,
+            pygame.K_LEFT,
+            pygame.K_RIGHT,
+            pygame.K_LSHIFT,
+            pygame.K_z,
+            pygame.K_x,
+            pygame.K_c,
+            pygame.K_p,
+            pygame.K_ESCAPE,
+        )}
 
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
@@ -66,8 +78,6 @@ if __name__ == '__main__':
                     )
 
             fps = lib.globals.clock.get_fps()
-            # if abs(1 - fps / 60) > .05:
-            #     print(fps, len(lib.globals.groupEnemyBullet))
             fpsSurface = lib.font.FONT_SMALL.render(f'FPS: {fps:.02f}', True, (255, 255, 255) if abs(1 - fps / 60) < .05 else (255, 255, 0))
             lib.globals.screen.blit(fpsSurface, (1190, 930))
             pygame.display.flip()

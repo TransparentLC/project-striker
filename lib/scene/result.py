@@ -1,8 +1,9 @@
 import pygame
 
 import lib.constants
-import lib.globals
 import lib.font
+import lib.globals
+import lib.replay
 import lib.scene.title
 import lib.sound
 import lib.stg_overlay
@@ -19,12 +20,42 @@ commentText = tuple(fontLargeRenderer.render(x) for x in (
     'No Miss No Hyper通关了！\n厉害啊……\n你真的没有使用秘籍吗？',
     '因为续关了，所以你并不能见到最终\nBOSS。\n下次再尝试以没有续关的状态攻略到\n这里吧！',
 ))
+saveReplayText = fontLargeRenderer.render('保存本次游戏的REPLAY？\n\n\n　　　　　　　↑↓←→－输入机签\n　　　　　　　Ｚ－确认　Ｘ－放弃\n　　按住ＬＳｈｉｆｔ快速选择字符')
+cannotSaveReplayText = fontLargeRenderer.render('在续关的情况下不能保存REPLAY。')
+replayNameBuffer = bytearray(ord(' ') for i in range(8))
+replayNameInputPosition = 0
+replayNameInputPositionBlink = 0
+
+def returnToTitle():
+    lib.sound.sfx['PAGE'].play()
+    lib.sound.playBgm('TITLE')
+    lib.globals.nextScene = lib.scene.title
 
 def update():
-    if lib.globals.keys[pygame.K_z] and not lib.globals.keysLastFrame[pygame.K_z]:
-        lib.sound.sfx['PAGE'].play()
-        lib.sound.playBgm('TITLE')
-        lib.globals.nextScene = lib.scene.title
+    global replayNameInputPosition
+    global replayNameInputPositionBlink
+
+    if lib.globals.continueCount:
+        if lib.globals.keys[pygame.K_x] and not lib.globals.keysLastFrame[pygame.K_x]:
+            returnToTitle()
+    else:
+        replayNameInputPositionBlink += 1
+        replayNameInputPositionBlink &= 31
+        if lib.globals.keys[pygame.K_z] and not lib.globals.keysLastFrame[pygame.K_z]:
+            lib.replay.saveReplay(replayNameBuffer)
+            returnToTitle()
+        if lib.globals.keys[pygame.K_x] and not lib.globals.keysLastFrame[pygame.K_x]:
+            returnToTitle()
+        if lib.globals.keys[pygame.K_LEFT] and not lib.globals.keysLastFrame[pygame.K_LEFT]:
+            replayNameInputPosition -= 1
+            replayNameInputPosition %= 8
+        if lib.globals.keys[pygame.K_RIGHT] and not lib.globals.keysLastFrame[pygame.K_RIGHT]:
+            replayNameInputPosition += 1
+            replayNameInputPosition %= 8
+        if lib.globals.keys[pygame.K_UP] and (lib.globals.keys[pygame.K_LSHIFT] or not lib.globals.keysLastFrame[pygame.K_UP]):
+            replayNameBuffer[replayNameInputPosition] = lib.replay.replayNameCharsAscii[(lib.replay.replayNameCharsAscii.index(replayNameBuffer[replayNameInputPosition]) - 1) % len(lib.replay.replayNameChars)]
+        if lib.globals.keys[pygame.K_DOWN] and (lib.globals.keys[pygame.K_LSHIFT] or not lib.globals.keysLastFrame[pygame.K_DOWN]):
+            replayNameBuffer[replayNameInputPosition] = lib.replay.replayNameCharsAscii[(lib.replay.replayNameCharsAscii.index(replayNameBuffer[replayNameInputPosition]) + 1) % len(lib.replay.replayNameChars)]
 
 def draw(surface: pygame.Surface):
     surface.blit(background, (0, 0))
@@ -49,4 +80,17 @@ def draw(surface: pygame.Surface):
             commentSurface = commentText[2]
     else:
         commentSurface = commentText[1]
+
     surface.blit(commentSurface, (708, 256))
+    if lib.globals.continueCount:
+        surface.blit(cannotSaveReplayText, (708, 418))
+    else:
+        surface.blit(saveReplayText, (708, 418))
+        surface.blit(
+            fontLargeRenderer.render('[' + ''.join(lib.replay.replayNameCharsFullWidth[x] for x in replayNameBuffer) + ']'),
+            (824, 482)
+        )
+        surface.blit(
+            fontLargeRenderer.render(''.join(('＿' if i == replayNameInputPosition and replayNameInputPositionBlink & 16 else '　') for i in range(8))),
+            (834, 490)
+        )

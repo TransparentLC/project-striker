@@ -16,6 +16,7 @@ with lib.utils.getResourceHandler('scriptfiles/phase-name.txt') as f:
 
 TITLE = 'Striker'
 DATA_DIR = f'{pathlib.Path.home()}/.striker'
+REPLAY_DIR = f'{DATA_DIR}/replay'
 PATH_CONFIG = f'{DATA_DIR}/config.json'
 PATH_SAVEDATA = f'{DATA_DIR}/savedata.json'
 

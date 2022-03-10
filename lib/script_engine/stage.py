@@ -1,10 +1,11 @@
 import enum
 import pygame
 import os
-import random
 import typing
 
 import lib.globals
+import lib.replay
+import lib.scene.replay
 import lib.scene.result
 import lib.sound
 import lib.sprite
@@ -212,12 +213,12 @@ class Engine:
             params: tuple[int, int, int] = params
             address, minValue, maxValue = params
 
-            self.vars[address] = random.randint(minValue, maxValue)
+            self.vars[address] = lib.globals.stgRandom.randint(minValue, maxValue)
         elif opcode == Opcode.RANDOM_FLOAT:
             params: tuple[int, float, float] = params
             address, minValue, maxValue = params
 
-            self.vars[address] = minValue + (maxValue - minValue) * random.random()
+            self.vars[address] = minValue + (maxValue - minValue) * lib.globals.stgRandom.random()
         elif opcode == Opcode.INC:
             params: tuple[int] = params
             address, = params
@@ -309,8 +310,13 @@ class Engine:
         elif opcode == Opcode.DISABLE_CONTINUE:
             lib.globals.continueEnabled = False
         elif opcode == Opcode.SHOW_RESULT:
-            pygame.mixer.music.stop()
-            lib.globals.nextScene = lib.scene.result
+            if lib.globals.replayRecording:
+                pygame.mixer.music.stop()
+                lib.replay.stopRecording()
+                lib.globals.nextScene = lib.scene.result
+            else:
+                lib.sound.playBgm('TITLE')
+                lib.globals.nextScene = lib.scene.replay
 
         # elif opcode == Opcode.:
         #     params: tuple[] = params

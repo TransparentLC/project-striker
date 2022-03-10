@@ -47,7 +47,7 @@ def update():
 
 def draw(surface: pygame.Surface):
     surface.blit(BACKGROUND, (0, 0))
-    surface.blit(MENU_ITEMS[3][0], (640 - MENU_ITEMS[3][0].get_width() // 2, 64))
+    surface.blit(MENU_ITEMS[4][0], (640 - MENU_ITEMS[3][0].get_width() // 2, 64))
     surface.blit(SHADE, (115, 184))
     surface.blit(arrowSurface, (135, 198 + 96 * currentItem))
     for index, item in enumerate(configItems):

@@ -80,7 +80,7 @@ class Player(Sprite):
                     self.invincibleRemain = 150
                     self.position.update(playerInitialPosition)
                 else:
-                    if lib.globals.continueEnabled:
+                    if lib.globals.replayRecording and lib.globals.continueEnabled:
                         lib.sound.sfx['COUNTDOWN'].play()
                     lib.globals.continueRemain = 659
                     self.deathWait = 1

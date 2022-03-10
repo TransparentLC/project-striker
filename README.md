@@ -98,7 +98,6 @@
 * 更多的性能优化（人家的弹幕游戏引擎随随便便就[同屏几千甚至上万发](https://cowlevel.net/article/1882071)，你这一千发好意思吗）
 * 完整的背景卷轴设计（素材不够）
 * 键位修改（暂时可以用改键工具替代）
-* Replay 系统
 * ……
 
 ## 一些技术性较强的高级内容
@@ -116,6 +115,47 @@
 * `sound`
 
 在启动游戏时，可以使用环境变量 `STRIKER_MODDED_RESOURCE` 指定模组文件的路径。
+
+</details>
+
+### Replay 文件结构
+
+<details>
+
+Replay 文件分为文件头、校验码和按键数据三个部分。
+
+文件头共计 80 字节，具体结构的伪代码：
+
+```c
+struct ReplayHeader {
+    uint8_t  magic[4];     // 固定为RPLY四个字符
+    uint32_t version;      // 版本号，对于每个主程序版本有固定的默认值（游戏机制修改时会改变），与主程序对应版本号不同的replay可能无法正常播放
+    uint64_t timestamp;    // 创建replay的时间戳
+    uint8_t  name[8];      // 机签
+    uint64_t seed;         // 随机种子（random.seed(version=2)）
+    uint64_t score;        // 游戏结束时的分数
+    uint8_t  optionType;   // 自机类型
+    uint8_t  missCount;    // MISS次数
+    uint8_t  hyperCount;   // 火力强化使用次数
+    uint8_t  bonusCount;   // 完美击破奖励次数
+    uint32_t unused;       // 未使用
+}
+```
+
+校验码 32 字节，计算规则：`hmac_sha256(msg=文件头 + 解压后的按键数据, key=???)`
+
+按键数据保存时使用 `lzma.compress(format=lzma.FORMAT_ALONE)` 压缩。在原始数据中每一帧用一个 `uint8_t` 表示，每个位表示一个按键是否有按下：
+
+* `1 << 0` <kbd>↑</kbd>
+* `1 << 1` <kbd>↓</kbd>
+* `1 << 2` <kbd>←</kbd>
+* `1 << 3` <kbd>→</kbd>
+* `1 << 4` <kbd>LShift</kbd>
+* `1 << 5` <kbd>Z</kbd>
+* `1 << 6` <kbd>X</kbd>
+* `1 << 7` <kbd>C</kbd>（未使用）
+
+通关流程大概为 20 分钟，即 20x60x60=72000f。由于存在压缩，文件大小理论上不会大于 70 KB。
 
 </details>
 

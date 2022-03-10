@@ -5,6 +5,8 @@ import lib.constants
 import lib.debug
 import lib.font
 import lib.globals
+import lib.replay
+import lib.scene.replay
 import lib.scene.result
 import lib.scene.title
 import lib.scroll_map
@@ -14,11 +16,17 @@ import lib.sprite.player
 import lib.utils
 
 background = pygame.image.load(lib.utils.getResourceHandler('assets/ui-stg-background.webp')).convert()
+enemyMarker = pygame.image.load(lib.utils.getResourceHandler('assets/enemy-marker.webp')).convert_alpha()
+replayPlayingHint = lib.font.FONT_LARGE.render('REPLAY播放中', True, (255, 255, 255))
 
 def update():
     player: lib.sprite.player.Player = lib.globals.groupPlayer.sprite
 
     if not lib.globals.continueRemain:
+        if lib.globals.replayRecording:
+            lib.globals.replayKeyStream.write(bytes([lib.replay.readKeys()]))
+        else:
+            lib.replay.setKeys(lib.globals.replayKeyStream.read(1)[0] or 0)
         lib.globals.scoreLastFrame = lib.globals.score
 
         lib.globals.stageEngine.update()
@@ -35,7 +43,7 @@ def update():
         lib.globals.phaseBonus = max(0, lib.globals.phaseBonus - lib.globals.phaseBonusDrop)
 
         if not lib.globals.continueCount:
-            if lib.globals.savedata[lib.globals.optionType]['highScore'] < lib.globals.score:
+            if lib.globals.replayRecording and lib.globals.savedata[lib.globals.optionType]['highScore'] < lib.globals.score:
                 lib.globals.savedata[lib.globals.optionType]['highScore'] = lib.globals.score
 
             for extendLimit in (
@@ -54,7 +62,7 @@ def update():
                     lib.sound.sfx['EXTEND_LIFE'].play()
 
     if lib.globals.continueRemain:
-        if lib.globals.continueEnabled:
+        if lib.globals.replayRecording and lib.globals.continueEnabled:
             if lib.globals.keys[pygame.K_z] and not lib.globals.keysLastFrame[pygame.K_z]:
                 lib.sound.sfx['HYPER_ACTIVATE'].play()
                 lib.globals.continueCount += 1
@@ -73,14 +81,21 @@ def update():
                 if not lib.globals.continueRemain:
                     lib.sound.sfx['HYPER_END'].play()
                     pygame.mixer.music.stop()
+                    lib.replay.stopRecording()
                     lib.globals.nextScene = lib.scene.result
         else:
             lib.sound.sfx['HYPER_END'].play()
-            pygame.mixer.music.stop()
-            lib.globals.nextScene = lib.scene.result
+            if lib.globals.replayRecording:
+                pygame.mixer.music.stop()
+                lib.replay.stopRecording()
+                lib.globals.nextScene = lib.scene.result
+            else:
+                lib.sound.playBgm('TITLE')
+                lib.globals.nextScene = lib.scene.replay
 
     if lib.globals.keys[pygame.K_ESCAPE]:
         lib.sound.playBgm('TITLE')
+        lib.replay.stopRecording()
         lib.globals.nextScene = lib.scene.title
 
 def draw(surface: pygame.Surface):
@@ -157,3 +172,9 @@ def draw(surface: pygame.Surface):
                 24
             ),
         )
+        surface.blit(
+            enemyMarker,
+            (round(lib.globals.groupBoss.sprite.position.x * 2 - enemyMarker.get_width() / 2) + 32, 932)
+        )
+    if not lib.globals.replayRecording:
+        surface.blit(replayPlayingHint, (1040 - replayPlayingHint.get_width() // 2, 820 - replayPlayingHint.get_height() // 2))

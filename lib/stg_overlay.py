@@ -45,7 +45,7 @@ def update():
             overlayStatus[i] -= 1
 
 def draw(surface: pygame.Surface):
-    if lib.globals.continueRemain:
+    if lib.globals.replayRecording and lib.globals.continueRemain:
         continueRemainSurface = lib.utils.renderBitmapNumber(lib.globals.continueRemain // 60, overlayNumber2x)
         surface.blits((
             (overlayContinue, (224, 320)),

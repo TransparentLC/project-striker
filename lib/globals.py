@@ -1,7 +1,9 @@
 import collections
+import io
 import json
 import os
 import pygame
+import random
 import typing
 
 from jsonschema import Draft7Validator
@@ -24,6 +26,8 @@ Draft7ValidatorWithDefault = extendValidatorWithDefault(Draft7Validator)
 
 if not os.path.exists(lib.constants.DATA_DIR):
     os.mkdir(lib.constants.DATA_DIR)
+if not os.path.exists(lib.constants.REPLAY_DIR):
+    os.mkdir(lib.constants.REPLAY_DIR)
 config: dict = None
 if os.path.exists(lib.constants.PATH_CONFIG):
     with open(lib.constants.PATH_CONFIG, 'r', encoding='utf-8') as f:
@@ -69,6 +73,10 @@ nextScene = None
 stgSurface = pygame.Surface((384, 448))
 stgSurface2x = pygame.Surface((768, 896))
 stageEngine = None
+stgRandomSeed: bytes = None
+stgRandom = random.Random()
+replayKeyStream: io.BytesIO = None
+replayRecording = False
 
 backgroundScrollSpeed = 1.5
 backgroundScrollOffset = 0
