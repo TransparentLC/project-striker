@@ -124,7 +124,7 @@
 
 Replay 文件分为文件头、校验码和按键数据三个部分。
 
-文件头共计 80 字节，具体结构的伪代码：
+文件头具体结构的伪代码：
 
 ```c
 struct ReplayHeader {
@@ -142,7 +142,7 @@ struct ReplayHeader {
 }
 ```
 
-校验码 32 字节，计算规则：`hmac_sha256(msg=文件头 + 解压后的按键数据, key=???)`
+校验码计算规则：`hmac_sha256(msg=文件头 + 解压后的按键数据, key=???)`。文件头和校验码共计 80 字节，
 
 按键数据保存时使用 `lzma.compress(format=lzma.FORMAT_ALONE)` 压缩。在原始数据中每一帧用一个 `uint8_t` 表示，每个位表示一个按键是否有按下：
 
