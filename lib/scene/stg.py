@@ -42,6 +42,9 @@ def update():
             lib.globals.maxGetPoint = max(10000, lib.globals.maxGetPoint - 2)
         lib.globals.phaseBonus = max(0, lib.globals.phaseBonus - lib.globals.phaseBonusDrop)
 
+        scoreDiff = lib.globals.score - lib.globals.scoreDisplay
+        lib.globals.scoreDisplay += scoreDiff if scoreDiff < 128 else max(128, scoreDiff // 8)
+
         if not lib.globals.continueCount:
             if lib.globals.replayRecording and lib.globals.savedata[lib.globals.optionType]['highScore'] < lib.globals.score:
                 lib.globals.savedata[lib.globals.optionType]['highScore'] = lib.globals.score
@@ -120,8 +123,12 @@ def draw(surface: pygame.Surface):
     surface.blit(lib.globals.stgSurface2x, (32, 32))
 
     for text, (posX, posY) in (
-        (str(lib.globals.savedata[lib.globals.optionType]['highScore']), (1248, 76)),
-        (f'Continue×{lib.globals.continueCount}' if lib.globals.continueCount else str(lib.globals.score), (1248, 136)),
+        (str(
+            lib.globals.savedata[lib.globals.optionType]['highScore']
+            if lib.globals.savedata[lib.globals.optionType]['highScore'] != lib.globals.score else
+            lib.globals.scoreDisplay
+        ), (1248, 76)),
+        (f'Continue×{lib.globals.continueCount}' if lib.globals.continueCount else str(lib.globals.scoreDisplay), (1248, 136)),
         (str(lib.globals.maxGetPoint), (1248, 376)),
         (str(lib.globals.grazeCount), (1248, 436)),
         (str(len(lib.globals.groupEnemyBullet)), (1248, 526)),

@@ -17,6 +17,7 @@ def init():
     lib.globals.groupPlayer.sprite.shootWait = 0
     lib.globals.groupPlayer.sprite.deathWait = 0
     lib.globals.score = 0
+    lib.globals.scoreDisplay = 0
     lib.globals.scoreLastFrame = 0
     lib.globals.grazeCount = 0
     lib.globals.maxGetPoint = 10000

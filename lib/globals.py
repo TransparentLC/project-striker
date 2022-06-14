@@ -86,6 +86,7 @@ backgroundMaskChangeSpeed = 0
 backgroundSurfaces: typing.Deque[pygame.Surface] = collections.deque()
 
 score = 0
+scoreDisplay = 0
 scoreLastFrame = 0
 grazeCount = 0
 maxGetPoint = 0
