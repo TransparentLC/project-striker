@@ -61,13 +61,13 @@ jobs:
           if [ "$RUNNER_OS" == "Windows" ]; then
             choco install mingw --no-progress
           elif [ "$RUNNER_OS" == "Linux" ]; then
-            sudo add-apt-repository ppa:ubuntu-toolchain-r/test
-            sudo apt install gcc-13 g++-13
-            echo "CC=gcc-13" >> $GITHUB_ENV
-            echo "CXX=g++-13" >> $GITHUB_ENV
+            sudo add-apt-repository ppa:ubuntu-toolchain-r/ppa
+            sudo apt install gcc-14 g++-14
+            echo "CC=gcc-14" >> $GITHUB_ENV
+            echo "CXX=g++-14" >> $GITHUB_ENV
           elif [ "$RUNNER_OS" == "macOS" ]; then
-            echo "CC=gcc-13" >> $GITHUB_ENV
-            echo "CXX=g++-13" >> $GITHUB_ENV
+            echo "CC=gcc-14" >> $GITHUB_ENV
+            echo "CXX=g++-14" >> $GITHUB_ENV
           fi
       - name: Set vars
         id: vars
