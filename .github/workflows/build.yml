@@ -22,9 +22,9 @@ jobs:
           - ubuntu-latest
           - macos-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: 3.x
           cache: pip
@@ -32,7 +32,7 @@ jobs:
       - name: Install pip dependencies
         run: pip install -U -r requirements-build.txt
       - name: Cache font
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         id: cache-font
         with:
           path: .font
@@ -62,12 +62,12 @@ jobs:
             choco install mingw --no-progress
           elif [ "$RUNNER_OS" == "Linux" ]; then
             sudo add-apt-repository ppa:ubuntu-toolchain-r/test
-            sudo apt install gcc-11 g++-11
-            echo "CC=gcc-11" >> $GITHUB_ENV
-            echo "CXX=g++-11" >> $GITHUB_ENV
+            sudo apt install gcc-13 g++-13
+            echo "CC=gcc-13" >> $GITHUB_ENV
+            echo "CXX=g++-13" >> $GITHUB_ENV
           elif [ "$RUNNER_OS" == "macOS" ]; then
-            echo "CC=gcc-11" >> $GITHUB_ENV
-            echo "CXX=g++-11" >> $GITHUB_ENV
+            echo "CC=gcc-13" >> $GITHUB_ENV
+            echo "CXX=g++-13" >> $GITHUB_ENV
           fi
       - name: Set vars
         id: vars
@@ -79,8 +79,8 @@ jobs:
           elif [ "$RUNNER_OS" == "macOS" ]; then
             ext=".zip"
           fi
-          echo "::set-output name=ext::${ext}"
-          echo "::set-output name=executableName::striker-$(date +%Y%m%d-%H%M%S)-$(git rev-parse --short HEAD)-${{ runner.os }}${ext}"
+          echo "ext=${ext}" >> $GITHUB_OUTPUT
+          echo "executableName=striker-$(date +%Y%m%d-%H%M%S)-$(git rev-parse --short HEAD)-${{ runner.os }}${ext}" >> $GITHUB_OUTPUT
       - name: Build executable
         run: |
           if [ "$RUNNER_OS" == "Windows" ]; then
@@ -113,7 +113,7 @@ jobs:
             openssl sha256 dist/${{ steps.vars.outputs.executableName }}
           fi
       - name: Upload result
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: striker-${{ runner.os }}
           path: dist/${{ steps.vars.outputs.executableName }}
