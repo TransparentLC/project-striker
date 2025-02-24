@@ -1,4 +1,5 @@
 fonttools == 4.*
 jsonschema == 4.*
+pillow == 11.*; sys_platform == 'darwin'
 pygame-ce == 2.*
 pyinstaller == 6.*
